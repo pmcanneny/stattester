@@ -1,0 +1,234 @@
+<h1>Data Sheet</h1>
+
+<table>
+	<tr>
+		<td><b>Company: </b></td>
+		<td><%= @company.name %></td>
+	</tr>
+	<tr>
+		<td><b>Reporting Scale: </b></td>
+		<td><%= Company.reporting_scale(@company.reporting_scale) %></td>
+	</tr>
+	<tr>
+		<td><b>CY Equivalent: </b></td>
+		<td><%= @company.cy %></td>
+	</tr>
+</table>
+
+<%= form_for(@company, :url => {:controller=>:data_sheet,:action => :update}) do |f| %>	
+	<table width="100%">
+		<tr class="goldrow">
+			<td style="text-align:center">Confidential Data</td>
+		</tr>
+		<tr >
+			<th width="25%" style="background-color:gold"></th>
+			<th style="background-color:gold">Now</th>
+			<th style="background-color:gold">CY</th>
+			<th style="background-color:gold">2Y</th>
+			<th style="background-color:gold">3Y</th>
+			<th style="background-color:gold">4Y</th>
+			<th style="background-color:gold">5Y</th>
+		</tr>
+		<tr class="goldrow">
+			<td><%= label :secure, "Gross Sales or Revenue:" %></td>
+			<td><%= number_field :secure_now, :gross_sales %></td>
+			<td><%= number_field :secure_cy, :gross_sales %></td>
+			<td><%= number_field :secure_2y, :gross_sales %></td>
+			<td><%= number_field :secure_3y, :gross_sales %></td>
+			<td><%= number_field :secure_4y, :gross_sales %></td>
+			<td><%= number_field :secure_5y, :gross_sales %></td>			
+		</tr>
+		<tr class="goldrow">
+			<td><%= label :secure, "Assets:" %></td>
+			<td><%= number_field :secure_now, :assets %></td>
+			<td><%= number_field :secure_cy, :assets %></td>
+			<td><%= number_field :secure_2y, :assets %></td>
+			<td><%= number_field :secure_3y, :assets %></td>
+			<td><%= number_field :secure_4y, :assets %></td>
+			<td><%= number_field :secure_5y, :assets %></td>			
+		</tr>
+		<tr class="goldrow">
+			<td><%= label :secure, "Gross Profit:" %></td>
+			<td><%= number_field :secure_now, :gross_profit %></td>
+			<td><%= number_field :secure_cy, :gross_profit %></td>
+			<td><%= number_field :secure_2y, :gross_profit %></td>
+			<td><%= number_field :secure_3y, :gross_profit %></td>
+			<td><%= number_field :secure_4y, :gross_profit %></td>
+			<td><%= number_field :secure_5y, :gross_profit %></td>			
+		</tr>
+		<tr class="goldrow">
+			<td><%= label :secure, "Operating Profit:" %></td>
+			<td><%= number_field :secure_now, :operating_profit %></td>
+			<td><%= number_field :secure_cy, :operating_profit %></td>
+			<td><%= number_field :secure_2y, :operating_profit %></td>
+			<td><%= number_field :secure_3y, :operating_profit %></td>
+			<td><%= number_field :secure_4y, :operating_profit %></td>
+			<td><%= number_field :secure_5y, :operating_profit %></td>			
+		</tr>
+		<tr class="goldrow">
+			<td><%= label :secure, "EBITDA:" %></td>
+			<td><%= number_field :secure_now, :ebitda %></td>
+			<td><%= number_field :secure_cy, :ebitda %></td>
+			<td><%= number_field :secure_2y, :ebitda %></td>
+			<td><%= number_field :secure_3y, :ebitda %></td>
+			<td><%= number_field :secure_4y, :ebitda %></td>
+			<td><%= number_field :secure_5y, :ebitda %></td>			
+		</tr>
+		<tr class="goldrow">
+			<td><%= label :secure, "EBITDA Multiple:" %></td>
+			<td><%= number_field :secure_now, :ebitda_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_cy, :ebitda_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_2y, :ebitda_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_3y, :ebitda_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_4y, :ebitda_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_5y, :ebitda_multiple, :step => "any" %></td>			
+		</tr>
+		<tr class="goldrow">
+			<td><%= label :secure, "Sales Multiple:" %></td>
+			<td><%= number_field :secure_now, :sales_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_cy, :sales_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_2y, :sales_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_3y, :sales_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_4y, :sales_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_5y, :sales_multiple, :step => "any" %></td>			
+		</tr>
+		<tr class="goldrow">
+			<td><%= label :secure, "Funded Debt Multiple:" %></td>
+			<td><%= number_field :secure_now, :debt_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_cy, :debt_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_2y, :debt_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_3y, :debt_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_4y, :debt_multiple, :step => "any" %></td>
+			<td><%= number_field :secure_5y, :debt_multiple, :step => "any" %></td>			
+		</tr>
+		<tr class="goldrow">
+			<td><%= label :secure, "Stock Price:" %></td>
+			<td><%= number_field :secure_now, :stock_price, :step => "any" %></td>
+			<td><%= number_field :secure_cy, :stock_price, :step => "any" %></td>
+			<td><%= number_field :secure_2y, :stock_price, :step => "any" %></td>
+			<td><%= number_field :secure_3y, :stock_price, :step => "any" %></td>
+			<td><%= number_field :secure_4y, :stock_price, :step => "any" %></td>
+			<td><%= number_field :secure_5y, :stock_price, :step => "any"%></td>			
+		</tr>
+
+
+
+		<tr >
+			<%= f.hidden_field(:id) %>
+			<td><%= f.submit "Update & Save"%></td>
+			<td></td>
+			<td><%= link_to 'Back', summary_sheet_url %></td>
+			<td><%= link_to 'View Network Stats', {:controller=>"network_stats",:action=>"view", :id => @company.id} %></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+
+		<tr class="greyrow">
+			<td style="text-align:center">My Stat Trade</td>
+		</tr>
+		<tr >
+			<th style="background-color:lightgrey"></th>
+			<th style="background-color:lightgrey">Now</th>
+			<th style="background-color:lightgrey">CY</th>
+			<th style="background-color:lightgrey">2Y</th>
+			<th style="background-color:lightgrey">3Y</th>
+			<th style="background-color:lightgrey">4Y</th>
+			<th style="background-color:lightgrey">5Y</th>
+		</tr>
+		<tr class="greyrow">
+			<td><%= label :trade, "Revenue Category:" %></td>
+			<td><%= @trade_now.revenue_category %></td>
+			<td><%= @trade_cy.revenue_category %></td>
+			<td><%= @trade_2y.revenue_category %></td>
+			<td><%= @trade_3y.revenue_category %></td>
+			<td><%= @trade_4y.revenue_category %></td>
+			<td><%= @trade_5y.revenue_category %></td>
+		</tr>
+		<tr class="greyrow">
+			<td><%= label :trade, "Asset Category:" %></td>
+			<td><%= @trade_now.asset_category %></td>
+			<td><%= @trade_cy.asset_category %></td>
+			<td><%= @trade_2y.asset_category %></td>
+			<td><%= @trade_3y.asset_category %></td>
+			<td><%= @trade_4y.asset_category %></td>
+			<td><%= @trade_5y.asset_category %></td>
+		</tr>
+		<tr class="greyrow">
+			<td><%= label :trade, "Sales/Revenue Growth:" %></td>
+			<td><%= @trade_now.sales_growth %><%= "%" unless @trade_now.sales_growth.nil? %></td>
+			<td><%= @trade_cy.sales_growth %><%= "%" unless @trade_cy.sales_growth.nil? %></td>
+			<td><%= @trade_2y.sales_growth %><%= "%" unless @trade_2y.sales_growth.nil? %></td>
+			<td><%= @trade_3y.sales_growth %><%= "%" unless @trade_3y.sales_growth.nil? %></td>
+			<td><%= @trade_4y.sales_growth %><%= "%" unless @trade_4y.sales_growth.nil? %></td>
+			<td><%= @trade_5y.sales_growth %><%= "%" unless @trade_5y.sales_growth.nil? %></td>
+		</tr>
+		<tr class="greyrow">
+			<td><%= label :trade, "Gross Profit Margin:" %></td>
+			<td><%= @trade_now.gross_profit_margin %><%= "%" unless @trade_now.gross_profit_margin.nil? %></td>
+			<td><%= @trade_cy.gross_profit_margin %><%= "%" unless @trade_cy.gross_profit_margin.nil? %></td>
+			<td><%= @trade_2y.gross_profit_margin %><%= "%" unless @trade_2y.gross_profit_margin.nil? %></td>
+			<td><%= @trade_3y.gross_profit_margin %><%= "%" unless @trade_3y.gross_profit_margin.nil? %></td>
+			<td><%= @trade_4y.gross_profit_margin %><%= "%" unless @trade_4y.gross_profit_margin.nil? %></td>
+			<td><%= @trade_5y.gross_profit_margin %><%= "%" unless @trade_5y.gross_profit_margin.nil? %></td>
+		</tr>
+		<tr class="greyrow">
+			<td><%= label :trade, "Operating Profit Margin:" %></td>
+			<td><%= @trade_now.operating_profit_margin %><%= "%" unless @trade_now.operating_profit_margin.nil? %></td>
+			<td><%= @trade_cy.operating_profit_margin %><%= "%" unless @trade_cy.operating_profit_margin.nil? %></td>
+			<td><%= @trade_2y.operating_profit_margin %><%= "%" unless @trade_2y.operating_profit_margin.nil? %></td>
+			<td><%= @trade_3y.operating_profit_margin %><%= "%" unless @trade_3y.operating_profit_margin.nil? %></td>
+			<td><%= @trade_4y.operating_profit_margin %><%= "%" unless @trade_4y.operating_profit_margin.nil? %></td>
+			<td><%= @trade_5y.operating_profit_margin %><%= "%" unless @trade_5y.operating_profit_margin.nil? %></td>
+		</tr>
+		<tr class="greyrow">
+			<td><%= label :trade, "EBITDA %:" %></td>
+			<td><%= @trade_now.ebitda_percent %><%= "%" unless @trade_now.ebitda_percent.nil? %></td>
+			<td><%= @trade_cy.ebitda_percent %><%= "%" unless @trade_cy.ebitda_percent.nil? %></td>
+			<td><%= @trade_2y.ebitda_percent %><%= "%" unless @trade_2y.ebitda_percent.nil? %></td>
+			<td><%= @trade_3y.ebitda_percent %><%= "%" unless @trade_3y.ebitda_percent.nil? %></td>
+			<td><%= @trade_4y.ebitda_percent %><%= "%" unless @trade_4y.ebitda_percent.nil? %></td>
+			<td><%= @trade_5y.ebitda_percent %><%= "%" unless @trade_5y.ebitda_percent.nil? %></td>
+		</tr>
+		<tr class="greyrow">
+			<td><%= label :trade, "Enterprise Multiple of Book:" %></td>
+			<td><%= @trade_now.enterprise_multiple %></td>
+			<td><%= @trade_cy.enterprise_multiple %></td>
+			<td><%= @trade_2y.enterprise_multiple %></td>
+			<td><%= @trade_3y.enterprise_multiple %></td>
+			<td><%= @trade_4y.enterprise_multiple %></td>
+			<td><%= @trade_5y.enterprise_multiple %></td>
+		</tr>
+		<tr class="greyrow">
+			<td><%= label :trade, "My EBITDA Multiple:" %></td>
+			<td><%= @trade_now.ebitda_multiple %></td>
+			<td><%= @trade_cy.ebitda_multiple %></td>
+			<td><%= @trade_2y.ebitda_multiple %></td>
+			<td><%= @trade_3y.ebitda_multiple %></td>
+			<td><%= @trade_4y.ebitda_multiple %></td>
+			<td><%= @trade_5y.ebitda_multiple %></td>
+		</tr>
+		<tr class="greyrow">
+			<td><%= label :trade, "My Sales Multiple:" %></td>
+			<td><%= @trade_now.sales_multiple %></td>
+			<td><%= @trade_cy.sales_multiple %></td>
+			<td><%= @trade_2y.sales_multiple %></td>
+			<td><%= @trade_3y.sales_multiple %></td>
+			<td><%= @trade_4y.sales_multiple %></td>
+			<td><%= @trade_5y.sales_multiple %></td>
+		</tr>
+		<tr class="greyrow">
+			<td><%= label :trade, "My Funded Debt Multiple:" %></td>
+			<td><%= @trade_now.debt_multiple %></td>
+			<td><%= @trade_cy.debt_multiple %></td>
+			<td><%= @trade_2y.debt_multiple %></td>
+			<td><%= @trade_3y.debt_multiple %></td>
+			<td><%= @trade_4y.debt_multiple %></td>
+			<td><%= @trade_5y.debt_multiple %></td>
+		</tr>
+
+
+
+
+	</table>
+<% end %>

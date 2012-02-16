@@ -1,0 +1,39 @@
+<!--
+TODO: conditionalize drop-downs such that "please select" is an option only when the field is nil
+-->
+<h1>Edit Company</h1>
+
+<%= form_for(@company, :url => {:controller=>:summary_sheet,:action => :updatecompany}) do |f| %>	
+	<table>
+		<tr class="<%= cycle("even", "odd") %>">
+			<td><%= f.label "Company Name:" %></td>
+			<td><%= f.text_field :name %></td>
+		</tr>
+		<tr class="<%= cycle("even", "odd") %>">
+			<td><%= f.label "Reporting Entity:" %></td>
+			<td><%= f.select(:reporting_entity, Company.reporting_entity_options, :include_blank => "", :class => "rowform") %></td>
+		</tr>
+		<tr class="<%= cycle("even", "odd") %>">
+			<td><%= f.label "Ownership:" %></td>
+			<td><%= f.select(:ownership, Company.ownership_options, :include_blank => "", :class => "rowform") %></td>
+		</tr>
+		<tr class="<%= cycle("even", "odd") %>">
+			<td><%= f.label "SIC:" %></td>
+			<td><%= f.number_field :sic %></td>
+		</tr>
+		<tr class="<%= cycle("even", "odd") %>">
+			<td><%= f.label "Country:" %></td>
+			<td><%= f.select(:country, Company.country_options, :class => "rowform") %></td>
+		</tr>
+		<tr class="<%= cycle("even", "odd") %>">
+			<td><%= f.label "Region:" %></td>
+			<td><%= f.select(:region, Company.region_options, :include_blank => "", :class => "rowform") %></td>
+		</tr>
+
+		<%= f.hidden_field(:id) %>		
+
+		<tr class="<%= cycle("even", "odd") %>">
+			<td><%= f.submit %></td><td><%= link_to 'Cancel', summary_sheet_url %></td>
+		</tr>
+	</table>
+<% end %>

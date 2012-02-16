@@ -1,0 +1,34 @@
+
+<img src="\img\stattrader-logo.jpg" style="position:relative; left:11px">
+<%= show_notice(notice) %>
+<% if notice.nil? %>
+<br><br><br>
+<% end %>
+
+
+
+<h1>StatTrader Login</h1>
+
+<%= form_tag(:action=>'login') do %>
+<table class="login" style="border-collapse:collapse;" cellspacing="0" >
+	<tr>
+	  <td style="padding-top: 10px"><font face="Arial" size="4"><b>Username:</b></font></td>
+	  <td><%= text_field_tag(:email)%> </td>
+	</tr>
+	<tr>
+	  <td style="padding-top: 10px"><font face="Arial" size="4"><b>Password:</b></font></td>
+	  <td><%= password_field_tag(:password)%> </td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td style="text-align:left"><%= submit_tag("Login")%> </td>
+	</tr>
+</table>
+
+<% end %>
+
+<br><br>
+
+<%= link_to 'Register', {:controller => 'access', :action => 'register'} %>
+
+
