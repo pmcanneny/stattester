@@ -1,42 +1,42 @@
 #This is the model for the secure data a user will enter about a company
 # this data will be encrypted with a user's secondary data password
-class SecureStat < Stat
+class SecureStat < ActiveRecord::Base
+  belongs_to :company
+  validates_presence_of :company_id
   validate :datacheck
 
   #if an updated field is the CY's fye, update all secure and trade stat
   #fye (other than "now") 
-  on_update do
-    if self.year = 1 and self.fye_changed?
+  before_save do
+    if self.year == 1 and (self.fye.to_s != self.fye_was.to_s) and !(self.fye.nil?)
       comp = self.company 
-      2y = SecureStat.find(comp.secure_2y_id)
-      3y = SecureStat.find(comp.secure_3y_id)
-      4y = SecureStat.find(comp.secure_4y_id)
-      5y = SecureStat.find(comp.secure_5y_id)
-      2y.fye = "1/#{self.fye.month}/#{self.fye.year-1}".to_datetime
-      3y.fye = "1/#{self.fye.month}/#{self.fye.year-2}".to_datetime
-      4y.fye = "1/#{self.fye.month}/#{self.fye.year-3}".to_datetime
-      5y.fye = "1/#{self.fye.month}/#{self.fye.year-4}".to_datetime
+      y2 = SecureStat.find(comp.secure_2y_id)
+      y3 = SecureStat.find(comp.secure_3y_id)
+      y4 = SecureStat.find(comp.secure_4y_id)
+      y5 = SecureStat.find(comp.secure_5y_id)
+      y2.fye = "1/#{self.fye.month}/#{self.fye.year-1}".to_datetime
+      y3.fye = "1/#{self.fye.month}/#{self.fye.year-2}".to_datetime
+      y4.fye = "1/#{self.fye.month}/#{self.fye.year-3}".to_datetime
+      y5.fye = "1/#{self.fye.month}/#{self.fye.year-4}".to_datetime
+      trade_cy = TradeStat.find(comp.trade_cy_id)
       trade_2y = TradeStat.find(comp.trade_2y_id)
       trade_3y = TradeStat.find(comp.trade_3y_id)
       trade_4y = TradeStat.find(comp.trade_4y_id)
       trade_5y = TradeStat.find(comp.trade_5y_id)
-      trade_2y.fye=2y.fye
-      trade_3y.fye=3y.fye
-      trade_4y.fye=4y.fye
-      trade_5y.fye=5y.fye
-      2y.save
-      3y.save
-      4y.save
-      5y.save
+      trade_cy.fye = self.fye
+      trade_2y.fye=y2.fye
+      trade_3y.fye=y3.fye
+      trade_4y.fye=y4.fye
+      trade_5y.fye=y5.fye
+      y2.save
+      y3.save
+      y4.save
+      y5.save
+      trade_cy.save
       trade_2y.save
       trade_3y.save
       trade_4y.save
-      trade_5y.save
-
-      trade_cy = TradeStat.find(comp.trade_cy_id)
-      trade_cy.fye = self.fye
-      trade_cy.save
-      self.save
+      trade_5y.save      
     end
     # if self.year = 1 and self.fye_changed?
     #   comp = self.company
@@ -51,6 +51,37 @@ class SecureStat < Stat
 	   # errors.add(:gross_sales, "Cannot be a negative number")
 	  #end
 	  #end
+  end
+  
+  #define the options for reporting scale
+  def self.reporting_scale(s)
+    case s
+    when 1
+      "Dollars"
+    when 2
+      "Thousands of Dollars"
+    when 3
+      "Millions of Dollars"
+    when 4
+      "Billions of Dollars"
+    end
+  end
+  #define the scale - for use in calculations
+  def self.scale(s)
+    case s
+    when 1
+      1
+    when 2
+      1000
+    when 3
+      1000000
+    when 4
+      1000000000
+    end
+  end
+  #scale options in hash form - for use in drop-down menus
+  def self.reporting_scale_options
+    {SecureStat.reporting_scale(1)=>1,SecureStat.reporting_scale(2)=>2,SecureStat.reporting_scale(3)=>3,SecureStat.reporting_scale(4)=>4}
   end
 
   #this returns the SecureStat for the previous year
@@ -99,5 +130,24 @@ class SecureStat < Stat
       SecureStat.find(self.company.secure_cy_id).fye
     end
   end
+
+  #define the options for Historical Quality
+  def self.quality(q)
+    case q
+    when 1
+      "Audit"
+    when 2
+      "Review"
+    when 3
+      "Mgt/Compiled"
+    end
+  end
+
+  #quality options in hash form - for use in drop-down menus
+  def self.quality_options
+    {SecureStat.quality(1)=>1,SecureStat.quality(2)=>2,SecureStat.quality(3)=>3}
+  end
+
+ 
 
 end

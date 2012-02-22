@@ -16,12 +16,12 @@ class InitialMigration < ActiveRecord::Migration
     create_table :companies do |t|
       t.string :name, :null => false
       t.references :user, :null => false
-      t.integer :reporting_entity, :precision => 1 #combination or subsidiary
+      t.integer :combination, :precision => 1, :default => 2 #1=yes 2=no
       t.integer :ownership, :precision => 1 #public, private investor, or private operator
       t.integer :sic, :precision => 4 #sic codes are up to 4 digits
       t.integer :country, :precision => 3 #about 200 countries in the world
       t.integer :region, :precision => 1 #there are arguably 9 regions in the US
-      t.bool :shifted, :default => false #has this company's data been year-shifted?
+      t.boolean :shifted, :default => false #has this company's data been year-shifted?
       t.timestamps
       #now we get into the data to be later encrypted
       t.references "secure_now"
@@ -59,7 +59,7 @@ class InitialMigration < ActiveRecord::Migration
       t.integer :input_basis, :precision => 1 #"transaction based" or "my estimate"
       t.integer :quality, :precision => 1 #audit, review, or "mgt/compiled"
       t.integer :year, :precision => 1 #now, cy, 2y, 3y, 4y, or 5y
-      t.datetime :fye, :precision => 2 #for cy - within the last 36 months
+      t.datetime :fye #month and year of fiscal year end
       t.timestamps
     end
 
@@ -79,7 +79,7 @@ class InitialMigration < ActiveRecord::Migration
       t.integer :input_basis, :precision => 1 #"transaction based" or "my estimate"
       t.integer :quality, :precision => 1 #audit, review, or "mgt/compiled"
       t.integer :year, :precision => 1 #now, cy, 2y, 3y, 4y, or 5y
-      t.datetime :fye, :precision => 2 #for cy - within the last 36 months
+      t.datetime :fye #month and year of fiscal year end
       t.timestamps
     end    
 
@@ -126,12 +126,11 @@ class InitialMigration < ActiveRecord::Migration
     #create data for companies
     #Alberto Culver
     alberto = Company.find(1)
-    alberto.reporting_entity = 1
+    alberto.combination = 1
     alberto.ownership = 1
     alberto.sic = 2841
     alberto.country = 1
     alberto.region = 1
-    alberto.quality = 1
     alberto_now = SecureStat.find(Company.find(1).secure_now_id)
     alberto_cy = SecureStat.find(Company.find(1).secure_cy_id)
     alberto_2y = SecureStat.find(Company.find(1).secure_2y_id)
@@ -177,18 +176,16 @@ class InitialMigration < ActiveRecord::Migration
 
     #avon
     avon = Company.find(2)
-    avon.reporting_entity = 1
+    avon.combination = 1
     avon.ownership = 1
     avon.sic = 2841
     avon.country = 1
     avon.region = 1
-    avon.quality = 1
-    avon.cy = 2010
-    avon.reporting_scale = 2
     avon_now = SecureStat.find(Company.find(2).secure_now_id)
     avon_cy = SecureStat.find(Company.find(2).secure_cy_id)
     avon_2y = SecureStat.find(Company.find(2).secure_2y_id)
     avon_3y = SecureStat.find(Company.find(2).secure_3y_id)
+    avon_cy.fye = "1/1/2010".to_datetime
     avon_now.gross_sales = 11000000
     avon_now.assets = 8000000
     avon_now.gross_profit = 7000000

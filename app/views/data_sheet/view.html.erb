@@ -5,14 +5,6 @@
 		<td><b>Company: </b></td>
 		<td><%= @company.name %></td>
 	</tr>
-	<tr>
-		<td><b>Reporting Scale: </b></td>
-		<td><%= Company.reporting_scale(@company.reporting_scale) %></td>
-	</tr>
-	<tr>
-		<td><b>CY Equivalent: </b></td>
-		<td><%= @company.cy %></td>
-	</tr>
 </table>
 
 <%= form_for(@company, :url => {:controller=>:data_sheet,:action => :update}) do |f| %>	
@@ -28,6 +20,33 @@
 			<th style="background-color:gold">3Y</th>
 			<th style="background-color:gold">4Y</th>
 			<th style="background-color:gold">5Y</th>
+		</tr>
+		<tr >
+			<td width="25%" style="background-color:gold"><!-- Fiscal Year End: --></td>
+			<td style="background-color:gold"><%= fye_format(@secure_now.updated_at) %></td>
+			<td style="background-color:gold"><%= select(:secure_cy, :fye, fye_options(@secure_cy.fye), :class => "rowform") %></td>
+			<td style="background-color:gold"><%= fye_format(@secure_2y.fye) %></td>
+			<td style="background-color:gold"><%= fye_format(@secure_3y.fye) %></td>
+			<td style="background-color:gold"><%= fye_format(@secure_4y.fye) %></td>
+			<td style="background-color:gold"><%= fye_format(@secure_5y.fye) %></td>
+		</tr>
+		<tr >
+			<td width="25%" style="background-color:gold">Historical Data Quality:</td>
+			<td style="background-color:gold">My Estimate </td>
+			<td style="background-color:gold"><%= select(:secure_cy, :quality, SecureStat.quality_options, :class => "rowform") %></td>
+			<td style="background-color:gold"><%= select(:secure_2y, :quality, SecureStat.quality_options, :class => "rowform") %></td>
+			<td style="background-color:gold"><%= select(:secure_3y, :quality, SecureStat.quality_options, :class => "rowform") %></td>
+			<td style="background-color:gold"><%= select(:secure_4y, :quality, SecureStat.quality_options, :class => "rowform") %></td>
+			<td style="background-color:gold"><%= select(:secure_5y, :quality, SecureStat.quality_options, :class => "rowform") %></td>
+		</tr>
+		<tr >
+			<th width="25%" style="background-color:gold">Reporting Scale:</td>
+			<th style="background-color:gold"><%= select(:secure_now, :reporting_scale, SecureStat.reporting_scale_options) %></th>
+			<th style="background-color:gold"><%= select(:secure_cy, :reporting_scale, SecureStat.reporting_scale_options) %></th>
+			<th style="background-color:gold"><%= select(:secure_2y, :reporting_scale, SecureStat.reporting_scale_options) %></th>
+			<th style="background-color:gold"><%= select(:secure_3y, :reporting_scale, SecureStat.reporting_scale_options) %></th>
+			<th style="background-color:gold"><%= select(:secure_4y, :reporting_scale, SecureStat.reporting_scale_options) %></th>
+			<th style="background-color:gold"><%= select(:secure_5y, :reporting_scale, SecureStat.reporting_scale_options) %></th>
 		</tr>
 		<tr class="goldrow">
 			<td><%= label :secure, "Gross Sales or Revenue:" %></td>

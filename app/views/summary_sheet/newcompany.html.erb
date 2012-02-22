@@ -8,7 +8,7 @@
 		</tr>
 		<tr class="<%= cycle("even", "odd") %>">
 			<td><%= f.label "Reporting Entity:" %></td>
-			<td><%= f.select(:reporting_entity, Company.reporting_entity_options, :include_blank => "Please Select", :class => "rowform") %></td>
+			<td><%= f.select(:combination, Company.combination_options, :include_blank => "Please Select", :class => "rowform") %></td>
 		</tr>
 		<tr class="<%= cycle("even", "odd") %>">
 			<td><%= f.label "Ownership:" %></td>

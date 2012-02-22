@@ -21,28 +21,32 @@ class Company < ActiveRecord::Base
   	secure_5y = SecureStat.new
 	secure_now.company_id = self.id
 	secure_now.year = 0
-	secure_now.reporting_scale = 1
-	secure_now.save
+	secure_now.reporting_scale = 1	
 	secure_cy.company_id = self.id
 	secure_cy.year = 1
-	secure_cy.reporting_scale = 1
-	secure_cy.save
+	secure_cy.reporting_scale = 1	
 	secure_2y.company_id = self.id
 	secure_2y.year = 2
 	secure_2y.reporting_scale = 1
-	secure_2y.save
 	secure_3y.company_id = self.id
 	secure_3y.year = 3
 	secure_3y.reporting_scale = 1
-	secure_3y.save
 	secure_4y.company_id = self.id
 	secure_4y.year = 4
 	secure_4y.reporting_scale = 1
-	secure_4y.save
 	secure_5y.company_id = self.id
 	secure_5y.year = 5
 	secure_5y.reporting_scale = 1
+
+	secure_now.save
+	secure_2y.save
+	secure_3y.save
+	secure_4y.save
 	secure_5y.save
+
+	#saving the cy last to prevent issues
+	secure_cy.save
+
 	self.secure_now_id = secure_now.id
 	self.secure_cy_id = secure_cy.id
 	self.secure_2y_id = secure_2y.id
@@ -99,36 +103,40 @@ class Company < ActiveRecord::Base
   	companies = Company.all
   	for company in companies
   	  cy = SecureStat.find(company.secure_cy)
-  	  if 
-  
-  #define the options for Reporting Entity
-  def self.reporting_entity(r)
-	case r
-	when 1
-		"Combination"
-	when 2
-		"Subsidiary"
-	end
-  end
-  #reporting_entity options in hash form - for use in drop-down menus
-  def self.reporting_entity_options
-  	{Company.reporting_entity(1)=>1,Company.reporting_entity(2)=>2}
+  	  if ((DateTime.now.year-cy.fye.year)*12 + (DateTime.now.month-cy.fye.month)) > Company.max_cy_range
+  	  	company.shift_years
+  	  end
+  	end
   end
 
-  #define the options for Historical Quality
-  def self.quality(q)
-	case q
+  #perform the year shift on the data pieces
+  def shift_years
+  	secure_cy = SecureStat.find(self.secure_cy_id)
+  	secure_2y = SecureStat.find(self.secure_2y_id)
+  	secure_3y = SecureStat.find(self.secure_3y_id)
+  	secure_4y = SecureStat.find(self.secure_4y_id)
+  	secure_5y = SecureStat.find(self.secure_5y_id)
+  	trade_cy = TradeStat.find(self.trade_cy_id)
+  	trade_2y = TradeStat.find(self.trade_2y_id)
+  	trade_3y = TradeStat.find(self.trade_3y_id)
+  	trade_4y = TradeStat.find(self.trade_4y_id)
+  	trade_5y = TradeStat.find(self.trade_5y_id)
+  	
+  	#secure_cy.year = 
+  end
+  
+  #define the options for Reporting Entity
+  def self.combination(r)
+	case r
 	when 1
-		"Audit"
+		"Yes"
 	when 2
-		"Review"
-	when 3
-		"Mgt/Compiled"
+		"No"
 	end
   end
-  #quality options in hash form - for use in drop-down menus
-  def self.quality_options
-  	{Company.quality(1)=>1,Company.quality(2)=>2,Company.quality(3)=>3}
+  #combination options in hash form - for use in drop-down menus
+  def self.combination_options
+  	{Company.combination(1)=>1,Company.combination(2)=>2}
   end
 
   #define the options for Ownership

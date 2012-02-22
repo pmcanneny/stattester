@@ -1,11 +1,8 @@
 #This is the model for the stats that will be shared anonymously for use in 
 # calculating network stats
-class TradeStat < Stat  
-
-  #method that returns the scale as defined in the company data
-  def scale
-  	Company.scale(self.company.reporting_scale)
-  end
+class TradeStat < ActiveRecord::Base
+  belongs_to :company
+  validates_presence_of :company_id
 
   #method takes TradeStat data and returns if it is valid or not to be used in network stats
   def self.valid?(data)
@@ -19,27 +16,27 @@ class TradeStat < Stat
   	#starts with category 1 being less than 1million in sales
   	#ends with catefory 12 being more than 2billion in sales
   	unless base_stats.gross_sales.nil?
-  	  if 	base_stats.gross_sales*self.scale < 1 	*1000000
+  	  if 	base_stats.gross_sales*SecureStat.scale(base_stats.reporting_scale)   < 1 	*1000000
   	    self.revenue_category = 1
-  	  elsif base_stats.gross_sales*self.scale < 5 	*1000000
+  	  elsif base_stats.gross_sales*SecureStat.scale(base_stats.reporting_scale) < 5 	*1000000
   	    self.revenue_category = 2
-  	  elsif base_stats.gross_sales*self.scale < 10	*1000000
+  	  elsif base_stats.gross_sales*SecureStat.scale(base_stats.reporting_scale) < 10	*1000000
   	    self.revenue_category = 3
-  	  elsif base_stats.gross_sales*self.scale < 30	*1000000
+  	  elsif base_stats.gross_sales*SecureStat.scale(base_stats.reporting_scale) < 30	*1000000
   	    self.revenue_category = 4
-  	  elsif base_stats.gross_sales*self.scale < 75	*1000000
+  	  elsif base_stats.gross_sales*SecureStat.scale(base_stats.reporting_scale) < 75	*1000000
   	    self.revenue_category = 5
-  	  elsif base_stats.gross_sales*self.scale < 100 *1000000
+  	  elsif base_stats.gross_sales*SecureStat.scale(base_stats.reporting_scale) < 100 *1000000
   	    self.revenue_category = 6
-  	  elsif base_stats.gross_sales*self.scale < 150 *1000000
+  	  elsif base_stats.gross_sales*SecureStat.scale(base_stats.reporting_scale) < 150 *1000000
   	    self.revenue_category = 7
-  	  elsif base_stats.gross_sales*self.scale < 250 *1000000
+  	  elsif base_stats.gross_sales*SecureStat.scale(base_stats.reporting_scale) < 250 *1000000
   	    self.revenue_category = 8
-  	  elsif base_stats.gross_sales*self.scale < 500 *1000000
+  	  elsif base_stats.gross_sales*SecureStat.scale(base_stats.reporting_scale) < 500 *1000000
   	    self.revenue_category = 9
-  	  elsif base_stats.gross_sales*self.scale < 1000*1000000
+  	  elsif base_stats.gross_sales*SecureStat.scale(base_stats.reporting_scale) < 1000*1000000
   	    self.revenue_category = 10
-  	  elsif base_stats.gross_sales*self.scale < 2000*1000000
+  	  elsif base_stats.gross_sales*SecureStat.scale(base_stats.reporting_scale) < 2000*1000000
   	    self.revenue_category = 11
 	  else
 	    self.revenue_category = 12
@@ -50,27 +47,27 @@ class TradeStat < Stat
   	#starts with category 1 being less than 1million in assets
   	#ends with catefory 12 being more than 2billion in assets
 	unless base_stats.assets.nil?
-  	  if 	base_stats.assets*self.scale < 1   *1000000
+  	  if 	base_stats.assets*SecureStat.scale(base_stats.reporting_scale)   < 1   *1000000
   	    self.asset_category = 1
-  	  elsif base_stats.assets*self.scale < 5   *1000000
+  	  elsif base_stats.assets*SecureStat.scale(base_stats.reporting_scale) < 5   *1000000
   	    self.asset_category = 2
-  	  elsif base_stats.assets*self.scale < 10  *1000000
+  	  elsif base_stats.assets*SecureStat.scale(base_stats.reporting_scale) < 10  *1000000
   	    self.asset_category = 3
-  	  elsif base_stats.assets*self.scale < 30  *1000000
+  	  elsif base_stats.assets*SecureStat.scale(base_stats.reporting_scale) < 30  *1000000
   	    self.asset_category = 4
-  	  elsif base_stats.assets*self.scale < 75  *1000000
+  	  elsif base_stats.assets*SecureStat.scale(base_stats.reporting_scale) < 75  *1000000
   	    self.asset_category = 5
-  	  elsif base_stats.assets*self.scale < 100 *1000000
+  	  elsif base_stats.assets*SecureStat.scale(base_stats.reporting_scale) < 100 *1000000
   	    self.asset_category = 6
-  	  elsif base_stats.assets*self.scale < 150 *1000000
+  	  elsif base_stats.assets*SecureStat.scale(base_stats.reporting_scale) < 150 *1000000
   	    self.asset_category = 7
-  	  elsif base_stats.assets*self.scale < 250 *1000000
+  	  elsif base_stats.assets*SecureStat.scale(base_stats.reporting_scale) < 250 *1000000
   	    self.asset_category = 8
-  	  elsif base_stats.assets*self.scale < 500 *1000000
+  	  elsif base_stats.assets*SecureStat.scale(base_stats.reporting_scale) < 500 *1000000
   	    self.asset_category = 9
-  	  elsif base_stats.assets*self.scale < 1000*1000000
+  	  elsif base_stats.assets*SecureStat.scale(base_stats.reporting_scale) < 1000*1000000
   	    self.asset_category = 10
-  	  elsif base_stats.assets*self.scale < 2000*1000000
+  	  elsif base_stats.assets*SecureStat.scale(base_stats.reporting_scale) < 2000*1000000
   	    self.asset_category = 11
 	  else
 	    self.asset_category = 12
