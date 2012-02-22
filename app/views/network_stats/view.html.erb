@@ -1,4 +1,81 @@
 <h1>Network Stats</h1>
+<div class="netfilter">
+<div class="netstats">
+<table class="nettable">
+	<tr class="greyrow" >
+		<td style="text-align:center">Recommended Filter</td>
+	</tr>
+</table>
+<table class="nettable">
+	<tr class="greyrow" >
+		<td>SIC Range:</td>
+		<td>Any</td>
+	</tr>
+	<tr class="greyrow" >
+		<td>Ownership:</td>
+		<td>Any</td>
+	</tr>
+	<tr class="greyrow" >
+		<td>Combination:</td>
+		<td>Any</td>
+	</tr>
+	<tr class="greyrow" >
+		<td>Country:</td>
+		<td>Any</td>
+	</tr>
+	<tr class="greyrow" >
+		<td>Region:</td>
+		<td>Any</td>
+	</tr>
+	<tr class="greyrow" >
+		<td>Historical Quality:</td>
+		<td>Any</td>
+	</tr>
+</table>
+</div>
+
+<div class="netstats">
+<table class="nettable">
+	<tr class="bluerow">
+		<td style="text-align:center">Current Filter</td>
+	</tr>
+</table>
+<form accept-charset="UTF-8" action="/network_stats/filter" method="post">
+	<table class="nettable">
+		<tr class="bluerow">
+			<td>SIC Range:</td>
+			<td>Any</td>
+		</tr>
+		<tr class="bluerow">
+			<td>Ownership:</td>
+			<td><%= select(:filter, :ownership, StatFilter.ownership_options) %></td>
+		</tr>
+		<tr class="bluerow">
+			<td>Combination:</td>
+			<td><%= select(:filter, :combination, StatFilter.combination_options) %></td>
+		</tr>
+		<tr class="bluerow">
+			<td>Country:</td>
+			<td><%= select(:filter, :country, StatFilter.country_options) %></td>
+		</tr>
+		<tr class="bluerow">
+			<td>Region:</td>
+			<td><%= select(:filter, :region, StatFilter.region_options) %></td>
+		</tr>
+		<tr class="bluerow">
+			<td>Historical Quality:</td>
+			<td><%= select(:filter, :quality, StatFilter.quality_options) %></td>
+		</tr>
+	</table>
+
+	<%= hidden_field(:company, :id) %>
+	<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+	<input name="commit" type="submit" value="Apply Filter" />
+ </form>
+ </div>
+ </div>
+
+<div class="netdiv">
 <div class="netstats">
 <table class="nettable">
 	<tr class="greyrow" >
@@ -215,6 +292,7 @@
 		<td><%= @trade_5y.debt_multiple %></td> -->
 	</tr>
 </table>
+</div>
 </div>
 <br>
 <div>

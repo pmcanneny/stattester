@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_secure_password
   has_many :companies
+  has_many :stat_filters
 
   validates_presence_of :password
   validates_presence_of :email

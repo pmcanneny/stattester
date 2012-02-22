@@ -14,14 +14,14 @@
 ActiveRecord::Schema.define(:version => 20120131174501) do
 
   create_table "companies", :force => true do |t|
-    t.string   "name",                             :null => false
-    t.integer  "user_id",                          :null => false
-    t.integer  "combination",   :default => 2
+    t.string   "name",                                 :null => false
+    t.integer  "user_id",                              :null => false
+    t.integer  "combination",       :default => 2
     t.integer  "ownership"
     t.integer  "sic"
-    t.integer  "country"
+    t.integer  "country",           :default => 1
     t.integer  "region"
-    t.boolean  "shifted",       :default => false
+    t.boolean  "shifted",           :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "secure_now_id"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20120131174501) do
     t.integer  "trade_3y_id"
     t.integer  "trade_4y_id"
     t.integer  "trade_5y_id"
+    t.integer  "default_filter_id"
   end
 
   create_table "secure_stats", :force => true do |t|
@@ -54,6 +55,25 @@ ActiveRecord::Schema.define(:version => 20120131174501) do
     t.integer  "quality"
     t.integer  "year"
     t.datetime "fye"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stat_filters", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "combination"
+    t.integer  "ownership"
+    t.integer  "sic_low"
+    t.integer  "sic_high"
+    t.integer  "country"
+    t.integer  "region"
+    t.integer  "revenue_low"
+    t.integer  "revenue_high"
+    t.integer  "asset_low"
+    t.integer  "asset_high"
+    t.integer  "input_basis"
+    t.integer  "quality"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -49,6 +49,12 @@ class DataSheetController < ApplicationController
     	@trade_3y = TradeStat.find(@company.trade_3y_id)
     	@trade_4y = TradeStat.find(@company.trade_4y_id)
     	@trade_5y = TradeStat.find(@company.trade_5y_id)
+    	#set the cy fye param for use in update command below
+    	unless params[:secure_cy][:fye].to_i == 0
+    	  params[:secure_cy][:fye] = DateTime.now-params[:secure_cy][:fye].to_i.months
+    	else
+    	  params[:secure_cy][:fye] = @secure_cy.fye
+    	end
     	#update the securestats transactionally
     	SecureStat.transaction do #todo: test this
     	  @secure_now.update_attributes(params[:secure_now])

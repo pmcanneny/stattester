@@ -20,6 +20,14 @@
 }
 .netstats {
 	float:left;
+
+}
+.netdiv {
+	margin:auto;
+
+}
+.netfilter {
+
 }
 .nettable table, tr {
 	height:35px;

@@ -19,7 +19,7 @@ class InitialMigration < ActiveRecord::Migration
       t.integer :combination, :precision => 1, :default => 2 #1=yes 2=no
       t.integer :ownership, :precision => 1 #public, private investor, or private operator
       t.integer :sic, :precision => 4 #sic codes are up to 4 digits
-      t.integer :country, :precision => 3 #about 200 countries in the world
+      t.integer :country, :precision => 3, :default => 1 #about 200 countries in the world
       t.integer :region, :precision => 1 #there are arguably 9 regions in the US
       t.boolean :shifted, :default => false #has this company's data been year-shifted?
       t.timestamps
@@ -37,11 +37,32 @@ class InitialMigration < ActiveRecord::Migration
       t.references "trade_3y"
       t.references "trade_4y"
       t.references "trade_5y"
+      #reference the default stat filter
+      t.references :default_filter
     end
 
     #
     #Precision is the total number of digits, scale is the number digits after the decimal point.
     #
+
+    #stat_filter table as defined in stat_filter.rb
+    create_table :stat_filters do |t|
+      t.string :name
+      t.references :user #company default filters will not have an associated user
+      t.integer :combination, :precision => 1
+      t.integer :ownership, :precision => 1 #public, private investor, or private operator
+      t.integer :sic_low, :precision => 4 #sic codes are up to 4 digits
+      t.integer :sic_high, :precision => 4 #sic codes are up to 4 digits
+      t.integer :country, :precision => 3 #about 200 countries in the world
+      t.integer :region, :precision => 1 #there are arguably 9 regions in the US
+      t.integer :revenue_low, :precision => 2
+      t.integer :revenue_high, :precision => 2
+      t.integer :asset_low, :precision => 2
+      t.integer :asset_high, :precision => 2
+      t.integer :input_basis, :precision => 1 #"transaction based" or "my estimate"
+      t.integer :quality, :precision => 1 #audit, review, or "mgt/compiled"
+      t.timestamps
+    end
 
     #secure_stats table as defined in the secure_stat.rb model
     create_table :secure_stats do |t|
@@ -101,25 +122,25 @@ class InitialMigration < ActiveRecord::Migration
     #Avon - 2
     Company.create :name => "Avon", :user_id => 1
     #Bare Essentials - 3
-    Company.create :name => "Bare Essentials", :user_id => 2
-    #China green creative - 4
-    Company.create :name => "China Green creative", :user_id => 1
-    #Colgate Palmolive - 5
-    Company.create :name => "Colgate Palmolive", :user_id => 1
-    #Divine Skin - 6 
-    Company.create :name => "Divine Skin", :user_id => 1
-    #Elizabeth Arden - 7
-    Company.create :name => "Elizabeth Arden", :user_id => 1
-    #Estee Lauder - 8
-    Company.create :name => "Estee Lauder", :user_id => 1
-    #Human Phermone Sciences - 9
-    Company.create :name => "Human Phermone Sciences", :user_id => 1
-    #OmniReliant Holdings - 10
-    Company.create :name => "OmniReliant Holdings", :user_id => 1
-    #Inter Parfums - 11
-    Company.create :name => "Inter Parfums", :user_id => 1
-    #Parlux Fragrances - 12
-    Company.create :name => "Parlux Fragrances", :user_id => 1
+    # Company.create :name => "Bare Essentials", :user_id => 2
+    # #China green creative - 4
+    # Company.create :name => "China Green creative", :user_id => 1
+    # #Colgate Palmolive - 5
+    # Company.create :name => "Colgate Palmolive", :user_id => 1
+    # #Divine Skin - 6 
+    # Company.create :name => "Divine Skin", :user_id => 1
+    # #Elizabeth Arden - 7
+    # Company.create :name => "Elizabeth Arden", :user_id => 1
+    # #Estee Lauder - 8
+    # Company.create :name => "Estee Lauder", :user_id => 1
+    # #Human Phermone Sciences - 9
+    # Company.create :name => "Human Phermone Sciences", :user_id => 1
+    # #OmniReliant Holdings - 10
+    # Company.create :name => "OmniReliant Holdings", :user_id => 1
+    # #Inter Parfums - 11
+    # Company.create :name => "Inter Parfums", :user_id => 1
+    # #Parlux Fragrances - 12
+    # Company.create :name => "Parlux Fragrances", :user_id => 1
     #
     
 
@@ -234,6 +255,7 @@ class InitialMigration < ActiveRecord::Migration
     drop_table :companies
     drop_table :trade_stats
     drop_table :secure_stats
+    drop_table :stat_filters
 
 
   end

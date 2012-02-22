@@ -9,22 +9,38 @@ class NetworkStatsController < ApplicationController
     redirect_to summary_sheet_url, :notice => "Page not found."
   end
   
+  #simply update the company's default filter and redirect to the view network stats page
+  def filter
+    @company = Company.find(params[:company][:id])
+    #verify that the logged-in user is authorized to see this page
+    authorize_user(@company.user_id)
+
+    @filter = StatFilter.find(@company.default_filter_id)
+    @filter.update_attributes(params[:filter])
+
+    redirect_to :action => :view, :id =>@company.id
+  end
+
   #this is the main action of the network stats page
   def view
     @company = Company.find(params[:id])
     #verify that the logged-in user is authorized to see this page
     authorize_user(@company.user_id)
+
+    #get the company's default stat filter
+    @filter = StatFilter.find(@company.default_filter_id)
+
     #gather the company's trade data
-	@trade_now = TradeStat.find(@company.trade_now_id)
-	@trade_cy = TradeStat.find(@company.trade_cy_id)
-	@trade_2y = TradeStat.find(@company.trade_2y_id)
-	@trade_3y = TradeStat.find(@company.trade_3y_id)
-	@trade_4y = TradeStat.find(@company.trade_4y_id)
-	@trade_5y = TradeStat.find(@company.trade_5y_id)
+	  @trade_now = TradeStat.find(@company.trade_now_id)
+  	@trade_cy = TradeStat.find(@company.trade_cy_id)
+  	@trade_2y = TradeStat.find(@company.trade_2y_id)
+  	@trade_3y = TradeStat.find(@company.trade_3y_id)
+  	@trade_4y = TradeStat.find(@company.trade_4y_id)
+  	@trade_5y = TradeStat.find(@company.trade_5y_id)
 
     #gather the companies that the filter applies to
     companies = Company.all
-    sample_size = 2.to_f #companies.size.to_f
+    sample_size = companies.size.to_f
 
     #TODO: this logic can be shortened and somewhat encapsulated into a class
     #initialize all these variables to zero

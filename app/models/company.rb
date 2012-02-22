@@ -86,15 +86,23 @@ class Company < ActiveRecord::Base
 	self.trade_4y_id = trade_4y.id
 	self.trade_5y_id = trade_5y.id
 
-	self.save  	
-  end
+	#initialize the default filter
+	filter = StatFilter.new
+	filter.country = 0
+	filter.region = 0
+	filter.revenue_low = 0
+	filter.revenue_high = 0
+	filter.asset_low = 0
+	filter.asset_high = 0
+	filter.sic_low = 0
+	filter.sic_high = 0
+	filter.combination = 0
+	filter.ownership = 0
+	filter.input_basis = 0
+	filter.save
+	self.default_filter_id = filter.id
 
-  #apply default values before saving
-  before_save do
-  	#country default to 1
-  	if self.country.nil?
-  	  self.country = 1
-  	end
+	self.save  	
   end
 
   #the method through which the year shift update is checked and applied
