@@ -144,7 +144,7 @@ div.lognbox{
 div.log1{
 	text-align:right;
 	float: right;
-	width = 150px;
+	width: 150px;
 	clear: none;
 }
 div.log2{
