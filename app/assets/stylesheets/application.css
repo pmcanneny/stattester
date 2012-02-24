@@ -12,6 +12,9 @@
 .goldrow td, th{
 	background-color:gold
 }
+.goldrow input{
+	text-align:right;
+}
 .greyrow td, th{
 	background-color:lightgrey
 }

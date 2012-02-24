@@ -39,8 +39,8 @@ class NetworkStatsController < ApplicationController
   	@trade_5y = TradeStat.find(@company.trade_5y_id)
 
     #gather the companies that the filter applies to
-    companies = Company.all
-    sample_size = companies.size.to_f
+    companies = Company.where((@filter.region==0 ? "" : "region = #{@filter.region}"))
+    @sample_size = companies.size.to_f
 
     #TODO: this logic can be shortened and somewhat encapsulated into a class
     #initialize all these variables to zero
@@ -135,47 +135,46 @@ class NetworkStatsController < ApplicationController
   	end
 
   	#divide all the stats by the sample size to get the average
-  	@now_revenue_category/=sample_size
-    @now_asset_category/=sample_size
-    @now_sales_growth/=sample_size
-    @now_gross_profit_margin/=sample_size
-    @now_operating_profit_margin/=sample_size
-    @now_ebitda_percent/=sample_size
-    @now_enterprise_multiple/=sample_size
-    @now_ebitda_multiple/=sample_size
-    @now_sales_multiple/=sample_size
-    @now_debt_multiple/=sample_size
-    @cy_revenue_category/=sample_size
-    @cy_asset_category/=sample_size
-    @cy_sales_growth/=sample_size
-    @cy_gross_profit_margin/=sample_size
-    @cy_operating_profit_margin/=sample_size
-    @cy_ebitda_percent/=sample_size
-    @cy_enterprise_multiple/=sample_size
-    @cy_ebitda_multiple/=sample_size
-    @cy_sales_multiple/=sample_size
-    @cy_debt_multiple/=sample_size
-    @y2_revenue_category/=sample_size
-    @y2_asset_category/=sample_size
-    @y2_sales_growth/=sample_size
-    @y2_gross_profit_margin/=sample_size
-    @y2_operating_profit_margin/=sample_size
-    @y2_ebitda_percent/=sample_size
-    @y2_enterprise_multiple/=sample_size
-    @y2_ebitda_multiple/=sample_size
-    @y2_sales_multiple/=sample_size
-    @y2_debt_multiple/=sample_size
-    @y3_revenue_category/=sample_size
-    @y3_asset_category/=sample_size
-    @y3_sales_growth/=sample_size
-    @y3_gross_profit_margin/=sample_size
-    @y3_operating_profit_margin/=sample_size
-    @y3_ebitda_percent/=sample_size
-    @y3_enterprise_multiple/=sample_size
-    @y3_ebitda_multiple/=sample_size
-    @y3_sales_multiple/=sample_size
-    @y3_debt_multiple/=sample_size
-
+  	@now_revenue_category/=@sample_size
+    @now_asset_category/=@sample_size
+    @now_sales_growth/=@sample_size
+    @now_gross_profit_margin/=@sample_size
+    @now_operating_profit_margin/=@sample_size
+    @now_ebitda_percent/=@sample_size
+    @now_enterprise_multiple/=@sample_size
+    @now_ebitda_multiple/=@sample_size
+    @now_sales_multiple/=@sample_size
+    @now_debt_multiple/=@sample_size
+    @cy_revenue_category/=@sample_size
+    @cy_asset_category/=@sample_size
+    @cy_sales_growth/=@sample_size
+    @cy_gross_profit_margin/=@sample_size
+    @cy_operating_profit_margin/=@sample_size
+    @cy_ebitda_percent/=@sample_size
+    @cy_enterprise_multiple/=@sample_size
+    @cy_ebitda_multiple/=@sample_size
+    @cy_sales_multiple/=@sample_size
+    @cy_debt_multiple/=@sample_size
+    @y2_revenue_category/=@sample_size
+    @y2_asset_category/=@sample_size
+    @y2_sales_growth/=@sample_size
+    @y2_gross_profit_margin/=@sample_size
+    @y2_operating_profit_margin/=@sample_size
+    @y2_ebitda_percent/=@sample_size
+    @y2_enterprise_multiple/=@sample_size
+    @y2_ebitda_multiple/=@sample_size
+    @y2_sales_multiple/=@sample_size
+    @y2_debt_multiple/=@sample_size
+    @y3_revenue_category/=@sample_size
+    @y3_asset_category/=@sample_size
+    @y3_sales_growth/=@sample_size
+    @y3_gross_profit_margin/=@sample_size
+    @y3_operating_profit_margin/=@sample_size
+    @y3_ebitda_percent/=@sample_size
+    @y3_enterprise_multiple/=@sample_size
+    @y3_ebitda_multiple/=@sample_size
+    @y3_sales_multiple/=@sample_size
+    @y3_debt_multiple/=@sample_size
 
 
   end
