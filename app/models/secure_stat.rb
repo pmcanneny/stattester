@@ -57,13 +57,13 @@ class SecureStat < ActiveRecord::Base
   def self.reporting_scale(s)
     case s
     when 1
-      "Dollars"
+      "$0" #dollars
     when 2
-      "Thousands of Dollars"
+      "$000" #thousands of dollars
     when 3
-      "Millions of Dollars"
+      "$000000" #millions of dollars
     when 4
-      "Billions of Dollars"
+      "$000000000" #billions of dollars
     end
   end
   #define the scale - for use in calculations

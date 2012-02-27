@@ -8,12 +8,12 @@
 </table>
 
 <%= form_for(@company, :url => {:controller=>:data_sheet,:action => :update}) do |f| %>	
-	<table width="100%">
+	<table >
 		<tr class="goldrow">
 			<td style="text-align:center">Confidential Data</td>
 		</tr>
 		<tr >
-			<th width="25%" style="background-color:gold"></th>
+			<th  style="background-color:gold"></th>
 			<th style="background-color:gold">Now</th>
 			<th style="background-color:gold">CY</th>
 			<th style="background-color:gold">2Y</th>
@@ -22,7 +22,7 @@
 			<th style="background-color:gold">5Y</th>
 		</tr>
 		<tr >
-			<td width="25%" style="background-color:gold"><!-- Fiscal Year End: --></td>
+			<td  style="background-color:gold"><!-- Fiscal Year End: --></td>
 			<td style="background-color:gold"><%= fye_format(@secure_now.updated_at) %></td>
 			<td style="background-color:gold"><%= select(:secure_cy, :fye, fye_options(@secure_cy.fye)) %></td>
 			<td style="background-color:gold"><%= fye_format(@secure_2y.fye) %></td>
@@ -31,7 +31,7 @@
 			<td style="background-color:gold"><%= fye_format(@secure_5y.fye) %></td>
 		</tr>
 		<tr >
-			<td width="25%" style="background-color:gold">Historical Data Quality:</td>
+			<td  style="background-color:gold">Historical Data Quality:</td>
 			<td style="background-color:gold">My Estimate </td>
 			<td style="background-color:gold"><%= select(:secure_cy, :quality, SecureStat.quality_options) %></td>
 			<td style="background-color:gold"><%= select(:secure_2y, :quality, SecureStat.quality_options) %></td>

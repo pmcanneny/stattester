@@ -39,7 +39,11 @@ class NetworkStatsController < ApplicationController
   	@trade_5y = TradeStat.find(@company.trade_5y_id)
 
     #gather the companies that the filter applies to
-    companies = Company.where((@filter.region==0 ? "" : "region = #{@filter.region}"))
+    companies = Company.where(
+      @filter.region==0 ? "" : "region = #{@filter.region}").where(
+      @filter.country==0 ? "" : "country = #{@filter.country}").where(
+      @filter.ownership==0 ? "" : "ownership = #{@filter.ownership}").where(
+      @filter.combination==0 ? "" : "combination = #{@filter.combination}")
     @sample_size = companies.size.to_f
 
     #TODO: this logic can be shortened and somewhat encapsulated into a class
