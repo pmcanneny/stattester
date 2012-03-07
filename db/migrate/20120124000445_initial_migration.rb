@@ -8,7 +8,9 @@ class InitialMigration < ActiveRecord::Migration
     create_table :users do |t|
       t.string :email, :null => false
       t.string :password_digest, :null => false
-      #todo: add email confirmation
+      t.boolean :activated, :defailt => false #email activation/confirmation
+      t.integer :activation_code
+      
       t.timestamps
     end
 
@@ -113,8 +115,8 @@ class InitialMigration < ActiveRecord::Migration
     ##########testing section##########
 
     #create user for testing
-    User.create :email => "123", :password => "123"
-    User.create :email => "1234", :password => "123"
+    User.create :email => "stat1@stattrader.com", :password => "1234", :activated => true
+    User.create :email => "stat2@stattrader.com", :password => "1234", :activated => true
 
     #create some companies for the test user
     #Alberto Culver - 1

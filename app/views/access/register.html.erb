@@ -6,7 +6,6 @@
   
   <%= show_notice(notice) %>
   <% if notice.nil? %>
-  <br><br><br>
   <% end %>
 
    <% if @user.errors.any? %>
@@ -20,17 +19,26 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
-  </div>
-  <div class="actions"><%= f.submit %></div>
+  <table>
+    <tr>
+      <td>Your Email Address</td>
+      <td><%= f.text_field :email %></td>
+    </tr>
+    <tr>
+      <td>Confirm Email Address</td>
+      <td><%= f.text_field :email_confirmation %></td>
+    </tr>
+    <tr>
+      <td>Password</td>
+      <td><%= f.password_field :password %></td>
+    </tr>
+    <tr>
+      <td>Confirm Password</td>
+      <td><%= f.password_field :password_confirmation %></td>
+    </tr>
+    <tr>
+      <td><%= f.submit %></td><td><%= link_to 'Cancel', summary_sheet_url %></td>
+    </tr>
+  </table>
+  
 <% end %>

@@ -55,6 +55,13 @@ class DataSheetController < ApplicationController
     	else
     	  params[:secure_cy][:fye] = @secure_cy.fye
     	end
+    	#set the reporting scales for use (changing the cy reporting scale changes them all)
+    	params[:secure_now][:reporting_scale] = params[:secure_cy][:reporting_scale]
+    	params[:secure_2y][:reporting_scale] = params[:secure_cy][:reporting_scale]
+    	params[:secure_3y][:reporting_scale] = params[:secure_cy][:reporting_scale]
+    	params[:secure_4y][:reporting_scale] = params[:secure_cy][:reporting_scale]
+    	params[:secure_5y][:reporting_scale] = params[:secure_cy][:reporting_scale]
+
     	#update the securestats transactionally
     	SecureStat.transaction do #todo: test this
     	  @secure_now.update_attributes(params[:secure_now])

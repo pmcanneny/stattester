@@ -31,13 +31,19 @@ class AccessController < ApplicationController
   #The login action
   def login
   	user = User.find_by_email(params[:email])
-   	  if user && user.authenticate(params[:password])
-    	session[:user_id] = user.id
-    	redirect_to root_url, :notice => "Logged in!"
-  	  else
+
+   	if user && user.authenticate(params[:password])
+      if user.activated
+    	 session[:user_id] = user.id
+    	 redirect_to root_url, :notice => "Logged in!"
+      else
+        #user has not activated account via email yet
+        redirect_to :action => :please_activate, :id => user.id
+      end
+  	else
     	# flash.now.alert = "Invalid email or password"
     	# render "index"
-    	redirect_to root_url, :notice => "Invalid email or password"
+    	redirect_to root_url, :notice => "Invalid email or password."
   	end
   end
 
@@ -45,6 +51,36 @@ class AccessController < ApplicationController
   def logout
   	session[:user_id] = nil
   	redirect_to root_url, :notice => "Logged out!"
+  end
+  
+  #user has not activated via email yet
+  def please_activate
+    @user = User.find(params[:id])
+    if @user.nil?
+      redirect_to root_url, :notice => "Access Denied."
+    elsif @user.activated
+      redirect_to root_url, :notice => "Email already verified."
+    else
+      UserMailer.activation_email(@user).deliver
+    end
+  end
+
+  def activate
+    user = User.find(params[:id])
+    code = params[:code]
+    if user.nil? or code.nil?
+      redirect_to root_url, :notice => "Invalid Request"
+    elsif user.activated
+      redirect_to root_url, :notice => "Account has alread been activated"
+    else
+      if user.activate(code)
+        #success
+        redirect_to root_url, :notice => "Account Activated!"
+      else
+        #failure
+        redirect_to root_url, :notice => "Invalid activation code."
+      end
+    end
   end
 
 

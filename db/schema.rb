@@ -101,6 +101,8 @@ ActiveRecord::Schema.define(:version => 20120131174501) do
   create_table "users", :force => true do |t|
     t.string   "email",           :null => false
     t.string   "password_digest", :null => false
+    t.boolean  "activated"
+    t.integer  "activation_code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

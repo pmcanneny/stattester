@@ -6,6 +6,9 @@ Stattrader2::Application.routes.draw do
   resources :companies
 
   match 'summary_sheet' => 'summary_sheet#index'
+
+  #for use with the email activation link
+  match "/activate/:id/:code" => "access#activate"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

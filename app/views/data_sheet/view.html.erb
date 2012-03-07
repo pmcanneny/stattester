@@ -40,22 +40,13 @@
 			<td style="background-color:gold"><%= select(:secure_5y, :quality, SecureStat.quality_options) %></td>
 		</tr>
 		<tr >
-			<th width="25%" style="background-color:gold">Reporting Scale:</td>
-			<th style="background-color:gold"><%= select(:secure_now, :reporting_scale, SecureStat.reporting_scale_options) %></th>
-			<th style="background-color:gold"><%= select(:secure_cy, :reporting_scale, SecureStat.reporting_scale_options) %></th>
-			<th style="background-color:gold"><%= select(:secure_2y, :reporting_scale, SecureStat.reporting_scale_options) %></th>
-			<th style="background-color:gold"><%= select(:secure_3y, :reporting_scale, SecureStat.reporting_scale_options) %></th>
-			<th style="background-color:gold"><%= select(:secure_4y, :reporting_scale, SecureStat.reporting_scale_options) %></th>
-			<th style="background-color:gold"><%= select(:secure_5y, :reporting_scale, SecureStat.reporting_scale_options) %></th>
-		</tr>
-		<tr class="goldrow">
-			<td><%= label :secure, "Gross Sales or Revenue:" %></td>
-			<td><%= number_field :secure_now, :gross_sales %></td>
-			<td><%= number_field :secure_cy, :gross_sales %></td>
-			<td><%= number_field :secure_2y, :gross_sales %></td>
-			<td><%= number_field :secure_3y, :gross_sales %></td>
-			<td><%= number_field :secure_4y, :gross_sales %></td>
-			<td><%= number_field :secure_5y, :gross_sales %></td>			
+			<td  style="background-color:gold">Reporting Scale:</td>
+			<td style="background-color:gold"><%= SecureStat.reporting_scale(@secure_now.reporting_scale) %></th>
+			<td style="background-color:gold"><%= select(:secure_cy, :reporting_scale, SecureStat.reporting_scale_options) %></th>
+			<td style="background-color:gold"><%= SecureStat.reporting_scale(@secure_2y.reporting_scale) %></th>
+			<td style="background-color:gold"><%= SecureStat.reporting_scale(@secure_3y.reporting_scale) %></th>
+			<td style="background-color:gold"><%= SecureStat.reporting_scale(@secure_4y.reporting_scale) %></th>
+			<td style="background-color:gold"><%= SecureStat.reporting_scale(@secure_5y.reporting_scale) %></th>
 		</tr>
 		<tr class="goldrow">
 			<td><%= label :secure, "Assets:" %></td>
@@ -65,6 +56,15 @@
 			<td><%= number_field :secure_3y, :assets %></td>
 			<td><%= number_field :secure_4y, :assets %></td>
 			<td><%= number_field :secure_5y, :assets %></td>			
+		</tr>
+		<tr class="goldrow">
+			<td><%= label :secure, "Revenue:" %></td>
+			<td><%= number_field :secure_now, :gross_sales %></td>
+			<td><%= number_field :secure_cy, :gross_sales %></td>
+			<td><%= number_field :secure_2y, :gross_sales %></td>
+			<td><%= number_field :secure_3y, :gross_sales %></td>
+			<td><%= number_field :secure_4y, :gross_sales %></td>
+			<td><%= number_field :secure_5y, :gross_sales %></td>			
 		</tr>
 		<tr class="goldrow">
 			<td><%= label :secure, "Gross Profit:" %></td>
@@ -156,15 +156,6 @@
 			<th style="background-color:lightgrey">5Y</th>
 		</tr>
 		<tr class="greyrow">
-			<td><%= label :trade, "Revenue Category:" %></td>
-			<td><%= @trade_now.revenue_category %></td>
-			<td><%= @trade_cy.revenue_category %></td>
-			<td><%= @trade_2y.revenue_category %></td>
-			<td><%= @trade_3y.revenue_category %></td>
-			<td><%= @trade_4y.revenue_category %></td>
-			<td><%= @trade_5y.revenue_category %></td>
-		</tr>
-		<tr class="greyrow">
 			<td><%= label :trade, "Asset Category:" %></td>
 			<td><%= @trade_now.asset_category %></td>
 			<td><%= @trade_cy.asset_category %></td>
@@ -172,6 +163,15 @@
 			<td><%= @trade_3y.asset_category %></td>
 			<td><%= @trade_4y.asset_category %></td>
 			<td><%= @trade_5y.asset_category %></td>
+		</tr>
+		<tr class="greyrow">
+			<td><%= label :trade, "Revenue Category:" %></td>
+			<td><%= @trade_now.revenue_category %></td>
+			<td><%= @trade_cy.revenue_category %></td>
+			<td><%= @trade_2y.revenue_category %></td>
+			<td><%= @trade_3y.revenue_category %></td>
+			<td><%= @trade_4y.revenue_category %></td>
+			<td><%= @trade_5y.revenue_category %></td>
 		</tr>
 		<tr class="greyrow">
 			<td><%= label :trade, "Sales/Revenue Growth:" %></td>
