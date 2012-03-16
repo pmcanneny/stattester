@@ -2,7 +2,7 @@
 #also for controlling user access
 class AccessController < ApplicationController
 
-  layout 'login'
+  layout :resolve_layout
 
   #The login page
   #If a user already is logged in, redirect to the Sumary Sheet
@@ -23,7 +23,7 @@ class AccessController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      redirect_to root_url, :notice => "Signed up!"
+      redirect_to :action => :please_activate, :id => @user.id  #,:notice => "Account Created. Please activate via email confirmation."
     else
       render "register"
     end
@@ -89,6 +89,24 @@ class AccessController < ApplicationController
   #   @company = Company.find(params[:id])
   #   render "exportcompany.xml.erb" #=> @company.to_xml
   # end
+
+  def debug
+    @companies = Company.all
+    @users = User.all
+  end
+
+
+  private 
+
+  #conditional to determine layout
+  def resolve_layout
+    case action_name
+    when "please_activate"
+      nil
+    else
+      "login"
+    end
+  end
 
 
 end

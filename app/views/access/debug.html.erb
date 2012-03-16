@@ -1,0 +1,22 @@
+<h2>All Companies</h2>
+<table>
+  <% for company in @companies %>  
+    <tr class="<%= cycle("even", "odd") %>">  
+      <td ><font face ="Lucida Console"><%= company.name %></font></td>    
+      <td><%= company.updated_at.strftime("%m-%d-%Y") %></td> 
+    </tr>  
+  <% end %>  
+</table>
+
+<br><br>
+
+<h2>All Users</h2>
+<table>
+  <% for user in @users %>  
+    <tr class="<%= cycle("even", "odd") %>">  
+      <td ><font face ="Lucida Console"><%= user.email %></font></td>    
+      <td><%= user.updated_at.strftime("%m-%d-%Y") %></td>
+      <td><%= user.activated ? "Activated" : "Not Activated" %></td>
+    </tr>  
+  <% end %>  
+</table>

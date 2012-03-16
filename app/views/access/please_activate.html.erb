@@ -1,3 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>StatTrader Prototype</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+
+  
+<script type="text/javascript">
+<!--
+function delayer(){
+    window.location = "<%= root_url %>"
+}
+//-->
+</script>
+</head>
+<body onLoad="setTimeout('delayer()', 15000)">
+
+
 <img src="\img\stattrader-logo.jpg" style="position:relative; left:11px">
 <%= show_notice(notice) %>
 <% if notice.nil? %>
@@ -9,3 +29,6 @@ Thanks for signing up for StatTrader!
 <br><br>
 To verify your email, we have sent an email to <%= @user.email %> containing an activation link. Please click the link to activate your account.
 </center>
+
+</body>
+</html>

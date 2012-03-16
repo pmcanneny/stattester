@@ -9,6 +9,9 @@ Stattrader2::Application.routes.draw do
 
   #for use with the email activation link
   match "/activate/:id/:code" => "access#activate"
+
+  #for use with debug page
+  match "/debug" => "access#debug"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

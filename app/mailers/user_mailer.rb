@@ -3,7 +3,7 @@ class UserMailer < ActionMailer::Base
 
   def activation_email(user)
   	@user= user
-  	@url = "http://stattrader.com/activate/#{@user.id}/#{@user.activation_code}"
+  	@url = "http://app.stattrader.com/activate/#{@user.id}/#{@user.activation_code}"
   	mail(:to => user.email, :subject => "StatTrader Activation")
   end
 
