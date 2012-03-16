@@ -20,6 +20,20 @@ Stattrader2::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  #action mailer config
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+  :address              => "smtp.gmail.com",
+  :port                 => 587,
+  :domain               => 'StatTrader.com',
+  :user_name            => 'noreply@stattrader.com',
+  :password             => 'stat4359',
+  :authentication       => 'plain',
+  :enable_starttls_auto => true  }
+
+  # Don't care if the mailer can't send
+  config.action_mailer.raise_delivery_errors = false
+
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
 
