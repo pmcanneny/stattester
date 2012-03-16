@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131174501) do
+ActiveRecord::Schema.define(:version => 20120316041507) do
 
   create_table "companies", :force => true do |t|
     t.string   "name",                                 :null => false
@@ -101,10 +101,10 @@ ActiveRecord::Schema.define(:version => 20120131174501) do
   create_table "users", :force => true do |t|
     t.string   "email",           :null => false
     t.string   "password_digest", :null => false
-    t.boolean  "activated"
-    t.integer  "activation_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "activated"
+    t.integer  "activation_code"
   end
 
 end

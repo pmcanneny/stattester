@@ -8,8 +8,6 @@ class InitialMigration < ActiveRecord::Migration
     create_table :users do |t|
       t.string :email, :null => false
       t.string :password_digest, :null => false
-      t.boolean :activated, :defailt => false #email activation/confirmation
-      t.integer :activation_code
       
       t.timestamps
     end
@@ -23,7 +21,7 @@ class InitialMigration < ActiveRecord::Migration
       t.integer :sic, :precision => 4 #sic codes are up to 4 digits
       t.integer :country, :precision => 3, :default => 1 #about 200 countries in the world
       t.integer :region, :precision => 1 #there are arguably 9 regions in the US
-      t.boolean :shifted, :default => false #has this company's data been year-shifted?
+      t.boolean :shifted, :default => false #has this company's data been year-shifted? - possible UI feature
       t.timestamps
       #now we get into the data to be later encrypted
       t.references "secure_now"
@@ -115,8 +113,8 @@ class InitialMigration < ActiveRecord::Migration
     ##########testing section##########
 
     #create user for testing
-    User.create :email => "stat1@stattrader.com", :password => "1234", :activated => true
-    User.create :email => "stat2@stattrader.com", :password => "1234", :activated => true
+    #User.create :email => "stat1@stattrader.com", :password => "1234"
+    #User.create :email => "stat2@stattrader.com", :password => "1234"
 
     #create some companies for the test user
     #Alberto Culver - 1

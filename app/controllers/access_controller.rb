@@ -11,6 +11,7 @@ class AccessController < ApplicationController
     unless current_user.nil? 
       redirect_to :controller => :summary_sheet, :action => :index
     end
+    @companies = Company.all
   end
 
   #registration page for a new user
@@ -82,6 +83,12 @@ class AccessController < ApplicationController
       end
     end
   end
+
+  # #temporary XML export test
+  # def exportcompany
+  #   @company = Company.find(params[:id])
+  #   render "exportcompany.xml.erb" #=> @company.to_xml
+  # end
 
 
 end
