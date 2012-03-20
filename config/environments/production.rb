@@ -26,7 +26,7 @@ Stattrader2::Application.configure do
   :address              => "smtp.gmail.com",
   :port                 => 587,
   :domain               => 'StatTrader.com',
-  :user_name            => 'noreply@stattrader.com',
+  :user_name            => 'newuser@stattrader.com',
   :password             => 'stat4359',
   :authentication       => 'plain',
   :enable_starttls_auto => true  }
