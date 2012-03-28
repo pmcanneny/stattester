@@ -10,6 +10,12 @@ Stattrader2::Application.routes.draw do
   #for use with the email activation link
   match "/activate/:id/:code" => "access#activate"
 
+  #for use with the email activation link
+  match "/reset_password/:id/:code" => "access#reset_password"
+
+  #testing redirect
+  #match "/access/forgot_password" => "access#home"
+
   #for use with debug page
   match "/debug" => "access#debug"
   

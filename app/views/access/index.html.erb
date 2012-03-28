@@ -1,33 +1,48 @@
-
-<img src="\img\stattrader-logo.jpg" style="position:relative; left:11px">
 <%= show_notice(notice) %>
 <% if notice.nil? %>
-<br><br><br>
-<% end %>
 
+<p>
+	<% end %>
+</p>
 
-
-<h1>StatTrader Login</h1>
 
 <%= form_tag(:action=>'login') do %>
-<table class="login" style="border-collapse:collapse;" cellspacing="0" >
-	<tr>
-	  <td style="padding-top: 10px"><font face="Arial" size="4"><b>Username:</b></font></td>
-	  <td><%= text_field_tag(:email)%> </td>
-	</tr>
-	<tr>
-	  <td style="padding-top: 10px"><font face="Arial" size="4"><b>Password:</b></font></td>
-	  <td><%= password_field_tag(:password)%> </td>
-	</tr>
-	<tr>
-	  <td></td>
-	  <td style="text-align:left"><%= submit_tag("Login")%> </td>
-	</tr>
-</table>
+
+<div class="content">
+	
+	<table>
+	
+		<tr>
+			<td colspan="2"><h1>Log In Form</h1></td>
+		</tr>
+	
+		<tr>
+			<td>Username:</td><td><%= text_field_tag(:email)%></td>
+		</tr>
+
+		<tr>
+			<td>Password:</td><td><%= password_field_tag(:password)%></td>
+		</tr>
+
+		<tr>
+			<td colspan="2" class="center">
+		
+			<p><%= submit_tag("Login")%></p>
+		
+			<p><%= link_to 'Register', {:controller => 'access', :action => 'register'} %></p>
+
+			<p><%= link_to 'Forgot Password?', {:controller => 'access', :action => 'forgot_password'} %></p>
+
+			
+	
+			</td>
+		
+		</tr>
+		
+	</table>
+	
+</div>
 
 <% end %>
 
-<br><br>
-
-<%= link_to 'Register', {:controller => 'access', :action => 'register'} %>
 

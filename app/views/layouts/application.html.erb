@@ -1,20 +1,30 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
   <title>Stattrader Prototype</title>
+  <meta name="robots" content="none">
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
+<div class="header">
+<img src="/img/stattrader-logo.jpg" class="logo" />
+<div class="logout"><%= link_to 'Logout', {:controller => 'access', :action => 'logout'} %></div>
+<!-- <div class="menubutton-active">  ABOUT  |  RESEARCH  |  TRADING  |  HELP  |  ACCOUNT  |  CONTACT</div> -->
+</div>
+
+<div class="container">
 
 
-<%= link_to 'Logout', {:controller => 'access', :action => 'logout'} %>
 
 <%= show_notice(notice) %>
 
 <%= yield %>
 
+</div>
+<div class="footer">All content © 2012 StatTrader.com</div>
 </body>
 </html>

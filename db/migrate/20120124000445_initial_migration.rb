@@ -67,10 +67,10 @@ class InitialMigration < ActiveRecord::Migration
     #secure_stats table as defined in the secure_stat.rb model
     create_table :secure_stats do |t|
       t.references :company, :null => false
-      t.integer :gross_sales
+      t.integer :gross_sales# "revenue"
       t.integer :assets
       t.integer :gross_profit
-      t.integer :operating_profit
+      t.integer :operating_profit ## not found
       t.integer :ebitda
       t.decimal :ebitda_multiple, :precision => 10, :scale => 1
       t.decimal :sales_multiple, :precision => 10, :scale => 1

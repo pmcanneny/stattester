@@ -14,6 +14,11 @@ class AccessController < ApplicationController
     @companies = Company.all
   end
 
+  #redirect to root
+  def home
+    redirect_to root_url
+  end
+
   #registration page for a new user
   def register
     @user = User.new
@@ -64,8 +69,48 @@ class AccessController < ApplicationController
     else
       UserMailer.activation_email(@user).deliver
     end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_url, :notice => "User not found."
   end
 
+  #page for "forgot your password?"
+  def forgot_password
+  end
+
+  #send user the initial "forgot password" email
+  def forgot_password_email
+    @user = User.find_by_email(params[:email])    
+    if @user.nil?
+      redirect_to :action => :forgot_password, :notice => "Account not found."
+    elsif !(@user.last_password_email.nil?) and (@user.last_password_email+5.minutes > Time.now)
+        redirect_to root_url, :notice => "Email has been sent recently. Please wait a few minutes for additional password requests."
+    else
+      @user.generate_reset_password_code
+      @user.last_password_email = Time.now
+      @user.save
+      UserMailer.forgot_password_email(@user).deliver    
+    end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_url, :notice => "User not found."
+  end
+
+  #the action to reset the user's password and send them the email with the new password in it
+  def reset_password
+    user = User.find(params[:id])
+    if user.nil?
+      redirect_to root_url, :notice => "Access Denied."
+    elsif user.reset_password != true
+      redirect_to root_url, :notice => "Access Denied - No password reset request has been made."
+    elsif user.reset_password_code != params[:code]
+      redirect_to root_url, :notice => "Incorrect Reset Password Code."
+    else
+      UserMailer.new_password_email(user,new_password).deliver
+    end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_url, :notice => "User not found."
+  end
+
+  #attempt to activate specified user account with given activation code
   def activate
     user = User.find(params[:id])
     code = params[:code]
@@ -82,6 +127,8 @@ class AccessController < ApplicationController
         redirect_to root_url, :notice => "Invalid activation code."
       end
     end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_url, :notice => "User not found."
   end
 
   # #temporary XML export test
@@ -102,7 +149,11 @@ class AccessController < ApplicationController
   def resolve_layout
     case action_name
     when "please_activate"
-      nil
+      "short_message"
+    when "forgot_password_email"
+      "short_message"
+    when "reset_password_email"
+      "short_message"
     else
       "login"
     end
