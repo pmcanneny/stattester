@@ -61,7 +61,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .tablescontainer { float:left; }
 
-.notice { background-color:#FFcc33;padding: 5px 5px 5px 5px;text-align:center;border: 1px solid #999; }
+.notice { background-color:#efefef;padding: 5px 5px 5px 5px;text-align:center;border: 1px solid #999; }
 
 
 /* ----- Universal  -------*/

@@ -95,14 +95,24 @@ class AccessController < ApplicationController
     @user = User.find_by_reset_password_code(params[:code])
     if @user.nil?
       redirect_to root_url, :notice => "Access Denied."
-    elsif @user.reset_password != true
-      redirect_to root_url, :notice => "Access Denied - No password reset request has been made."
-    else
-      UserMailer.new_password_email(user,new_password).deliver
     end
   rescue ActiveRecord::RecordNotFound
     redirect_to root_url, :notice => "Invalid Password Reset Code."
   end
+
+  #todo: this has a secutiry flaw; fix this
+  def update_password
+    @user = User.find_by_reset_password_code(params[:code])
+    if @user.update_attributes(params[:user])
+      flash[:notice] = "Password Updated!"
+      redirect_to root_url
+    else
+      flash[:notice] = "Passwords must be greater than 4 characters and must match. Please try again."
+      redirect_to :action => 'reset_password', :code => @user.reset_password_code
+    end
+  end
+
+
 
   #attempt to activate specified user account with given activation code
   def activate
