@@ -14,6 +14,7 @@ Stattrader2::Application.routes.draw do
 
   #for use with the email activation link
   match "/reset_password/:code" => "access#reset_password"
+  #todo: make this and similar a redirect
   match "/reset_password" => "access#index"
 
   #testing redirect

@@ -90,7 +90,8 @@ class AccessController < ApplicationController
     redirect_to root_url, :notice => "User not found."
   end
 
-  #the action to reset the user's password and send them the email with the new password in it
+  #the action for the reset_password page
+  #todo: make code expire
   def reset_password
     @user = User.find_by_reset_password_code(params[:code])
     if @user.nil?
@@ -100,15 +101,16 @@ class AccessController < ApplicationController
     redirect_to root_url, :notice => "Invalid Password Reset Code."
   end
 
-  #todo: this has a secutiry flaw; fix this
+  #update the users password for the reset_password page
   def update_password
-    @user = User.find_by_reset_password_code(params[:code])
-    if @user.update_attributes(params[:user])
+    @user = User.find_by_reset_password_code(params[:user][:reset_password_code])
+    #set reset code to nil incase of successful update
+    if @user.update_attributes(:password => params[:user][:password], :password_confirmation => params[:user][:password_confirmation], :reset_password_code => nil)
       flash[:notice] = "Password Updated!"
       redirect_to root_url
     else
       flash[:notice] = "Passwords must be greater than 4 characters and must match. Please try again."
-      redirect_to :action => 'reset_password', :code => @user.reset_password_code
+      redirect_to :action => 'reset_password', :code => params[:user][:reset_password_code]
     end
   end
 
