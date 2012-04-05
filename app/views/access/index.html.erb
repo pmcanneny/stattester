@@ -8,13 +8,9 @@
 
 <%= form_tag(:action=>'login') do %>
 
-<div class="content">
+<div class="login">
 	
 	<table>
-	
-		<tr>
-			<td colspan="2"><h1>Log In Form</h1></td>
-		</tr>
 	
 		<tr>
 			<td>Username:</td><td><%= text_field_tag(:email)%></td>
@@ -30,10 +26,6 @@
 			<p><%= submit_tag("Login")%></p>
 		
 			<p><%= link_to 'Register', {:controller => 'access', :action => 'register'} %></p>
-
-			<p><%= link_to 'Forgot Password?', {:controller => 'access', :action => 'forgot_password'} %></p>
-
-			
 	
 			</td>
 		

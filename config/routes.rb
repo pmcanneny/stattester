@@ -8,16 +8,19 @@ Stattrader2::Application.routes.draw do
   match 'summary_sheet' => 'summary_sheet#index'
 
   #for use with the email activation link
-  match "/activate/:id/:code" => "access#activate"
+  match "/activate/:code" => "access#activate"
+  match "/activate" => "access#index"
+
 
   #for use with the email activation link
-  match "/reset_password/:id/:code" => "access#reset_password"
+  match "/reset_password/:code" => "access#reset_password"
+  match "/reset_password" => "access#index"
 
   #testing redirect
   #match "/access/forgot_password" => "access#home"
 
   #for use with debug page
-  match "/debug" => "access#debug"
+  #match "/debug" => "access#debug"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

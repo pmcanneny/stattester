@@ -74,20 +74,19 @@ class TradeStat < ActiveRecord::Base
 	  end
 	end
 	#Sales/Revenue Growth
-	unless base_stats.gross_sales.nil? or base_stats.prev_year.gross_sales.nil?
+	unless base_stats.gross_sales.nil? or base_stats.prev_year.nil? or base_stats.prev_year.gross_sales.nil? or base_stats.prev_year.gross_sales==0
 	  self.sales_growth = ((base_stats.gross_sales.to_f/base_stats.prev_year.gross_sales.to_f-1)*100)
-
 	end
 	#Gross Profit Margin
-	unless base_stats.gross_sales.nil? or base_stats.gross_profit.nil?
+	unless base_stats.gross_sales.nil? or base_stats.gross_profit.nil? or base_stats.gross_sales==0
 	  self.gross_profit_margin = (base_stats.gross_profit.to_f/base_stats.gross_sales.to_f)*100
 	end
 	#Operating Profit Margin
-	unless base_stats.gross_sales.nil? or base_stats.operating_profit.nil?
+	unless base_stats.gross_sales.nil? or base_stats.operating_profit.nil? or base_stats.gross_sales==0
 	  self.operating_profit_margin = (base_stats.operating_profit.to_f/base_stats.gross_sales.to_f)*100
 	end
 	#EBITDA%
-	unless base_stats.ebitda.nil? or base_stats.gross_sales.nil?
+	unless base_stats.ebitda.nil? or base_stats.gross_sales.nil? or base_stats.gross_sales==0
 	  self.ebitda_percent = (base_stats.ebitda.to_f/base_stats.gross_sales.to_f)*100
 	end
 	#Enterprise Multiple of Book

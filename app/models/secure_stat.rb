@@ -5,6 +5,8 @@ class SecureStat < ActiveRecord::Base
   validates_presence_of :company_id
   validate :datacheck
 
+  #validate fye and company ID combination is unique
+
   #if an updated field is the CY's fye, update all secure and trade stat
   #fye (other than "now") 
   before_save do
@@ -82,6 +84,26 @@ class SecureStat < ActiveRecord::Base
   #scale options in hash form - for use in drop-down menus
   def self.reporting_scale_options
     {SecureStat.reporting_scale(1)=>1,SecureStat.reporting_scale(2)=>2,SecureStat.reporting_scale(3)=>3,SecureStat.reporting_scale(4)=>4}
+  end
+
+  #this returns 0 for now, 1 for CY, 2 for 2Y, 3 for 3Y etc
+  def year
+    case self.id
+    when self.company.secure_now_id
+      0
+    when self.company.secure_cy_id
+      1
+    when self.company.secure_2y_id
+      2
+    when self.company.secure_3y_id
+      3
+    when self.company.secure_4y_id
+      4
+    when self.company.secure_5y_id
+      5
+    else
+      -1
+    end
   end
 
   #this returns the SecureStat for the previous year

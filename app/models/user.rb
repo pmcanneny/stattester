@@ -13,20 +13,15 @@ class User < ActiveRecord::Base
 
   #generate activation code upon creation
   after_create do
-  	self.generate_activation_code
+  	self.generate_token(:activation_code)
   end
 
-  #generates random big hex string as activation code
-  def generate_activation_code
-  	#self.activation_code = Random.rand(1000000-9999999)+1000000
-    self.activation_code = SecureRandom.hex(10)
-  	self.save
-  end
-
-  #generates random big hex string as reset password code
-  def generate_reset_password_code
-    self.reset_password = true
-    self.reset_password_code = SecureRandom.hex(12)
+  #generate a large random token for a given column
+  #this will be unique accross users for the given column
+  def generate_token(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while User.exists?(column => self[column])
     self.save
   end
 
@@ -35,6 +30,7 @@ class User < ActiveRecord::Base
   def activate(code)
   	if self.activation_code.to_i == code.to_i
   	  self.activated = true
+      self.activation_code = nil
   	  self.save
   	  true
   	else

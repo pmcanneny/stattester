@@ -1,47 +1,87 @@
+<div class="datamenu">
 
+<div id="datainlist" class="datain">
+<div id="datain" onselectstart="return false">Company Data In</div>
+<p>Select from StatTrader's Public Database</p>
+<p>Upload XBRL File to StatTrader</p>
+<p>Upload a StatTrader File</p>
+</div>  
 
-<div class="content">
+<div id="dataoutlist" class="dataout">
+<div id="dataout" onfocus="this.blur();">Company Data Out</div>
+<p>Export to Excel</p>
+<p>Export to a StatTrader File</p>
+</div>
 
-<h1>Summary Sheet</h1>
+</div>
 
-<table>
-
-
-	
-<table>
+<div class="menu"><span>Summary Sheet</span></div>
+<%= show_notice(notice) %>
 
 <table class="summarysheet">
 
 	<tr>  
-   		<th colspan="2">Company</th>    
-    	<th colspan="4">Last Updated</th> 
-	</tr>  
+	<td colspan="4" style="text-align:center;">MY COMPANIES</td>
+	<td colspan="4" style="text-align:center;">STATTRADER'S COMPARISON NETWORK</td>
+	<td colspan="4" style="text-align:center;">RELEVANT PUBLIC DATA & INFORMATION</td>
+	</tr>
+	<tr>
+	<th rowspan="2"></th>
+	<th rowspan="2">Last Time<br />Data<br />Updated</th>
+	<th rowspan="2">Company<br />Name or<br />Code</th>
+	<th rowspan="2">To<br />Stat<br />Trade</th>
+	<th rowspan="2">SIC<br />Default<br />Description</th>
+	<th colspan="3">Profile's Depth</th>
+	<th rowspan="2">Access<br />Public Co.<br />Data</th>
+	<th colspan="2">Buy or Rent</th>
+	<th rowspan="2">Network's<br />Traded<br />Links</th>
+	</tr>
+	<tr>
+	<td>Private<br />Cos</td>
+	<td>Public<br />Cos</td>
+	<td>View &<br />Filter</td>
+	<td style="text-align:center;">From<br />Vendors</td>
+	<td style="text-align:center;">From<br />Members</td>
+	</tr>
 
 	<% for company in @companies %>  
 
 	<tr class="<%= cycle("even", "odd") %>">  
-     
-		<td ><%= company.name %></td>    
-    
-		<td class="actions"><%= link_to "View/Edit", {:action=>"editcompany", :id => company.id} %></td>
-    
-		<td><%= company.updated_at.strftime("%m-%d-%Y") %></td>  
-     
-		<td ></td>
-     
-		<td class="actions"><%= link_to "Stat Trade", {:controller=>"data_sheet",:action=>"view", :id => company.id} %></td>
-      
+ 
+<td></td>
+<td><%= company.updated_at.strftime("%m-%d-%Y") %></td>
 
-		<td><%= link_to "Network Stats", {:controller =>"network_stats", :action=>"view", :id => company.id} %></td>
+<td><%= company.name %></td>
+<td style="text-align:center;"><%= link_to image_tag("padlock.png", :border => 1), {:controller=>"data_sheet",:action=>"view", :id => company.id} %></td>
 
-	</tr>  
+
+<td><%= company.sic %> Description</td>
+
+<td style="text-align:center;"><%= default_filter_private_count(company) %></td>
+<td style="text-align:center;"><%= default_filter_public_count(company) %></td>
+<td style="text-align:center;"><%= link_to image_tag("charticon.png", :border => 1), {:controller=>"network_stats",:action=>"view", :id => company.id} %></td>
+<td style="text-align:center;"><%= link_to image_tag("stattrader-icon.png", :border => 1), {:action=>"index"} %></td>
+<td style="text-align:center;"><%= link_to "View", {:action=>"index"} %></td>
+<td style="text-align:center;"><%= link_to "View", {:action=>"index"} %></td>
+<td style="text-align:center;"><%= link_to "View", {:action=>"index"} %></td>
+</tr>  
 
 <% end %>  
 
+<tr style="height:45px;">
+	<td></td>
+	<td></td>
+	<td><span class="button"><%= link_to "Add Company", {:controller=>"data_sheet",:action=>"new"} %></span></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
 </table>
 
-<p>
-	<span class="button"><%= link_to "Add Company", {:action=>"newcompany"} %></span>
-</p>
-
-</div>

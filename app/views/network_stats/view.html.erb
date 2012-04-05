@@ -1,55 +1,66 @@
-<div class="content" style="width:1200px;">
-<h1>Network Stats</h1><div class="goback"><%= link_to 'Back', summary_sheet_url %></div>
-<table class="dataheader">
-	<tr>
-		<td>Company: </td>
-		<td><%= @company.name %></td>
-	</tr>
-</table>
-<div class="filter">
 
 
+<div class="menu">
+	<%= link_to "Summary Sheet", :controller=>"summary_sheet",:action=>"index" %>
+	<%= link_to "Data Sheet", :controller=>"data_sheet",:action=>"view", :id => @company.id %>
+	<span>Network Stats</span>
+</div>
 
 
-<table>
-	<tr>
-		<th>Current Filter</th>
-	</tr>
-</table>
+<div class="filters"> 
+
+<div class="heading">Filter & Graphics</div>
+<%= show_notice(notice) %>
+
+<table><tr>
 <form accept-charset="UTF-8" action="/network_stats/filter" method="post">
-	<table>
-		<tr>
-			<td>SIC Range:</td>
-			<td>Any</td>
-			<td>Ownership:</td>
-			<td><%= select(:filter, :ownership, StatFilter.ownership_options) %></td>
-			<td>Combination:</td>
-			<td><%= select(:filter, :combination, StatFilter.combination_options) %></td>
-			<td>Country:</td>
-			<td><%= select(:filter, :country, StatFilter.country_options) %></td>
-			<td>Region:</td>
-			<td><%= select(:filter, :region, StatFilter.region_options) %></td>
-			<td>Historical Quality:</td>
-			<td><%= select(:filter, :quality, StatFilter.quality_options) %></td>
-		</tr>
-	</table>
-	<div>
+<td><input name="commit" type="submit" value="Apply Filter" /></td>
+<td><p>SIC Range:</p></td>
+<td><p>Any</p></td>
+<td><p>Ownership: <%= select(:filter, :ownership, StatFilter.ownership_options) %></p></td>
+<td><p>Combination: <%= select(:filter, :combination, StatFilter.combination_options) %></p></td>
+<td><p>Country: <%= select(:filter, :country, StatFilter.country_options) %></p></td>
+<td><p>Region: <%= select(:filter, :region, StatFilter.region_options) %></p></td>
+<td><p>Historical Quality: <%= select(:filter, :quality, StatFilter.quality_options) %></p></td>
+</tr></table>
+
 	<%= hidden_field(:company, :id) %>
 	<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
-	<input name="commit" type="submit" value="Apply Filter" />
-	</div>
+	
+
  </form>
 
- </div>
 
-<div class="companystats">
-<table class="dataheader networkpage">
+</div>
+
+
+<div style="width:1400px;margin:0px auto;">
+
+
+<div class="leftwindow networkstats" id="leftwindow">
+
+<div class="charts">
+
+<p>
+<div id="chart1" class="chart1"></div>
+</p>
+
+</div>
+
+
+ </div>
+ 
+ 
+<div class="tablescontainer">
+
+ 
+<div class="mystattradenetworkcontainer float" style="width:600px;padding:0px;">
+ 
+<div class="heading">My Stat Trade</div>
+
+<table style="border-spacing:0px;">
 	<tr>
-		<td>My Stat Trade</td>
-	</tr>
-</table>
-<table class="table">
-	<tr>
+	<th></th>
 		<th></th>
 		<th>Now</th>
 		<th>CY</th>
@@ -59,6 +70,7 @@
 		<th><!-- 5Y --></th>
 	</tr>
 	<tr>
+	<td><img src="/img/graph-icon.gif" /></td>
 		<td><%= label :trade, "Revenue Category:" %></td>
 		<td><%= @trade_now.revenue_category %></td>
 		<td><%= @trade_cy.revenue_category %></td>
@@ -68,6 +80,7 @@
 		<td><%= @trade_5y.revenue_category %></td>
 	</tr>
 	<tr>
+	<td><img src="/img/graph-icon.gif" /></td>
 		<td><%= label :trade, "Asset Category:" %></td>
 		<td><%= @trade_now.asset_category %></td>
 		<td><%= @trade_cy.asset_category %></td>
@@ -77,6 +90,7 @@
 		<td><%= @trade_5y.asset_category %></td>
 	</tr>
 	<tr>
+	<td><img src="/img/graph-icon.gif" /></td>
 		<td><%= label :trade, "Sales/Revenue Growth:" %></td>
 		<td><%= @trade_now.sales_growth %><%= "%" unless @trade_now.sales_growth.nil? %></td>
 		<td><%= @trade_cy.sales_growth %><%= "%" unless @trade_cy.sales_growth.nil? %></td>
@@ -86,6 +100,7 @@
 		<td><%= @trade_5y.sales_growth %><%= "%" unless @trade_5y.sales_growth.nil? %></td>
 	</tr>
 	<tr>
+	<td><img src="/img/graph-icon.gif" /></td>
 		<td><%= label :trade, "Gross Profit Margin:" %></td>
 		<td><%= @trade_now.gross_profit_margin %><%= "%" unless @trade_now.gross_profit_margin.nil? %></td>
 		<td><%= @trade_cy.gross_profit_margin %><%= "%" unless @trade_cy.gross_profit_margin.nil? %></td>
@@ -95,6 +110,7 @@
 		<td><%= @trade_5y.gross_profit_margin %><%= "%" unless @trade_5y.gross_profit_margin.nil? %></td>
 	</tr>
 	<tr>
+	<td><img src="/img/graph-icon.gif" /></td>
 		<td><%= label :trade, "Operating Profit Margin:" %></td>
 		<td><%= @trade_now.operating_profit_margin %><%= "%" unless @trade_now.operating_profit_margin.nil? %></td>
 		<td><%= @trade_cy.operating_profit_margin %><%= "%" unless @trade_cy.operating_profit_margin.nil? %></td>
@@ -104,6 +120,7 @@
 		<td><%= @trade_5y.operating_profit_margin %><%= "%" unless @trade_5y.operating_profit_margin.nil? %></td>
 	</tr>
 	<tr>
+	<td><img src="/img/graph-icon.gif" /></td>
 		<td><%= label :trade, "EBITDA %:" %></td>
 		<td><%= @trade_now.ebitda_percent %><%= "%" unless @trade_now.ebitda_percent.nil? %></td>
 		<td><%= @trade_cy.ebitda_percent %><%= "%" unless @trade_cy.ebitda_percent.nil? %></td>
@@ -113,6 +130,7 @@
 		<td><%= @trade_5y.ebitda_percent %><%= "%" unless @trade_5y.ebitda_percent.nil? %></td>
 	</tr>
 	<tr>
+	<td><img src="/img/graph-icon.gif" /></td>
 		<td><%= label :trade, "Enterprise Multiple of Book:" %></td>
 		<td><%= @trade_now.enterprise_multiple %></td>
 		<td><%= @trade_cy.enterprise_multiple %></td>
@@ -122,6 +140,7 @@
 		<td><%= @trade_5y.enterprise_multiple %></td>
 	</tr>
 	<tr>
+	<td><img src="/img/graph-icon.gif" /></td>
 		<td><%= label :trade, "My EBITDA Multiple:" %></td>
 		<td><%= @trade_now.ebitda_multiple %></td>
 		<td><%= @trade_cy.ebitda_multiple %></td>
@@ -131,6 +150,7 @@
 		<td><%= @trade_5y.ebitda_multiple %></td>
 	</tr>
 	<tr>
+	<td><img src="/img/graph-icon.gif" /></td>
 		<td><%= label :trade, "My Sales Multiple:" %></td>
 		<td><%= @trade_now.sales_multiple %></td>
 		<td><%= @trade_cy.sales_multiple %></td>
@@ -140,6 +160,7 @@
 		<td><%= @trade_5y.sales_multiple %></td>
 	</tr>
 	<tr>
+	<td><img src="/img/graph-icon.gif" /></td>
 		<td><%= label :trade, "My Funded Debt Multiple:" %></td>
 		<td><%= @trade_now.debt_multiple %></td>
 		<td><%= @trade_cy.debt_multiple %></td>
@@ -149,28 +170,22 @@
 		<td><%= @trade_5y.debt_multiple %></td>
 	</tr>
 </table>
+
 </div>
 
+<div class="networkstatscontainer">
 
+<div class="heading">Network Stats</div>
+<span>Companies Included: <%= @sample_size.to_i %></span>
 
-<div class="networkstats">
-
-<table class="dataheader networkpage">
-	<tr>
-		<td>Network Stats<span>Companies Included: <%= @sample_size.to_i %></span></td>
-	</tr>
-</table>
-
-
-<table class="table networktable">
+<table>
 
 		<!-- <th></th> -->
 		<th>Now</th>
 		<th>CY</th>
 		<th>2Y</th>
 		<th>3Y</th>
-		<!-- <th>4Y</th>
-		<th>5Y</th> -->
+		<th></th>
 	</tr>
 	<tr>
 		<!-- <td><%= label :trade, "Revenue Category:" %></td> -->
@@ -178,7 +193,7 @@
 		<td><%= number_with_precision(@cy_revenue_category, :precision => 1) %></td>
 		<td><%= number_with_precision(@y2_revenue_category, :precision => 1) %></td>
 		<td><%= number_with_precision(@y3_revenue_category, :precision => 1) %></td>
-		<td><img src="/img/graph-icon.gif" /></td>
+		
 		<!-- <td><%= @trade_4y.revenue_category %></td>
 		<td><%= @trade_5y.revenue_category %></td> -->
 	</tr>
@@ -188,7 +203,6 @@
 		<td><%= number_with_precision(@cy_asset_category, :precision => 1) %></td>
 		<td><%= number_with_precision(@y2_asset_category, :precision => 1) %></td>
 		<td><%= number_with_precision(@y3_asset_category, :precision => 1) %></td>
-		<td><img src="/img/graph-icon.gif" /></td>
 		<!-- <td><%= @trade_4y.asset_category %></td>
 		<td><%= @trade_5y.asset_category %></td> -->
 	</tr>
@@ -198,7 +212,6 @@
 		<td><%= number_with_precision(@cy_sales_growth, :precision => 1) %><%= "%" unless @cy_sales_growth.nil? %></td>
 		<td><%= number_with_precision(@y2_sales_growth, :precision => 1) %><%= "%" unless @y2_sales_growth.nil? %></td>
 		<td><%= number_with_precision(@y3_sales_growth, :precision => 1) %><%= "%" unless @y3_sales_growth.nil? %></td>
-		<td><img src="/img/graph-icon.gif" /></td>
 		<!-- <td><%= @trade_4y.sales_growth %><%= "%" unless @trade_4y.sales_growth.nil? %></td>
 		<td><%= @trade_5y.sales_growth %><%= "%" unless @trade_5y.sales_growth.nil? %></td> -->
 	</tr>
@@ -208,7 +221,6 @@
 		<td><%= number_with_precision(@cy_gross_profit_margin, :precision => 1) %><%= "%" unless @cy_gross_profit_margin.nil? %></td>
 		<td><%= number_with_precision(@y2_gross_profit_margin, :precision => 1) %><%= "%" unless @y2_gross_profit_margin.nil? %></td>
 		<td><%= number_with_precision(@y3_gross_profit_margin, :precision => 1) %><%= "%" unless @y3_gross_profit_margin.nil? %></td>
-		<td><img src="/img/graph-icon.gif" /></td>
 		<!-- <td><%= @trade_4y.gross_profit_margin %><%= "%" unless @trade_4y.gross_profit_margin.nil? %></td>
 		<td><%= @trade_5y.gross_profit_margin %><%= "%" unless @trade_5y.gross_profit_margin.nil? %></td> -->
 	</tr>
@@ -218,7 +230,6 @@
 		<td><%= number_with_precision(@cy_operating_profit_margin, :precision => 1) %><%= "%" unless @cy_operating_profit_margin.nil? %></td>
 		<td><%= number_with_precision(@y2_operating_profit_margin, :precision => 1) %><%= "%" unless @y2_operating_profit_margin.nil? %></td>
 		<td><%= number_with_precision(@y3_operating_profit_margin, :precision => 1) %><%= "%" unless @y3_operating_profit_margin.nil? %></td>
-		<td><img src="/img/graph-icon.gif" /></td>
 		<!-- <td><%= @trade_4y.operating_profit_margin %><%= "%" unless @trade_4y.operating_profit_margin.nil? %></td>
 		<td><%= @trade_5y.operating_profit_margin %><%= "%" unless @trade_5y.operating_profit_margin.nil? %></td> -->
 	</tr>
@@ -228,7 +239,6 @@
 		<td><%= number_with_precision(@cy_ebitda_percent, :precision => 1) %><%= "%" unless @cy_ebitda_percent.nil? %></td>
 		<td><%= number_with_precision(@y2_ebitda_percent, :precision => 1) %><%= "%" unless @y2_ebitda_percent.nil? %></td>
 		<td><%= number_with_precision(@y3_ebitda_percent, :precision => 1) %><%= "%" unless @y3_ebitda_percent.nil? %></td>
-		<td><img src="/img/graph-icon.gif" /></td>
 		<!-- <td><%= @trade_4y.ebitda_percent %><%= "%" unless @trade_4y.ebitda_percent.nil? %></td>
 		<td><%= @trade_5y.ebitda_percent %><%= "%" unless @trade_5y.ebitda_percent.nil? %></td> -->
 	</tr>
@@ -238,7 +248,6 @@
 		<td><%= number_with_precision(@cy_enterprise_multiple, :precision => 1) %></td>
 		<td><%= number_with_precision(@y2_enterprise_multiple, :precision => 1) %></td>
 		<td><%= number_with_precision(@y3_enterprise_multiple, :precision => 1) %></td>
-		<td><img src="/img/graph-icon.gif" /></td>
 		<!-- <td><%= @trade_4y.enterprise_multiple %></td>
 		<td><%= @trade_5y.enterprise_multiple %></td> -->
 	</tr>
@@ -248,7 +257,6 @@
 		<td><%= number_with_precision(@cy_ebitda_multiple, :precision => 1) %></td>
 		<td><%= number_with_precision(@y2_ebitda_multiple, :precision => 1) %></td>
 		<td><%= number_with_precision(@y3_ebitda_multiple, :precision => 1) %></td>
-		<td><img src="/img/graph-icon.gif" /></td>
 		<!-- <td><%= @trade_4y.ebitda_multiple %></td>
 		<td><%= @trade_5y.ebitda_multiple %></td> -->
 	</tr>
@@ -258,7 +266,6 @@
 		<td><%= number_with_precision(@cy_sales_multiple, :precision => 1) %></td>
 		<td><%= number_with_precision(@y2_sales_multiple, :precision => 1) %></td>
 		<td><%= number_with_precision(@y3_sales_multiple, :precision => 1) %></td>
-		<td><img src="/img/graph-icon.gif" /></td>
 		<!-- <td><%= @trade_4y.sales_multiple %></td>
 		<td><%= @trade_5y.sales_multiple %></td> -->
 	</tr>
@@ -268,23 +275,43 @@
 		<td><%= number_with_precision(@cy_debt_multiple, :precision => 1) %></td>
 		<td><%= number_with_precision(@y2_debt_multiple, :precision => 1) %></td>
 		<td><%= number_with_precision(@y3_debt_multiple, :precision => 1) %></td>
-		<td><img src="/img/graph-icon.gif" /></td>
 		<!-- <td><%= @trade_4y.debt_multiple %></td>
 		<td><%= @trade_5y.debt_multiple %></td> -->
 	</tr>
 </table>
-</div>
-
-<div class="charts">
-
-<p>
-<img class="chart" src="/img/chart1.png" />
-</p>
-
-<p>
-<img class="chart" src="/img/chart2.png" />
-</p>
 
 </div>
 
 </div>
+
+</div>
+
+<script>
+
+
+/* --------- Charts --------- */
+
+$(function () {
+
+    var d1 = [[2, <%= number_with_precision(@now_gross_profit_margin, :precision => 1) %>], [4, <%= number_with_precision(@cy_gross_profit_margin, :precision => 1) %>], [6, <%= number_with_precision(@y2_gross_profit_margin, :precision => 1) %>], [8, <%= number_with_precision(@y3_gross_profit_margin, :precision => 1) %>], [10, <%= number_with_precision(@y4_gross_profit_margin, :precision => 1) %>], [12, <%= number_with_precision(@y5_gross_profit_margin, :precision => 1) %>]];
+    
+    var d2 = [[2.5,1],[4.5,2],[6.5,3],[8.5,4],[10.5,5]];
+                        
+    $.plot($("#chart1"), [
+ 
+        {	
+        	color: "#c3d3e1",
+            data: d1,
+            bars: { show: true }
+        },
+        {	
+        	color: "#999999",
+            data: d2,
+            lines: { show: true },
+            points: { show: true }
+        }
+    ]);
+});
+
+
+</script>

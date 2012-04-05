@@ -1,14 +1,11 @@
 #This is a module containing various helper methods for the application
 module ApplicationHelper
 
-
-	
   #helper method for printing out the 'flash notice'
   #will not include the div tags if the notice is empty
   def show_notice(notice)
-    notice.nil? || notice.empty? ? "" : simple_format("<div id=\"flashMessage\" class=\"message\">#{notice}</div>")
+    notice.nil? || notice.empty? ? "" : simple_format("<div id=\"flashMessage\" class=\"notice\">#{notice}</div>")
   end
-
 
   #add commas to the thousands places for numbers
   def thousands(number)
@@ -24,7 +21,7 @@ module ApplicationHelper
     end
   end
 
-  #retuen fye options for use in drop-down
+  #return fye options for use in drop-down
   def fye_options(current)
     {
     fye_format(current)=>0,

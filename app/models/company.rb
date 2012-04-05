@@ -5,7 +5,7 @@ class Company < ActiveRecord::Base
 
   #The greatest numbers of months that CY's financial year end can be in the past
   def self.max_cy_range
-  	36
+  	18
   end
 
   #after creation of a company, initialize all the yearly data columns
@@ -20,22 +20,16 @@ class Company < ActiveRecord::Base
   	secure_4y = SecureStat.new
   	secure_5y = SecureStat.new
 	secure_now.company_id = self.id
-	secure_now.year = 0
 	secure_now.reporting_scale = 1	
 	secure_cy.company_id = self.id
-	secure_cy.year = 1
 	secure_cy.reporting_scale = 1	
 	secure_2y.company_id = self.id
-	secure_2y.year = 2
 	secure_2y.reporting_scale = 1
 	secure_3y.company_id = self.id
-	secure_3y.year = 3
 	secure_3y.reporting_scale = 1
 	secure_4y.company_id = self.id
-	secure_4y.year = 4
 	secure_4y.reporting_scale = 1
 	secure_5y.company_id = self.id
-	secure_5y.year = 5
 	secure_5y.reporting_scale = 1
 
 	secure_now.save
@@ -62,22 +56,16 @@ class Company < ActiveRecord::Base
   	trade_4y = TradeStat.new
   	trade_5y = TradeStat.new
 	trade_now.company_id = self.id
-	trade_now.year = 0
 	trade_now.save
 	trade_cy.company_id = self.id
-	trade_cy.year = 1
 	trade_cy.save
 	trade_2y.company_id = self.id
-	trade_2y.year = 2
 	trade_2y.save
 	trade_3y.company_id = self.id
-	trade_3y.year = 3
 	trade_3y.save
 	trade_4y.company_id = self.id
-	trade_4y.year = 4
 	trade_4y.save
 	trade_5y.company_id = self.id
-	trade_5y.year = 5
 	trade_5y.save
 	self.trade_now_id = trade_now.id
 	self.trade_cy_id = trade_cy.id
@@ -118,6 +106,7 @@ class Company < ActiveRecord::Base
   end
 
   #perform the year shift on the data pieces
+  #TODO:complete
   def shift_years
   	secure_cy = SecureStat.find(self.secure_cy_id)
   	secure_2y = SecureStat.find(self.secure_2y_id)

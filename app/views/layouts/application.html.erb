@@ -11,20 +11,15 @@
 <body>
 
 <div class="header">
-<img src="/img/stattrader-logo.jpg" class="logo" />
+<%= link_to image_tag("stattrader-logo.jpg", :class => "logo"), "http://www.stattrader.com" %>
 <div class="logout"><%= link_to 'Logout', {:controller => 'access', :action => 'logout'} %></div>
-<!-- <div class="menubutton-active">  ABOUT  |  RESEARCH  |  TRADING  |  HELP  |  ACCOUNT  |  CONTACT</div> -->
 </div>
 
-<div class="container">
-
-
-
-<%= show_notice(notice) %>
+<div class="container" id="container">
 
 <%= yield %>
 
 </div>
-<div class="footer">All content © 2012 StatTrader.com</div>
+<div class="footer">All content © 2012 <a href="http://www.stattrader.com">StatTrader.com</a></div>
 </body>
 </html>

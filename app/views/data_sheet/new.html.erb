@@ -27,7 +27,7 @@
 <%= show_notice(notice) %>
 <div class="heading">Company Profile</div>
 
-<%= form_for @company, :url => {:controller=>:data_sheet,:action => :update} do |f| %>	
+<%= form_for @company, :url => {:controller=>:data_sheet,:action => :createcompany} do |f| %>	
 		<table class="labels">
 		<tr>
 			<td><%= f.label "Company Name:" %></td>
@@ -57,8 +57,8 @@
 			<td colspan="2" class="center">
 			
 				<p><%= f.hidden_field(:id) %></p>
-				<p><%= f.submit "Save & Update" %></p>
-				<!--<p><%= link_to 'Cancel', summary_sheet_url %></p>-->
+				<p><%= f.submit "Save Company" %></p>
+				<p><%= link_to 'Cancel', summary_sheet_url %></p>
 			
 			</td>
 		</tr>

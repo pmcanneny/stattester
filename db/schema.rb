@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120321161640) do
+ActiveRecord::Schema.define(:version => 20120328224051) do
 
   create_table "companies", :force => true do |t|
     t.string   "name",                                 :null => false
@@ -38,6 +38,10 @@ ActiveRecord::Schema.define(:version => 20120321161640) do
     t.integer  "trade_5y_id"
     t.integer  "default_filter_id"
     t.boolean  "network_valid"
+    t.string   "CIK"
+    t.string   "ticker_symbol"
+    t.string   "state"
+    t.string   "zipcode"
   end
 
   create_table "secure_stats", :force => true do |t|
@@ -54,7 +58,6 @@ ActiveRecord::Schema.define(:version => 20120321161640) do
     t.integer  "reporting_scale"
     t.integer  "input_basis"
     t.integer  "quality"
-    t.integer  "year"
     t.datetime "fye"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -119,7 +122,6 @@ ActiveRecord::Schema.define(:version => 20120321161640) do
     t.integer  "Cost_of_Services_Depreciation_and_Amortization"
     t.integer  "Cost_of_Services_Other"
     t.integer  "Other_Cost_of_Sales"
-    t.integer  "Operating_Income_Loss"
     t.integer  "Expense"
     t.integer  "Selling_General_and_Administrative_Expenses"
     t.integer  "General_and_Administrative_Expenses"
@@ -187,26 +189,25 @@ ActiveRecord::Schema.define(:version => 20120321161640) do
     t.decimal  "debt_multiple",           :precision => 10, :scale => 1
     t.integer  "input_basis"
     t.integer  "quality"
-    t.integer  "year"
     t.datetime "fye"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                    :null => false
-    t.string   "password_digest",                          :null => false
+    t.string   "email",                                     :null => false
+    t.string   "password_digest",                           :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "activated",             :default => false
+    t.boolean  "activated",              :default => false
     t.string   "activation_code"
     t.datetime "last_activation_email"
     t.datetime "last_password_email"
     t.integer  "type"
     t.integer  "subtype"
     t.string   "auth_token"
-    t.boolean  "reset_password",        :default => false
     t.string   "reset_password_code"
+    t.datetime "reset_password_expires"
   end
 
 end

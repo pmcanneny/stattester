@@ -14,11 +14,6 @@ class AccessController < ApplicationController
     @companies = Company.all
   end
 
-  #redirect to root
-  def home
-    redirect_to root_url
-  end
-
   #registration page for a new user
   def register
     @user = User.new
@@ -85,8 +80,9 @@ class AccessController < ApplicationController
     elsif !(@user.last_password_email.nil?) and (@user.last_password_email+5.minutes > Time.now)
         redirect_to root_url, :notice => "Email has been sent recently. Please wait a few minutes for additional password requests."
     else
-      @user.generate_reset_password_code
+      @user.generate_token(:reset_password_code)
       @user.last_password_email = Time.now
+      @user.reset_password_expires = Time.now + 2.hours
       @user.save
       UserMailer.forgot_password_email(@user).deliver    
     end
@@ -96,23 +92,21 @@ class AccessController < ApplicationController
 
   #the action to reset the user's password and send them the email with the new password in it
   def reset_password
-    user = User.find(params[:id])
-    if user.nil?
+    @user = User.find_by_reset_password_code(params[:code])
+    if @user.nil?
       redirect_to root_url, :notice => "Access Denied."
-    elsif user.reset_password != true
+    elsif @user.reset_password != true
       redirect_to root_url, :notice => "Access Denied - No password reset request has been made."
-    elsif user.reset_password_code != params[:code]
-      redirect_to root_url, :notice => "Incorrect Reset Password Code."
     else
       UserMailer.new_password_email(user,new_password).deliver
     end
   rescue ActiveRecord::RecordNotFound
-    redirect_to root_url, :notice => "User not found."
+    redirect_to root_url, :notice => "Invalid Password Reset Code."
   end
 
   #attempt to activate specified user account with given activation code
   def activate
-    user = User.find(params[:id])
+    user = User.find_by_activation_code(params[:code])
     code = params[:code]
     if user.nil? or code.nil?
       redirect_to root_url, :notice => "Invalid Request"
@@ -136,12 +130,6 @@ class AccessController < ApplicationController
   #   @company = Company.find(params[:id])
   #   render "exportcompany.xml.erb" #=> @company.to_xml
   # end
-
-  def debug
-    @companies = Company.all
-    @users = User.all
-  end
-
 
   private 
 
