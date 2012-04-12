@@ -17,14 +17,16 @@ function delayer(){
 </head>
 <body onLoad="setTimeout('delayer()', 15000)">
 
+<div class="header">
+	<%= link_to image_tag("stattrader-logo.jpg", :class => "logo"), "http://www.stattrader.com" %>
+</div>
 
-<img src="\img\stattrader-logo.jpg" style="position:relative; left:11px">
-<%= show_notice(notice) %>
-<% if notice.nil? %>
-<br><br><br>
-<% end %>
+<br><br><br><br>
 
-<%= yield %>
+<div class="container">
+	<%= yield %>
+</div>
 
+<div class="footer">All content © 2012 <a href="http://www.stattrader.com">StatTrader.com</a></div>
 </body>
 </html>

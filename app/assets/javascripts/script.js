@@ -13,25 +13,24 @@ $(document).ready(function() {
 
 $("#5ybutton").toggle(
 	function() {
-	$("#container").animate({"width":"1400px" }, 300 );
-	$("#trade5y").animate({"width":"260px" }, 400 );
-	$("#company5y").animate({"width":"260px" }, 400 );
+	$("#container").animate({"width":"1500px" }, 300 );
+	$("#trade5y").animate({"width":"300px" }, 400 );
+	$("#company5y").animate({"width":"300px" }, 400 );
 	},
 	function() {
-	$("#container").animate({"width":"1100px" }, 400 );
+	$("#container").animate({"width":"1200px" }, 400 );
 	$("#trade5y").animate({"width":"1px" }, 300 );
 	$("#company5y").animate({"width":"1px" }, 300 );
 	});
 	
-	
 $("#5ytradebutton").toggle(
 	function() {
-	$("#container").animate({"width":"1400px" }, 300 );
-	$("#trade5y").animate({"width":"260px" }, 400 );
-	$("#company5y").animate({"width":"260px" }, 400 );
+	$("#container").animate({"width":"1500px" }, 300 );
+	$("#trade5y").animate({"width":"300px" }, 400 );
+	$("#company5y").animate({"width":"300px" }, 400 );
 	},
 	function() {
-	$("#container").animate({"width":"1100px" }, 400 );
+	$("#container").animate({"width":"1200px" }, 400 );
 	$("#trade5y").animate({"width":"1px" }, 300 );
 	$("#company5y").animate({"width":"1px" }, 300 );
 	});
@@ -65,5 +64,11 @@ $("#dataout").toggle(
 });
 
 
-
+function getChart(c) {
+$("div.topchart").animate({"top":"280px" }, 300 );
+$("div.bottomchart").removeClass("bottomchart").addClass("hiddenchart");
+$("div.topchart").removeClass("topchart").addClass("bottomchart");
+$("#chart"+c+"container").css("top","1px");
+$("#chart"+c+"container").removeClass("hiddenchart").addClass("topchart");
+}
 

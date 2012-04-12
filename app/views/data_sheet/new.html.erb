@@ -35,15 +35,15 @@
 		</tr>
 		<tr>
 			<td><%= f.label "Combination:" %></td>
-			<td><%= f.select(:combination, Company.combination_options, :include_blank => "Please Select", :class => "rowform") %></td>
+			<td><%= f.select(:combination, Company.combination_options, :include_blank => "Please Select") %></td>
 		</tr>
 		<tr>
 			<td><%= f.label "Ownership:" %></td>
-			<td><%= f.select(:ownership, Company.ownership_options, :include_blank => "Please Select", :class => "rowform") %></td>
+			<td><%= f.select(:ownership, Company.ownership_options, :include_blank => "Please Select") %></td>
 		</tr>
 		<tr>
 			<td><%= f.label "SIC:" %></td>
-			<td><%= f.number_field :sic %></td>
+			<td><%= f.select(:sic, Company.four_digit_sic_options, :include_blank => "Please Select") %></td>
 		</tr>
 		<tr>
 			<td><%= f.label "Country:" %></td>
@@ -51,7 +51,7 @@
 		</tr>
 		<tr>
 			<td><%= f.label "Region:" %></td>
-			<td><%= f.select(:region, Company.region_options, :include_blank => "Please Select", :class => "rowform") %></td>
+			<td><%= f.select(:region, Company.region_options, :include_blank => "Please Select") %></td>
 		</tr>
 		<tr>
 			<td colspan="2" class="center">
@@ -67,7 +67,8 @@
 	
 <div class="tablescontainer">
 
-<div class="heading">&nbsp;&nbsp;Company: <%= @company.name %></div>
+<!-- <div class="heading">&nbsp;&nbsp;Company: <%= @company.name %></div> -->
+<br>
 
 <div class="confidential">CONFIDENTIAL <img src="../../img/padlock.png" /></div>
 

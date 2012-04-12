@@ -14,14 +14,14 @@
 <body>
 
 <div class="header">
-	<img src="/img/stattrader-logo.jpg" class="logo" />
-<!--	<div class="logout"><%= link_to 'Logout', {:controller => 'access', :action => 'logout'} %></div> -->
+	<%= link_to image_tag("stattrader-logo.jpg", :class => "logo"), "http://www.stattrader.com" %>
 </div>
 
 <div class="container">
 	<%= yield %>
 </div>
 
+<div class="footer">All content © 2012 <a href="http://www.stattrader.com">StatTrader.com</a></div>
 </body>
 
 </html>

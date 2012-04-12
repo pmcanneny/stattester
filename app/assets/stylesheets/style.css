@@ -43,9 +43,9 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .header { position:fixed;top:0px;height:90px;width:100%;background-color:#ffffff;border-bottom:1px solid #cccccc;z-index:10; }
 
-.leftwindow { float:left;width:300px;height:800px;margin:0px;padding:0px;display:inline; }
+.leftwindow { float:left;width:300px;margin:0px;padding:0px;display:inline;margin-bottom:50px; }
 
-.container { text-align:left;padding:90px 0px 50px 0px;margin:0px auto;display:table;width:1100px; }
+.container { text-align:left;padding:90px 0px 50px 0px;margin:0px auto;display:table;width:1200px; }
 
 .footer { position:fixed;bottom:0px;width:100%;height:20px;background-color:#353535;color:#999999;text-align:center;padding-top:10px; }
 
@@ -53,34 +53,36 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .companydatacontainer { position:relative;padding-top:20px;margin-left:20px;height:auto;width:auto;display:block;background-color:#f6f0b8;border:1px solid #aaaa99; }
 
-.mystattradecontainer { position:relative;padding-top:20px;margin-left:20px;height:auto;width:auto;display:block;background-color:#f4f4f4; }
+.mystattradecontainer { position:relative;padding-top:20px;margin-left:20px;background-color:#f4f4f4; }
 
-.mystattradenetworkcontainer { position:relative;margin-left:20px;height:auto;width:auto;display:block;background-color:#f4f4f4; }
+.mystattradenetworkcontainer { position:relative;margin-left:20px;padding:0px 20px 20px 20px;background-color:#f4f4f4;width:600px; }
 
-.networkstatscontainer { float:left;text-align:left;background-color:#c3d3e1; }
+.mystattradenetworkcontainer td { text-align:right; }
+
+.networkstatscontainer { float:left;margin-left:20px;text-align:left;background-color:#c3d3e1; }
 
 .tablescontainer { float:left; }
 
-.notice { background-color:#efefef;padding: 5px 5px 5px 5px;text-align:center;border: 1px solid #999; }
+
 
 
 /* ----- Universal  -------*/
-
-.tablecolumn { float:left;width:130px;height:550px;margin:0px;padding:0px; }
-
-.tablecolumn td, .tablecolumn th { text-align:left;margin:0px;padding:0px; }
-
-.tablecolumn table { margin:0px;padding:0px;border-spacing:0px; }
-
-.collapsed { width:1px;overflow:hidden; }
 
 .container a { color:#333333;font-size:14px; }
 
 .container td { text-align:left;white-space:nowrap; }
 
-.container td + td { text-align:left;white-space:nowrap; }
-
 .container h1 { font-size:20px;color:#aaaa99;margin:20px 0px 0px 0px;border-bottom:1px solid #aaaa99;text-align:left; }
+
+.tablecolumn { float:left;width:130px;height:550px;margin:0px;padding:0px; }
+
+.tablecolumn td, .tablecolumn th { text-align:right;margin:0px;padding-right:4px; }
+
+.tablecolumn input { text-align:right; }
+
+.tablecolumn table { margin:0px;padding:0px;border-spacing:0px; }
+
+.collapsed { width:1px;overflow:hidden; }
 
 .center, .center p, .center div, .center h1 { text-align:center; }
 
@@ -106,6 +108,13 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .dataout { left:170px; }
 
+.percentage { width:25px;text-align:left; }
+
+.percentage td { width:25px;text-align:left; }
+
+.percentage table { width:25px;text-align:left; }
+
+.mytrade { width:100px; }
 
 
 /* ----- Company Data  -------*/
@@ -128,49 +137,47 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 
 
-/* ----- My Stat Trade  -------*/
 
 
-.mystattradecontainer td { border-bottom:1px solid #333333; }
 
-.mystattradenetworkcontainer td { border-bottom:1px solid #333333;border-spacing:none; }
-
-.mystattradenetworkcontainer table { border-spacing:none; }
-
-.mystattradenetworkcontainer td, .mystattradenetworkcontainer th { height:36px;width:400px;padding-left:10px; }
-
-
-/* ----- Network Stats  -------*/
-
-.networkstatscontainer td { padding:10px; }
-
-.networkstatscontainer span { position:absolute;margin:0px;border:0px;top:210px; }
-
-.networkstats { width:400px;background-color:#c3d3e1;padding:10px; }
-
-.networktable { width:400px; }
-
-.updatebutton { margin-left:20px;margin-top:20px; }
 
 
 /* ----- Filter  -------*/
 
 .login { position:relative;top:40px;width:400px;margin:0px auto; }
 
+.filters { width:1200px;background-color:#c3d3e1;padding:0px 20px 20px 20px;margin:0px; }
 
-/* ----- Filter  -------*/
+.filters p { display:block;height:20px;margin-left:20px; }
 
-.filters { width:1200px;height:100px;background-color:#c3d3e1;padding:20px;margin:0px; }
+.filters select { display:block;width:150px;margin-bottom:4px; }
+
+.filters td { vertical-align:middle;padding-left:20px; }
 
 
 /* ----- Charts  -------*/
 
-.charts { position:absolute;margin-left:20px; }
+.charts { position:relative;margin-left:20px;height:600px; }
 
-.chart1 { width:350px;height:200px;background-color:#ffffff;border:10px solid #ffffff;top:100px; }
+.charts p { margin-bottom:10px;padding:0px;text-align:center; }
 
+.chart { width:350px;height:200px;background-color:#ffffff;border:10px solid #ffffff;margin:0px;padding:0px; }
+
+.hiddenchart { position:absolute;left:-1000px;height:1px; }
+
+.topchart { position:absolute;top:1px;height:280px;  }
+
+.bottomchart { position:absolute;top:280px;height:280px;  }
 
 /* ----- Summary Sheet  -------*/
+
+.icon { border:1px solid #cccccc; }
+
+.summarytitle { vertical-align:middle;border-bottom:1px solid #000000; }
+
+.summarycontainer { float:left;margin-bottom:50px; }
+
+.summarymargin { margin-left:50px; }
 
 .summaryheader { position:relative;margin:0px auto;border-spacing:0px;top:50px;margin-bottom:10px;width:800px; }
 
@@ -178,17 +185,17 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .summarysheet { text-align:center;position:relative;margin:0px auto;border-spacing:0px;top:50px; }
 
-.summarysheet td { text-align:center;padding:5px;margin:0px;border:none; }
+.summarysheet td { width:60px;height:40px;text-align:center;padding:4px;margin:0px; }
 
-.summarysheet td { text-align:center;padding:5px;margin:0px;border:1px solid #999999; }
+.summarysheet td + td { text-align:center;padding:5px;margin:0px; }
 
-.summarysheet th { text-align:center;font-weight:normal;background-color:#f6f0b8;border:1px solid #999999; }
+.summarysheet th { height:50px;text-align:center;font-weight:normal;padding:0px 4px 0px 4px; }
 
-.summarysheet th + th + th + th + th { text-align:center;font-weight:normal;background-color:#c3d3e1;border:1px solid #999999; }
+.summarysheet th + th + th + th + th { text-align:center;font-weight:normal;background-color:#c3d3e1; }
 
-.summarysheet tr { text-align:center;background-color:none; }
+.summarysheet tr { text-align:center;background-color:none;font-size:18px;height:80px; }
 
-.summarysheet tr + tr { text-align:center;background-color:#c3d3e1; }
+.summarysheet tr + tr { text-align:center;background-color:#c3d3e1;font-size:12px;height:60px; }
 
 .summarysheet tr + tr + tr { text-align:center;background-color:#c3d3e1; }
 
@@ -214,9 +221,19 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .summarysheet tr + tr + tr + tr + tr + tr + tr + tr + tr + tr + tr + tr + tr + tr { text-align:center;background-color:#ffffff; }
 
-/* .summarysheet tr:nth-child(even) { background-color:#efefef; }
+.mycompanies th { background-color:none; }
 
-.summarysheet tr:nth-child(odd) { background-color:#ffffff; } */
+.mycompanies tr + tr { background-color:#f6f0b8; }
+
+.mycompanies tr + tr + tr { background-color:#f6f0b8; }
+
+.addcompanybutton { margin-left:50px; }
+
+
+/* 
+.summarysheet tr:nth-child(even) { background-color:#efefef; }
+.summarysheet tr:nth-child(odd) { background-color:#ffffff; } 
+*/
 
 
 /* ----- Header  -------*/
@@ -229,7 +246,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .logout a { text-decoration:none;color:#999999; }
 
-.logo { float:left;position:relative;margin:10px 0px 0px 40px;width:auto;height:70px; }
+.logo { float:left;position:relative;margin:10px 0px 0px 40px;width:auto;height:70px;border:none; }
 
 .menu { position:fixed;width:800px;left:300px;margin-top:-26px;z-index:1000;color:#cccccc;white-space:nowrap; }
 
@@ -241,6 +258,42 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .labels td { height:34px;text-align:right;border:none; }
 
-
 .labeltitle { font-weight:bold;text-align:left; }
+
+
+/* ----- My Stat Trade  -------*/
+
+
+.mystattradecontainer td { border-bottom:1px solid #333333; }
+
+.mystattradenetworkcontainer table { border-spacing:0px; }
+
+.mystattradenetworkcontainer td, .mystattradenetworkcontainer th { text-align:right;height:36px;width:400px;padding-left:10px;border-bottom:1px solid #333333;border-spacing:none; }
+
+.mystattradenetworkcontainer img:hover { cursor:pointer; }
+
+
+
+
+/* ----- Network Stats  -------*/
+
+.statsheading { font-size:24px;padding-top:20px;height:50px;text-align:left;display:block; }
+
+.statsheading span { font-size:12px;display:block; }
+
+.networkstatscontainer table { border-spacing:0px; }
+
+.networkstatscontainer td, .networkstatscontainer th { text-align:right;height:36px;padding-left:10px;border-bottom:1px solid #333333;border-spacing:none; }
+
+.networkstatscontainer span { top:0px;margin:0px;padding:0px; }
+
+.networkcontainer { background-color:#c3d3e1; }
+
+.networkstats { width:400px;background-color:#c3d3e1; }
+
+.networktab span { background-color:#c3d3e1; }
+
+.networktable { width:400px; }
+
+.updatebutton { margin-left:20px;margin-top:20px; }
 
