@@ -15,8 +15,84 @@
 
 </div>
 
+
+
+
+
 <div class="menu"><span>Summary Sheet</span></div>
 <%= show_notice(notice) %>
+
+
+
+
+
+
+<table class="summarysheet">
+
+
+<% for company in @companies %>  
+
+<tr class="<%= cycle("even", "odd") %>">  
+ 
+<td></td>
+<td><%= company.updated_at.strftime("%m-%d-%Y") %></td>
+
+<td><%= company.name %></td>
+<td style="text-align:center;"><%= link_to image_tag("padlock.png", :class => "icon"), {:controller=>"data_sheet",:action=>"view", :id => company.id} %></td>
+<td><%= 
+				if "#{Company.four_digit_sics(company.sic)}".length > 15
+					"#{company.sic} - #{Company.four_digit_sics(company.sic)}".slice(0,15) + "..."
+				else
+					"#{company.sic} - #{Company.four_digit_sics(company.sic)}"
+				end
+	%></td>
+<td><%= default_filter_private_count(company) %></td>
+<td><%= default_filter_public_count(company) %></td>
+<td><%= link_to image_tag("charticon.png", :class => "icon"), {:controller=>"network_stats",:action=>"view", :id => company.id} %></td>
+<td style="text-align:center;"><%= link_to image_tag("stattrader-icon.png", :class => "icon"), {:action=>"index"} %></td>
+<td><%= link_to "View", {:action=>"index"} %></td>
+<td><%= link_to "View", {:action=>"index"} %></td>
+<td><%= link_to "View", {:action=>"index"} %></td>
+
+
+</tr>  
+
+<% end %>  
+
+</table>
+
+
+<table class="summaryheader tan">
+
+	<tr>  
+	<th colspan="4" class="tan">My Companies</th>
+	<th colspan="4" class="tan">StatTrader's Comparison Network</th>
+	<th colspan="4" class="tan">Relevant Public Data<br />& Information</th>
+	</tr>
+	<tr>
+	<td rowspan="2" class="yellow"></td>
+	<td rowspan="2" class="yellow">Last Time<br />Data<br />Updated</td>
+	<td rowspan="2" class="yellow">Company<br />Name or<br />Code</td>
+	<td rowspan="2" class="yellow">To<br />Stat<br />Trade</td>
+	<td rowspan="2" class="red">SIC<br />Default<br />Description</td>
+	<td colspan="3" class="red summarytitlered">Profile's Depth</td>
+	<td rowspan="2" class="blue">Access<br />Public Co.<br />Data</td>
+	<td colspan="2" class="blue summarytitle">Buy or Rent</td>
+	<td rowspan="2" class="blue">Network's<br />Traded<br />Links</td>
+	</tr>
+	<tr>
+	<td class="red">Private<br />Cos</td>
+	<td class="red">Public<br />Cos</td>
+	<td class="red">View &<br />Filter</td>
+	<td class="blue">From<br />Vendors</td>
+	<td class="blue">From<br />Members</td>
+	</tr>
+	
+</table>
+
+
+<!--
+
 
 <div class="summarycontainer summarymargin">
 <table class="summarysheet mycompanies">
@@ -40,14 +116,12 @@
 <% end %> 
 </table>
 </div>
-
-
-<div class="summarycontainer">
+<div class="summarycontainer red">
 <table class="summarysheet">
 <tr><th colspan="4">StatTrader's Comparison Network</th></tr>
 <tr>
 <th rowspan="2">SIC<br />Default<br />Description</th>
-<th colspan="3" class="summarytitle">Profile's Depth</th>
+<th colspan="3" class="summarytitlered">Profile's Depth</th>
 </tr>
 <tr>
 <th>Private<br />Cos</th>
@@ -85,9 +159,7 @@
 <% end %> 
 </table>
 </div>
-
-
-
 <div class="clear"></div>
+-->
 
 <p><span class="button addcompanybutton"><%= link_to "Add Company", {:controller=>"data_sheet",:action=>"new"} %></span></p>

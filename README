@@ -6,3 +6,68 @@ statistics into our network in exchange for the processed results of all
 similar trades. For example, a user will be able to compare the statistics 
 from their own private company or private investments to the averages of 
 all other private companies in specific industries and/or regions.
+
+
+
+== List of features
+
+A. User Accounts and Security
+	1. New users and updating user information
+		- The user's email address must be unique to our database and be in an email address format (name@something.something)
+		- User passwords must be confirmed (entered in twice) and must contain at least 4 characters
+		- Users must select their type from the dropdown, which detrmines their user type
+		- For new users, clicking an email confirmation link is required for account activation. This confirms they have access to the email address they are using.
+		- Email confirmation links are generated using a large unique token string - these are very difficult to guess
+		- An email confirmation link can only be requested once per 5 minutes
+	2. Password reset
+		- A user can initiate the password reset process by clicking the password reset link and providing their email address
+		- A link containing a large unique token is then generated sent to the user's email address
+		- This link with token would be very difficult to guess, and only exists for a limited time after the password reset process is started
+		- Clinking the link brings the user to a unique page in which they can change their password as needed. The 4 character lower limit still applies
+	3. Authentication
+		- Authentication is the process by which we confirm a user is who they say they are. We simply use a password for this.
+		- A user sharing or using an easily guessable password is the only issue here.
+	4. Authorization
+		- Authorization deals with what users are authorized to see and/or what they have access to
+		- Users are only authorized to see data that applies to them
+		- Manual manipulation of the stattrader app URLs is possible, but ACCESS DENIED messages and redirections will occur when trying to access something that a user does not have authorization to view.
+		- Some users have authorization for special pages based on user type. This will include admin type users and licensees
+	5. Login, Logout, Cookies, Sessions, and "Remember Me"
+		- To Login, a user provides email and password. For more information please see "Authentication" above
+		- Successful login provides the user with a session cookie that contains the user's unique auth token
+		- This cookie is encrypted and stored on the user's machine. The cookie is encrypted so that if the user's machine is compromised, the user's unique auth token is not compromised.
+		- The cookie expires after a certain amount of time. This amount of time is increased to infinite if the "remember me" box is checked on login
+		- The cookie expiration checks happen server-side such that manipulation of this would require decryption and re-encryption if the encrypted cookie. 
+		- On logout cookies are expired/deleted
+	6. SQL Injection prevention - query sanitization
+		- SQL Injection is the method of an attacker manipulating a SQL query in some way - basically gaining some or full access to the database
+		- All queries are automatically sanitized and/or coded such that manipulation is not possible
+	7. CAPTCHA
+		- CAPTCHA is the method of confirming a user is an actual human and not an automated bot or script
+		- StatTrader does not use CAPTCHA at this time
+		- CAPTCHA would be useful for the new user page, and possibly the login page after a certain number of failed login attempts.
+	8. SSL
+		- SSL or Secure Sockets Layer is a method of encrypting information going to and from a website. This prevents "man in the middle" attacks (someone listening in or wire-tapping)
+		- StatTrader does not use SSL at this time but should in the future.
+		- SSL changes the URL of a website to https rather than http (the s stands for secure)
+B. Company Data and Statistics
+	1. Database Storage
+		- Company data is stored in two database tables "Secure Stats" and "Trade Stats", secure being only theirs, and trade being traded anonymously in our network
+		- Each row of company data corresponds to a particular year (NOW, CY, 2Y, etc.)
+		- Reasoning for this was because of the different fields in the "Secure" data and "Trade" statistics, and because statistics would be compared on a per-year basis
+	2. "Data Sheet" page
+		- A table for the company's Secure data and Trade stats appears, as well as the ccompany's profile information
+		- Initially the 4Y and 5Y columns are hidden, but can be shown by clicking a button
+		- Changes to the CY's reporting scale or FYE date will propogate appropriate changes across the other years
+		- Clicking update&save will calculate and fill in appropriate trade statistics
+		- Exporting to an Excel spreadsheet is possible. It will show the company profile information and Secure Data and Trade Statistics tables
+	3. Statistic Calculation
+		- Trade Statistics are calculated and saved when a user clicks the update&save button
+		- If sufficient data to calculate a particular statistic does not exist, it is left blank
+C. Network Statistics
+	1. Filters
+	2. Network Stats
+	3. Graphs
+D. Other
+	1. User Emails
+	2.

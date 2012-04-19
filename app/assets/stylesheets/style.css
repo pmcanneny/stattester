@@ -55,15 +55,13 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .mystattradecontainer { position:relative;padding-top:20px;margin-left:20px;background-color:#f4f4f4; }
 
-.mystattradenetworkcontainer { position:relative;margin-left:20px;padding:0px 20px 20px 20px;background-color:#f4f4f4;width:600px; }
+.mystattradenetworkcontainer { position:relative;margin:20px 0px 0px 20px;padding:0px 20px 20px 20px;background-color:#f4f4f4;width:600px; }
 
 .mystattradenetworkcontainer td { text-align:right; }
 
-.networkstatscontainer { float:left;margin-left:20px;text-align:left;background-color:#c3d3e1; }
+.networkstatscontainer { float:left;margin:20px 0px 0px 20px;text-align:left;background-color:#c3d3e1; }
 
 .tablescontainer { float:left; }
-
-
 
 
 /* ----- Universal  -------*/
@@ -108,12 +106,6 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .dataout { left:170px; }
 
-.percentage { width:25px;text-align:left; }
-
-.percentage td { width:25px;text-align:left; }
-
-.percentage table { width:25px;text-align:left; }
-
 .mytrade { width:100px; }
 
 
@@ -146,7 +138,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .login { position:relative;top:40px;width:400px;margin:0px auto; }
 
-.filters { width:1200px;background-color:#c3d3e1;padding:0px 20px 20px 20px;margin:0px; }
+.filters { width:1400px;background-color:#ab1600;padding:20px 20px 20px 20px;margin:0px;color:#ffffff; }
 
 .filters p { display:block;height:20px;margin-left:20px; }
 
@@ -163,41 +155,46 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .chart { width:350px;height:200px;background-color:#ffffff;border:10px solid #ffffff;margin:0px;padding:0px; }
 
-.hiddenchart { position:absolute;left:-1000px;height:1px; }
+.hiddenchart { position:absolute;left:-10000px;height:1px; }
 
 .topchart { position:absolute;top:1px;height:280px;  }
 
 .bottomchart { position:absolute;top:280px;height:280px;  }
 
+
 /* ----- Summary Sheet  -------*/
 
-.icon { border:1px solid #cccccc; }
+.icon { border:1px solid #cccccc;width:20px;height:21px; }
 
 .summarytitle { vertical-align:middle;border-bottom:1px solid #000000; }
+
+.summarytitlered { vertical-align:middle;border-bottom:1px solid #ffffff; }
 
 .summarycontainer { float:left;margin-bottom:50px; }
 
 .summarymargin { margin-left:50px; }
 
-.summaryheader { position:relative;margin:0px auto;border-spacing:0px;top:50px;margin-bottom:10px;width:800px; }
+.summaryheader { text-align:center;width:1200px;position:fixed;margin:0px auto;border-spacing:0px;top:90px;padding-top:10px;border-spacing:0px; }
 
-.summaryheader span { padding:15px; } 
+.summaryheader td, .summaryheader th { width:80px;height:50px;text-align:center;margin:0px;padding:0px; }
 
-.summarysheet { text-align:center;position:relative;margin:0px auto;border-spacing:0px;top:50px; }
+.summaryheader th { height:60px; }
 
-.summarysheet td { width:60px;height:40px;text-align:center;padding:4px;margin:0px; }
+.summarysheet { width:1200px;text-align:center;position:relative;margin:0px auto;border-spacing:0px;top:170px;border-spacing:0px;padding:0px; }
 
-.summarysheet td + td { text-align:center;padding:5px;margin:0px; }
+.summarysheet td { width:80px;height:40px;text-align:center;padding:0px;margin:0px; }
 
-.summarysheet th { height:50px;text-align:center;font-weight:normal;padding:0px 4px 0px 4px; }
+.summarysheet td + td { text-align:center;margin:0px; }
 
-.summarysheet th + th + th + th + th { text-align:center;font-weight:normal;background-color:#c3d3e1; }
+.summarysheet th { height:30px;text-align:center;font-weight:normal; }
 
-.summarysheet tr { text-align:center;background-color:none;font-size:18px;height:80px; }
+.summarysheet th + th + th + th + th { text-align:center;font-weight:normal;background-color:none; }
 
-.summarysheet tr + tr { text-align:center;background-color:#c3d3e1;font-size:12px;height:60px; }
+.summarysheet tr { text-align:center;background-color:#efefef; }
 
-.summarysheet tr + tr + tr { text-align:center;background-color:#c3d3e1; }
+.summarysheet tr + tr { text-align:center;background-color:#ffffff; }
+
+.summarysheet tr + tr + tr { text-align:center;background-color:#efefef; }
 
 .summarysheet tr + tr + tr + tr { text-align:center;background-color:#ffffff; }
 
@@ -229,6 +226,21 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .addcompanybutton { margin-left:50px; }
 
+.tan { background-color:#eaebd9; }
+
+.blue { background-color:#c3d3e1; }
+
+.yellow { background-color:#f6f0b8; }
+
+.red { background-color:#ab1600;color:#ffffff; }
+
+.red tr + tr { background-color:#ab1600;color:#ffffff; }
+
+.red tr + tr + tr { background-color:#ab1600;color:#ffffff; }
+
+.red tr + tr + tr + tr { color:#000000; }
+
+.fixed { position:fixed; }
 
 /* 
 .summarysheet tr:nth-child(even) { background-color:#efefef; }
@@ -263,16 +275,27 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 /* ----- My Stat Trade  -------*/
 
-
 .mystattradecontainer td { border-bottom:1px solid #333333; }
 
 .mystattradenetworkcontainer table { border-spacing:0px; }
 
-.mystattradenetworkcontainer td, .mystattradenetworkcontainer th { text-align:right;height:36px;width:400px;padding-left:10px;border-bottom:1px solid #333333;border-spacing:none; }
+.mystattradenetworkcontainer td, .mystattradenetworkcontainer th { text-align:right;height:36px;width:50px;padding-left:1px;border-bottom:1px solid #333333;border-spacing:none; }
+
+.mystattradenetworkcontainer td + td + td + td { text-align:left; }
+
+.mystattradenetworkcontainer td + td + td + td + td { text-align:right; }
+
+.mystattradenetworkcontainer td + td + td + td + td + td { text-align:left; }
+
+.mystattradenetworkcontainer td + td + td + td + td + td + td { text-align:right; }
+
+.mystattradenetworkcontainer td + td + td + td + td + td + td + td { text-align:left; }
+
+.mystattradenetworkcontainer td + td + td + td + td + td + td + td + td { text-align:right; }
+
+.mystattradenetworkcontainer td + td + td + td + td + td + td + td + td + td { text-align:left; }
 
 .mystattradenetworkcontainer img:hover { cursor:pointer; }
-
-
 
 
 /* ----- Network Stats  -------*/
@@ -283,7 +306,21 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .networkstatscontainer table { border-spacing:0px; }
 
-.networkstatscontainer td, .networkstatscontainer th { text-align:right;height:36px;padding-left:10px;border-bottom:1px solid #333333;border-spacing:none; }
+.networkstatscontainer td, .networkstatscontainer th { text-align:right;height:36px;width:30px;border-bottom:1px solid #333333;border-spacing:none; }
+
+.networkstatscontainer td + td { text-align:left; }
+
+.networkstatscontainer td + td + td { text-align:right; }
+
+.networkstatscontainer td + td + td + td { text-align:left; }
+
+.networkstatscontainer td + td + td + td + td { text-align:right; }
+
+.networkstatscontainer td + td + td + td + td + td { text-align:left; }
+
+.networkstatscontainer td + td + td + td + td + td + td { text-align:right; }
+
+.networkstatscontainer td + td + td + td + td + td + td + td { text-align:left; }
 
 .networkstatscontainer span { top:0px;margin:0px;padding:0px; }
 
@@ -291,9 +328,19 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .networkstats { width:400px;background-color:#c3d3e1; }
 
-.networktab span { background-color:#c3d3e1; }
+.networktab span { background-color:#ab1600;color:#ffffff; }
 
 .networktable { width:400px; }
 
 .updatebutton { margin-left:20px;margin-top:20px; }
+
+
+
+
+
+.percentage { width:25px;text-align:left; }
+
+.percentage td { width:25px;text-align:left;padding-left:0px; }
+
+.percentage table { width:25px;text-align:left; }
 

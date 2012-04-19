@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120328224051) do
+ActiveRecord::Schema.define(:version => 20120405172915) do
 
   create_table "companies", :force => true do |t|
     t.string   "name",                                 :null => false
     t.integer  "user_id",                              :null => false
     t.integer  "combination",       :default => 2
     t.integer  "ownership"
-    t.integer  "sic"
+    t.string   "sic"
     t.integer  "country",           :default => 1
     t.integer  "region"
     t.boolean  "shifted",           :default => false
@@ -157,7 +157,7 @@ ActiveRecord::Schema.define(:version => 20120328224051) do
   end
 
   create_table "stat_filters", :force => true do |t|
-    t.string   "name"
+    t.string   "name",         :default => "default"
     t.integer  "user_id"
     t.integer  "combination"
     t.integer  "ownership"
@@ -173,6 +173,8 @@ ActiveRecord::Schema.define(:version => 20120328224051) do
     t.integer  "quality"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
+    t.integer  "user_type"
   end
 
   create_table "trade_stats", :force => true do |t|

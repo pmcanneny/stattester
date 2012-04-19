@@ -1,13 +1,14 @@
 #a filter object for use in network stats
 class StatFilter < ActiveRecord::Base
+  belongs_to :company
   
   #define the options for Reporting Entity
   def self.combination(r)
-	unless r == 0
-	  Company.combination(r)
-	else
-	  "Any"
-	end
+  	unless r == 0
+  	  Company.combination(r)
+  	else
+  	  "Any"
+  	end
   end
   #combination options in hash form - for use in drop-down menus
   def self.combination_options
@@ -16,11 +17,11 @@ class StatFilter < ActiveRecord::Base
 
   #define the options for Ownership
   def self.ownership(o)
-	unless o == 0
-	  Company.ownership(o)
-	else
-	  "Any"
-	end
+  	unless o == 0
+  	  Company.ownership(o)
+  	else
+  	  "Any"
+  	end
   end
   #ownership options in hash form - for use in drop-down menus
   def self.ownership_options
@@ -29,11 +30,11 @@ class StatFilter < ActiveRecord::Base
 
   #define the options for Region
   def self.region(r)
-	unless r == 0
-	  Company.region(r)
-	else
-	  "Any"
-	end
+  	unless r == 0
+  	  Company.region(r)
+  	else
+  	  "Any"
+  	end
   end
   #region options in hash form - for use in drop-down menus
   def self.region_options
@@ -43,11 +44,11 @@ class StatFilter < ActiveRecord::Base
 
   #define the options for Country
   def self.country(c)
-	unless c == 0
-	  Company.country(c)
-	else
-	  "Any"
-	end
+  	unless c == 0
+  	  Company.country(c)
+  	else
+  	  "Any"
+  	end
   end
   #Country options in hash form - for use in drop-down menus
   def self.country_options
@@ -57,10 +58,10 @@ class StatFilter < ActiveRecord::Base
   #define the options for Historical Quality
   def self.quality(q)
     unless q == 0
-	  SecureStat.quality(q)
-	else
-	  "Any"
-	end
+  	  SecureStat.quality(q)
+  	else
+  	  "Any"
+  	end
   end
 
   #quality options in hash form - for use in drop-down menus

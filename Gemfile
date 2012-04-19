@@ -21,6 +21,7 @@ gem 'pg'
 gem 'bcrypt-ruby'
 gem 'mysql2', :group => :production
 gem 'rake' , '>= 0.9.2'
+gem 'spreadsheet', '~> 0.6.8'
 
 # gem 'sorcery'
 

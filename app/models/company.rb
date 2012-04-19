@@ -1,3 +1,6 @@
+require 'spreadsheet'
+Spreadsheet.client_encoding = 'UTF-8'
+
 class Company < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :name
@@ -92,6 +95,253 @@ class Company < ActiveRecord::Base
 
 	self.save  	
   end
+
+  #exporting to excel for the data sheet
+	def datasheet_xls
+		Spreadsheet.client_encoding = 'UTF-8'
+
+	  book = Spreadsheet::Workbook.new
+	  sheet1 = book.create_worksheet :name => "#{name} Data"
+
+	  sheet1[0,1] = "Company Profile"
+	 	sheet1[1,1] = "Name:"
+	 	sheet1[2,1] = "Entity:"
+	 	sheet1[3,1] = "Ownership:"
+	 	sheet1[4,1] = "SIC code:"
+	 	sheet1[5,1] = "Country:"
+	 	sheet1[6,1] = "Region:"
+
+	 	sheet1[1,2] = name
+	 	sheet1[2,2] = Company.combination(combination)
+	 	sheet1[3,2] = Company.ownership(ownership)
+	 	sheet1[4,2] = "#{sic} #{Company.four_digit_sics(sic)}"
+	 	sheet1[5,2] = Company.country(country)
+	 	sheet1[6,2] = Company.region(region)
+
+	 	sheet1[8,0]  = "Company Data"
+	 	sheet1[9,0]  = ""
+	 	sheet1[10,0] = "Fiscal Year End:"
+	 	sheet1[11,0] = "Historical Data Quality:"
+	 	sheet1[12,0] = "Reporting Scale:"
+	 	sheet1[13,0] = "--Accounts--"
+	 	sheet1[14,0] = "Assets:"
+	 	sheet1[15,0] = "Revenue:"
+	 	sheet1[16,0] = "Gross Profit:"
+	 	sheet1[17,0] = "Operating Profit:"
+	 	sheet1[18,0] = "EBITDA:"
+	 	sheet1[19,0] = "--Valuation--"
+	 	sheet1[20,0] = "EBITDA Multiple:"
+	 	sheet1[21,0] = "Sales Multiple:"
+	 	sheet1[22,0] = "Funded Debt Multiple:"
+	 	sheet1[23,0] = "Stock Price:"
+
+		secure_now= SecureStat.find(secure_now_id)
+		secure_cy = SecureStat.find(secure_cy_id)
+  	secure_2y = SecureStat.find(secure_2y_id)
+  	secure_3y = SecureStat.find(secure_3y_id)
+  	secure_4y = SecureStat.find(secure_4y_id)
+  	secure_5y = SecureStat.find(secure_5y_id)
+
+	 	sheet1[9,1]  = "NOW"
+	 	sheet1[10,1] = secure_now.fye == nil ? "" : "#{secure_now.fye.month}/#{secure_now.fye.year}"
+	 	sheet1[11,1] = "My Estimate"
+	 	sheet1[12,1] = SecureStat.reporting_scale(secure_now.reporting_scale)
+	 	sheet1[13,1] = ""
+	 	sheet1[14,1] = "#{secure_now.assets}"
+	 	sheet1[15,1] = "#{secure_now.gross_sales}"
+	 	sheet1[16,1] = "#{secure_now.gross_profit}"
+	 	sheet1[17,1] = "#{secure_now.operating_profit}"
+	 	sheet1[18,1] = "#{secure_now.ebitda}"
+	 	sheet1[19,1] = ""
+	 	sheet1[20,1] = "#{secure_now.ebitda_multiple}"
+	 	sheet1[21,1] = "#{secure_now.sales_multiple}"
+	 	sheet1[22,1] = "#{secure_now.debt_multiple}"
+	 	sheet1[23,1] = "#{secure_now.stock_price}"
+
+	 	sheet1[9,2]  = "CY"
+	 	sheet1[10,2] = secure_cy.fye == nil ? "" : "#{secure_cy.fye.month}/#{secure_cy.fye.year}"
+	 	sheet1[11,2] = SecureStat.quality(secure_cy.quality)
+	 	sheet1[12,2] = SecureStat.reporting_scale(secure_cy.reporting_scale)
+	 	sheet1[13,2] = ""
+	 	sheet1[14,2] = "#{secure_cy.assets}"
+	 	sheet1[15,2] = "#{secure_cy.gross_sales}"
+	 	sheet1[16,2] = "#{secure_cy.gross_profit}"
+	 	sheet1[17,2] = "#{secure_cy.operating_profit}"
+	 	sheet1[18,2] = "#{secure_cy.ebitda}"
+	 	sheet1[19,2] = ""
+	 	sheet1[20,2] = "#{secure_cy.ebitda_multiple}"
+	 	sheet1[21,2] = "#{secure_cy.sales_multiple}"
+	 	sheet1[22,2] = "#{secure_cy.debt_multiple}"
+	 	sheet1[23,2] = "#{secure_cy.stock_price}"
+
+	 	sheet1[9,3]  = "2Y"
+	 	sheet1[10,3] = secure_2y.fye == nil ? "" : "#{secure_2y.fye.month}/#{secure_2y.fye.year}"
+	 	sheet1[11,3] = SecureStat.quality(secure_2y.quality)
+	 	sheet1[12,3] = SecureStat.reporting_scale(secure_2y.reporting_scale)
+	 	sheet1[13,3] = ""
+	 	sheet1[14,3] = "#{secure_2y.assets}"
+	 	sheet1[15,3] = "#{secure_2y.gross_sales}"
+	 	sheet1[16,3] = "#{secure_2y.gross_profit}"
+	 	sheet1[17,3] = "#{secure_2y.operating_profit}"
+	 	sheet1[18,3] = "#{secure_2y.ebitda}"
+	 	sheet1[19,3] = ""
+	 	sheet1[20,3] = "#{secure_2y.ebitda_multiple}"
+	 	sheet1[21,3] = "#{secure_2y.sales_multiple}"
+	 	sheet1[22,3] = "#{secure_2y.debt_multiple}"
+	 	sheet1[23,3] = "#{secure_2y.stock_price}"
+
+	 	sheet1[9,4]  = "3Y"
+	 	sheet1[10,4] = secure_3y.fye == nil ? "" : "#{secure_3y.fye.month}/#{secure_3y.fye.year}"
+	 	sheet1[11,4] = SecureStat.quality(secure_3y.quality)
+	 	sheet1[12,4] = SecureStat.reporting_scale(secure_3y.reporting_scale)
+	 	sheet1[13,4] = ""
+	 	sheet1[14,4] = "#{secure_3y.assets}"
+	 	sheet1[15,4] = "#{secure_3y.gross_sales}"
+	 	sheet1[16,4] = "#{secure_3y.gross_profit}"
+	 	sheet1[17,4] = "#{secure_3y.operating_profit}"
+	 	sheet1[18,4] = "#{secure_3y.ebitda}"
+	 	sheet1[19,4] = ""
+	 	sheet1[20,4] = "#{secure_3y.ebitda_multiple}"
+	 	sheet1[21,4] = "#{secure_3y.sales_multiple}"
+	 	sheet1[22,4] = "#{secure_3y.debt_multiple}"
+	 	sheet1[23,4] = "#{secure_3y.stock_price}"
+
+	 	sheet1[9,5]  = "4Y"
+	 	sheet1[10,5] = secure_4y.fye == nil ? "" : "#{secure_4y.fye.month}/#{secure_4y.fye.year}"
+	 	sheet1[11,5] = SecureStat.quality(secure_4y.quality)
+	 	sheet1[12,5] = SecureStat.reporting_scale(secure_4y.reporting_scale)
+	 	sheet1[13,5] = ""
+	 	sheet1[14,5] = "#{secure_4y.assets}"
+	 	sheet1[15,5] = "#{secure_4y.gross_sales}"
+	 	sheet1[16,5] = "#{secure_4y.gross_profit}"
+	 	sheet1[17,5] = "#{secure_4y.operating_profit}"
+	 	sheet1[18,5] = "#{secure_4y.ebitda}"
+	 	sheet1[19,5] = ""
+	 	sheet1[20,5] = "#{secure_4y.ebitda_multiple}"
+	 	sheet1[21,5] = "#{secure_4y.sales_multiple}"
+	 	sheet1[22,5] = "#{secure_4y.debt_multiple}"
+	 	sheet1[23,5] = "#{secure_4y.stock_price}"
+
+	 	sheet1[9,6]  = "5Y"
+	 	sheet1[10,6] = secure_5y.fye == nil ? "" : "#{secure_5y.fye.month}/#{secure_5y.fye.year}"
+	 	sheet1[11,6] = SecureStat.quality(secure_5y.quality)
+	 	sheet1[12,6] = SecureStat.reporting_scale(secure_5y.reporting_scale)
+	 	sheet1[13,6] = ""
+	 	sheet1[14,6] = "#{secure_5y.assets}"
+	 	sheet1[15,6] = "#{secure_5y.gross_sales}"
+	 	sheet1[16,6] = "#{secure_5y.gross_profit}"
+	 	sheet1[17,6] = "#{secure_5y.operating_profit}"
+	 	sheet1[18,6] = "#{secure_5y.ebitda}"
+	 	sheet1[19,6] = ""
+	 	sheet1[20,6] = "#{secure_5y.ebitda_multiple}"
+	 	sheet1[21,6] = "#{secure_5y.sales_multiple}"
+	 	sheet1[22,6] = "#{secure_5y.debt_multiple}"
+	 	sheet1[23,6] = "#{secure_5y.stock_price}"
+
+	 	trade_now= TradeStat.find(trade_now_id)
+  	trade_cy = TradeStat.find(trade_cy_id)
+  	trade_2y = TradeStat.find(trade_2y_id)
+  	trade_3y = TradeStat.find(trade_3y_id)
+  	trade_4y = TradeStat.find(trade_4y_id)
+  	trade_5y = TradeStat.find(trade_5y_id)
+
+  	sheet1[25,0] = "Company Statistics (Stat Trade)"
+	 	sheet1[26,0] = ""
+	 	sheet1[27,0] = "--Accounts--"
+	 	sheet1[28,0] = "Asset Category:"
+	 	sheet1[29,0] = "Revenue Category:"
+	 	sheet1[30,0] = "Sales/Revenue Growth:"
+	 	sheet1[31,0] = "Gross Profit Margin:"
+	 	sheet1[32,0] = "Operating Profit Margin:"
+	 	sheet1[33,0] = "EBITDA %:"
+	 	sheet1[34,0] = "--Valuation--"
+	 	sheet1[35,0] = "EBITDA Multiple:"
+	 	sheet1[36,0] = "Sales Multiple:"
+	 	sheet1[37,0] = "Funded Debt Multiple:"
+
+	 	sheet1[26,1] = "NOW"
+	 	sheet1[27,1] = ""
+	 	sheet1[28,1] = "#{trade_now.asset_category}"
+	 	sheet1[29,1] = "#{trade_now.revenue_category}"
+	 	sheet1[30,1] = "#{trade_now.sales_growth}"
+	 	sheet1[31,1] = "#{trade_now.gross_profit_margin}"
+	 	sheet1[32,1] = "#{trade_now.operating_profit_margin}"
+	 	sheet1[33,1] = "#{trade_now.ebitda_percent}"
+	 	sheet1[34,1] = ""
+	 	sheet1[35,1] = "#{trade_now.ebitda_multiple}"
+	 	sheet1[36,1] = "#{trade_now.sales_multiple}"
+	 	sheet1[37,1] = "#{trade_now.debt_multiple}"
+
+	 	sheet1[26,2] = "CY"
+	 	sheet1[27,2] = ""
+	 	sheet1[28,2] = "#{trade_cy.asset_category}"
+	 	sheet1[29,2] = "#{trade_cy.revenue_category}"
+	 	sheet1[30,2] = "#{trade_cy.sales_growth}"
+	 	sheet1[31,2] = "#{trade_cy.gross_profit_margin}"
+	 	sheet1[32,2] = "#{trade_cy.operating_profit_margin}"
+	 	sheet1[33,2] = "#{trade_cy.ebitda_percent}"
+	 	sheet1[34,2] = ""
+	 	sheet1[35,2] = "#{trade_cy.ebitda_multiple}"
+	 	sheet1[36,2] = "#{trade_cy.sales_multiple}"
+	 	sheet1[37,2] = "#{trade_cy.debt_multiple}"
+
+	 	sheet1[26,3] = "2Y"
+	 	sheet1[27,3] = ""
+	 	sheet1[28,3] = "#{trade_2y.asset_category}"
+	 	sheet1[29,3] = "#{trade_2y.revenue_category}"
+	 	sheet1[30,3] = "#{trade_2y.sales_growth}"
+	 	sheet1[31,3] = "#{trade_2y.gross_profit_margin}"
+	 	sheet1[32,3] = "#{trade_2y.operating_profit_margin}"
+	 	sheet1[33,3] = "#{trade_2y.ebitda_percent}"
+	 	sheet1[34,3] = ""
+	 	sheet1[35,3] = "#{trade_2y.ebitda_multiple}"
+	 	sheet1[36,3] = "#{trade_2y.sales_multiple}"
+	 	sheet1[37,3] = "#{trade_2y.debt_multiple}"
+
+	 	sheet1[26,4] = "3Y"
+	 	sheet1[27,4] = ""
+	 	sheet1[28,4] = "#{trade_3y.asset_category}"
+	 	sheet1[29,4] = "#{trade_3y.revenue_category}"
+	 	sheet1[30,4] = "#{trade_3y.sales_growth}"
+	 	sheet1[31,4] = "#{trade_3y.gross_profit_margin}"
+	 	sheet1[32,4] = "#{trade_3y.operating_profit_margin}"
+	 	sheet1[33,4] = "#{trade_3y.ebitda_percent}"
+	 	sheet1[34,4] = ""
+	 	sheet1[35,4] = "#{trade_3y.ebitda_multiple}"
+	 	sheet1[36,4] = "#{trade_3y.sales_multiple}"
+	 	sheet1[37,4] = "#{trade_3y.debt_multiple}"
+
+	 	sheet1[26,5] = "4Y"
+	 	sheet1[27,5] = ""
+	 	sheet1[28,5] = "#{trade_4y.asset_category}"
+	 	sheet1[29,5] = "#{trade_4y.revenue_category}"
+	 	sheet1[30,5] = "#{trade_4y.sales_growth}"
+	 	sheet1[31,5] = "#{trade_4y.gross_profit_margin}"
+	 	sheet1[32,5] = "#{trade_4y.operating_profit_margin}"
+	 	sheet1[33,5] = "#{trade_4y.ebitda_percent}"
+	 	sheet1[34,5] = ""
+	 	sheet1[35,5] = "#{trade_4y.ebitda_multiple}"
+	 	sheet1[36,5] = "#{trade_4y.sales_multiple}"
+	 	sheet1[37,5] = "#{trade_4y.debt_multiple}"
+
+	 	sheet1[26,6] = "5Y"
+	 	sheet1[27,6] = ""
+	 	sheet1[28,6] = "#{trade_5y.asset_category}"
+	 	sheet1[29,6] = "#{trade_5y.revenue_category}"
+	 	sheet1[30,6] = "#{trade_5y.sales_growth}"
+	 	sheet1[31,6] = "#{trade_5y.gross_profit_margin}"
+	 	sheet1[32,6] = "#{trade_5y.operating_profit_margin}"
+	 	sheet1[33,6] = "#{trade_5y.ebitda_percent}"
+	 	sheet1[34,6] = ""
+	 	sheet1[35,6] = "#{trade_5y.ebitda_multiple}"
+	 	sheet1[36,6] = "#{trade_5y.sales_multiple}"
+	 	sheet1[37,6] = "#{trade_5y.debt_multiple}"
+
+
+	  spreadsheet = StringIO.new 
+		book.write spreadsheet 
+		spreadsheet
+	end
 
   #the method through which the year shift update is checked and applied
   #all companies are checked and if needed, the shift happens and the shifted companies are flagged

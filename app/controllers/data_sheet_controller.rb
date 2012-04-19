@@ -28,6 +28,12 @@ class DataSheetController < ApplicationController
     	@trade_3y = TradeStat.find(@company.trade_3y_id)
     	@trade_4y = TradeStat.find(@company.trade_4y_id)
     	@trade_5y = TradeStat.find(@company.trade_5y_id)
+
+        respond_to do |format|
+            format.html
+            format.xml { render :xml => @company }
+            format.xls { send_data @company.datasheet_xls.string, content_type: 'application/vnd.ms-excel', :filename => "#{@company.name}.xls" }
+        end
 	end
 
 	#'update' will update+save the data and refresh the page
@@ -38,7 +44,9 @@ class DataSheetController < ApplicationController
           if (key.to_s[/(secure_.*)/])
             # whatever logic you need for params that start with 'setname1'
             params[key].each do |subkey, subvalue|
-              params[key][subkey] = drop_dollar_format(params[key][subkey]).to_f
+                unless params[key][subkey] == ""
+                    params[key][subkey] = drop_dollar_format(params[key][subkey]).to_f
+                end
             end
           end
         end
@@ -137,10 +145,11 @@ class DataSheetController < ApplicationController
 
     #action for creating a new company
     def createcompany
-        @company = Company.new(params[:company].merge(:user_id => current_user.id))
+        @company = Company.new(params[:company])
+        @company.user_id = current_user.id
         unless @company.save
             flash[:notice] = "Must enter company profile data. Please try again."
-            redirect_to :action => :createcompany
+            redirect_to :action => :new
             return
         end
         
@@ -213,8 +222,8 @@ class DataSheetController < ApplicationController
     private 
 
     #drop the dollar signs and commas from submitted string
-    def drop_dollar_format(string)
-        string.gsub(/(,)|(\$)/,"")
+    def drop_dollar_format(string)        
+        string.gsub(/(,)|(\$)/,"")        
     end
 
 end
