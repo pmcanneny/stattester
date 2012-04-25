@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120424192113) do
+ActiveRecord::Schema.define(:version => 20120425195321) do
 
   create_table "companies", :force => true do |t|
     t.string   "name",                                 :null => false
@@ -43,6 +43,21 @@ ActiveRecord::Schema.define(:version => 20120424192113) do
     t.string   "state"
     t.string   "zipcode"
   end
+
+  add_index "companies", ["current_filter_id"], :name => "index_companies_on_current_filter_id"
+  add_index "companies", ["secure_2y_id"], :name => "index_companies_on_secure_2y_id"
+  add_index "companies", ["secure_3y_id"], :name => "index_companies_on_secure_3y_id"
+  add_index "companies", ["secure_4y_id"], :name => "index_companies_on_secure_4y_id"
+  add_index "companies", ["secure_5y_id"], :name => "index_companies_on_secure_5y_id"
+  add_index "companies", ["secure_cy_id"], :name => "index_companies_on_secure_cy_id"
+  add_index "companies", ["secure_now_id"], :name => "index_companies_on_secure_now_id"
+  add_index "companies", ["trade_2y_id"], :name => "index_companies_on_trade_2y_id"
+  add_index "companies", ["trade_3y_id"], :name => "index_companies_on_trade_3y_id"
+  add_index "companies", ["trade_4y_id"], :name => "index_companies_on_trade_4y_id"
+  add_index "companies", ["trade_5y_id"], :name => "index_companies_on_trade_5y_id"
+  add_index "companies", ["trade_cy_id"], :name => "index_companies_on_trade_cy_id"
+  add_index "companies", ["trade_now_id"], :name => "index_companies_on_trade_now_id"
+  add_index "companies", ["user_id"], :name => "index_companies_on_user_id"
 
   create_table "secure_stats", :force => true do |t|
     t.integer  "company_id",                                                                                    :null => false
@@ -157,6 +172,8 @@ ActiveRecord::Schema.define(:version => 20120424192113) do
     t.text     "xbrlfile"
   end
 
+  add_index "secure_stats", ["company_id"], :name => "index_secure_stats_on_company_id"
+
   create_table "stat_filters", :force => true do |t|
     t.string   "name",         :default => "default"
     t.integer  "user_id"
@@ -178,6 +195,8 @@ ActiveRecord::Schema.define(:version => 20120424192113) do
     t.integer  "user_type"
   end
 
+  add_index "stat_filters", ["company_id"], :name => "index_stat_filters_on_company_id"
+
   create_table "trade_stats", :force => true do |t|
     t.integer  "company_id",                                             :null => false
     t.integer  "revenue_category"
@@ -196,6 +215,8 @@ ActiveRecord::Schema.define(:version => 20120424192113) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "trade_stats", ["company_id"], :name => "index_trade_stats_on_company_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                     :null => false

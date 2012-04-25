@@ -81,11 +81,8 @@ class NetworkStat
       filter.combination.to_f==0 ? "" : "combination = #{filter.combination}")#.where(
       #filter.sic_low.to_f==0 ? "" : "sic = '#{filter.sic_low.to_s}'")     #todo: make sic a string
 
-    #@total_companies = companies.size.to_f
-    companies = companies.where(:id => company_ids1)
-    #companies_stattrader = companies.where(:user_id => -1)    
+    companies = companies.where(:id => company_ids1)  
     companies = companies.where(:user_id => user_ids1)
-    #companies+=companies_stattrader
 
     @total_companies = companies.size.to_i
 
