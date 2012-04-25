@@ -82,13 +82,12 @@ class NetworkStat
       #filter.sic_low.to_f==0 ? "" : "sic = '#{filter.sic_low.to_s}'")     #todo: make sic a string
 
     #@total_companies = companies.size.to_f
-    companies = companies.where(:id => company_ids1)
+    #companies = companies.where(:id => company_ids1)
     #companies_stattrader = companies.where(:user_id => -1)    
-    companies = companies.where(:user_id => user_ids1)
+    #companies = companies.where(:user_id => user_ids1)
     #companies+=companies_stattrader
 
-    company2 = Company.where("")
-    @total_companies = company2.size.to_i
+    @total_companies = companies.size.to_i
 
     @now_revenue_category=0
     @now_asset_category=0
