@@ -90,12 +90,12 @@ class NetworkStatsController < ApplicationController
     @filters = StatFilter.where(:company_id => @company.id)
 
     #gather the company's trade data
-    @trade_now = TradeStat.find(@company.trade_now_id)
-    @trade_cy = TradeStat.find(@company.trade_cy_id)
-    @trade_2y = TradeStat.find(@company.trade_2y_id)
-    @trade_3y = TradeStat.find(@company.trade_3y_id)
-    @trade_4y = TradeStat.find(@company.trade_4y_id)
-    @trade_5y = TradeStat.find(@company.trade_5y_id)
+    @trade_now = TradeStat.find(@company.trade_now)
+    @trade_cy = TradeStat.find(@company.trade_cy)
+    @trade_2y = TradeStat.find(@company.trade_2y)
+    @trade_3y = TradeStat.find(@company.trade_3y)
+    @trade_4y = TradeStat.find(@company.trade_4y)
+    @trade_5y = TradeStat.find(@company.trade_5y)
 
     #calculate and create network stats
     netstats = NetworkStat.new(@company.current_filter)

@@ -15,19 +15,19 @@ class DataSheetController < ApplicationController
 		#verify that the logged-in user is authorized to see this page
 		authorize_user(@company.user_id)
 		#gather the company's secure data
-		@secure_now = SecureStat.find(@company.secure_now_id)
-		@secure_cy = SecureStat.find(@company.secure_cy_id)
-		@secure_2y = SecureStat.find(@company.secure_2y_id)
-		@secure_3y = SecureStat.find(@company.secure_3y_id)
-		@secure_4y = SecureStat.find(@company.secure_4y_id)
-		@secure_5y = SecureStat.find(@company.secure_5y_id)
+		@secure_now = SecureStat.find(@company.secure_now)
+		@secure_cy = SecureStat.find(@company.secure_cy)
+		@secure_2y = SecureStat.find(@company.secure_2y)
+		@secure_3y = SecureStat.find(@company.secure_3y)
+		@secure_4y = SecureStat.find(@company.secure_4y)
+		@secure_5y = SecureStat.find(@company.secure_5y)
     	#gather the company's trade data
-    	@trade_now = TradeStat.find(@company.trade_now_id)
-    	@trade_cy = TradeStat.find(@company.trade_cy_id)
-    	@trade_2y = TradeStat.find(@company.trade_2y_id)
-    	@trade_3y = TradeStat.find(@company.trade_3y_id)
-    	@trade_4y = TradeStat.find(@company.trade_4y_id)
-    	@trade_5y = TradeStat.find(@company.trade_5y_id)
+    	@trade_now = TradeStat.find(@company.trade_now)
+    	@trade_cy = TradeStat.find(@company.trade_cy)
+    	@trade_2y = TradeStat.find(@company.trade_2y)
+    	@trade_3y = TradeStat.find(@company.trade_3y)
+    	@trade_4y = TradeStat.find(@company.trade_4y)
+    	@trade_5y = TradeStat.find(@company.trade_5y)
 
         respond_to do |format|
             format.html
@@ -64,19 +64,19 @@ class DataSheetController < ApplicationController
         end
 
 		#gather the company's secure data
-		@secure_now = SecureStat.find(@company.secure_now_id)
-		@secure_cy = SecureStat.find(@company.secure_cy_id)
-		@secure_2y = SecureStat.find(@company.secure_2y_id)
-		@secure_3y = SecureStat.find(@company.secure_3y_id)
-		@secure_4y = SecureStat.find(@company.secure_4y_id)
-		@secure_5y = SecureStat.find(@company.secure_5y_id)
+		@secure_now = SecureStat.find(@company.secure_now)
+		@secure_cy = SecureStat.find(@company.secure_cy)
+		@secure_2y = SecureStat.find(@company.secure_2y)
+		@secure_3y = SecureStat.find(@company.secure_3y)
+		@secure_4y = SecureStat.find(@company.secure_4y)
+		@secure_5y = SecureStat.find(@company.secure_5y)
     	#gather the company's trade data
-    	@trade_now = TradeStat.find(@company.trade_now_id)
-    	@trade_cy = TradeStat.find(@company.trade_cy_id)
-    	@trade_2y = TradeStat.find(@company.trade_2y_id)
-    	@trade_3y = TradeStat.find(@company.trade_3y_id)
-    	@trade_4y = TradeStat.find(@company.trade_4y_id)
-    	@trade_5y = TradeStat.find(@company.trade_5y_id)
+    	@trade_now = TradeStat.find(@company.trade_now)
+    	@trade_cy = TradeStat.find(@company.trade_cy)
+    	@trade_2y = TradeStat.find(@company.trade_2y)
+    	@trade_3y = TradeStat.find(@company.trade_3y)
+    	@trade_4y = TradeStat.find(@company.trade_4y)
+    	@trade_5y = TradeStat.find(@company.trade_5y)
     	#set the cy fye param for use in update command below
     	unless params[:secure_cy][:fye].to_i == 0
     	  params[:secure_cy][:fye] = DateTime.now-params[:secure_cy][:fye].to_i.months
@@ -154,19 +154,19 @@ class DataSheetController < ApplicationController
         end
         
         #gather the company's secure data
-        @secure_now = SecureStat.find(@company.secure_now_id)
-        @secure_cy = SecureStat.find(@company.secure_cy_id)
-        @secure_2y = SecureStat.find(@company.secure_2y_id)
-        @secure_3y = SecureStat.find(@company.secure_3y_id)
-        @secure_4y = SecureStat.find(@company.secure_4y_id)
-        @secure_5y = SecureStat.find(@company.secure_5y_id)
+        @secure_now = SecureStat.find(@company.secure_now)
+        @secure_cy = SecureStat.find(@company.secure_cy)
+        @secure_2y = SecureStat.find(@company.secure_2y)
+        @secure_3y = SecureStat.find(@company.secure_3y)
+        @secure_4y = SecureStat.find(@company.secure_4y)
+        @secure_5y = SecureStat.find(@company.secure_5y)
         #gather the company's trade data
-        @trade_now = TradeStat.find(@company.trade_now_id)
-        @trade_cy = TradeStat.find(@company.trade_cy_id)
-        @trade_2y = TradeStat.find(@company.trade_2y_id)
-        @trade_3y = TradeStat.find(@company.trade_3y_id)
-        @trade_4y = TradeStat.find(@company.trade_4y_id)
-        @trade_5y = TradeStat.find(@company.trade_5y_id)
+        @trade_now = TradeStat.find(@company.trade_now)
+        @trade_cy = TradeStat.find(@company.trade_cy)
+        @trade_2y = TradeStat.find(@company.trade_2y)
+        @trade_3y = TradeStat.find(@company.trade_3y)
+        @trade_4y = TradeStat.find(@company.trade_4y)
+        @trade_5y = TradeStat.find(@company.trade_5y)
         #set the cy fye param for use in update command below
         unless params[:secure_cy][:fye].to_i == 0
           params[:secure_cy][:fye] = DateTime.now-params[:secure_cy][:fye].to_i.months

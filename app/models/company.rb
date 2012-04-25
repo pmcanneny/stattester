@@ -14,90 +14,93 @@ class Company < ActiveRecord::Base
   #after creation of a company, initialize all the yearly data columns
   #we must set their company_id as well as set this company's data ids
   #also, set the data column's year type and reporting scale default to 1
-  after_create do
-  	#the six SecureStat years
-  	secure_now = SecureStat.new
-  	secure_cy = SecureStat.new
-  	secure_2y = SecureStat.new
-  	secure_3y = SecureStat.new
-  	secure_4y = SecureStat.new
-  	secure_5y = SecureStat.new
-	secure_now.company_id = self.id
-	secure_now.reporting_scale = 1	
-	secure_cy.company_id = self.id
-	secure_cy.reporting_scale = 1	
-	secure_2y.company_id = self.id
-	secure_2y.reporting_scale = 1
-	secure_3y.company_id = self.id
-	secure_3y.reporting_scale = 1
-	secure_4y.company_id = self.id
-	secure_4y.reporting_scale = 1
-	secure_5y.company_id = self.id
-	secure_5y.reporting_scale = 1
+ #  after_create do
+ #  	#the six SecureStat years
+ #  	secure_now = SecureStat.new
+ #  	secure_cy = SecureStat.new
+ #  	secure_2y = SecureStat.new
+ #  	secure_3y = SecureStat.new
+ #  	secure_4y = SecureStat.new
+ #  	secure_5y = SecureStat.new
+	# secure_now.company_id = self.id
+	# secure_now.reporting_scale = 1	
+	# secure_cy.company_id = self.id
+	# secure_cy.reporting_scale = 1	
+	# secure_2y.company_id = self.id
+	# secure_2y.reporting_scale = 1
+	# secure_3y.company_id = self.id
+	# secure_3y.reporting_scale = 1
+	# secure_4y.company_id = self.id
+	# secure_4y.reporting_scale = 1
+	# secure_5y.company_id = self.id
+	# secure_5y.reporting_scale = 1
 
-	secure_now.save
-	secure_2y.save
-	secure_3y.save
-	secure_4y.save
-	secure_5y.save
+	# secure_now.save
+	# secure_2y.save
+	# secure_3y.save
+	# secure_4y.save
+	# secure_5y.save
 
-	#saving the cy last to prevent issues
-	secure_cy.save
+	# #saving the cy last to prevent issues
+	# secure_cy.save
 
-	self.secure_now_id = secure_now.id
-	self.secure_cy_id = secure_cy.id
-	self.secure_2y_id = secure_2y.id
-	self.secure_3y_id = secure_3y.id
-	self.secure_4y_id = secure_4y.id
-	self.secure_5y_id = secure_5y.id
+	# self.secure_now_id = secure_now.id
+	# self.secure_cy_id = secure_cy.id
+	# self.secure_2y_id = secure_2y.id
+	# self.secure_3y_id = secure_3y.id
+	# self.secure_4y_id = secure_4y.id
+	# self.secure_5y_id = secure_5y.id
 
-	#the six TradeStat years
-	trade_now = TradeStat.new
-  	trade_cy = TradeStat.new
-  	trade_2y = TradeStat.new
-  	trade_3y = TradeStat.new
-  	trade_4y = TradeStat.new
-  	trade_5y = TradeStat.new
-	trade_now.company_id = self.id
-	trade_now.save
-	trade_cy.company_id = self.id
-	trade_cy.save
-	trade_2y.company_id = self.id
-	trade_2y.save
-	trade_3y.company_id = self.id
-	trade_3y.save
-	trade_4y.company_id = self.id
-	trade_4y.save
-	trade_5y.company_id = self.id
-	trade_5y.save
-	self.trade_now_id = trade_now.id
-	self.trade_cy_id = trade_cy.id
-	self.trade_2y_id = trade_2y.id
-	self.trade_3y_id = trade_3y.id
-	self.trade_4y_id = trade_4y.id
-	self.trade_5y_id = trade_5y.id
+	# #the six TradeStat years
+	# trade_now = TradeStat.new
+ #  	trade_cy = TradeStat.new
+ #  	trade_2y = TradeStat.new
+ #  	trade_3y = TradeStat.new
+ #  	trade_4y = TradeStat.new
+ #  	trade_5y = TradeStat.new
+	# trade_now.company_id = self.id
+	# trade_now.save
+	# trade_cy.company_id = self.id
+	# trade_cy.save
+	# trade_2y.company_id = self.id
+	# trade_2y.save
+	# trade_3y.company_id = self.id
+	# trade_3y.save
+	# trade_4y.company_id = self.id
+	# trade_4y.save
+	# trade_5y.company_id = self.id
+	# trade_5y.save
+	# self.trade_now_id = trade_now.id
+	# self.trade_cy_id = trade_cy.id
+	# self.trade_2y_id = trade_2y.id
+	# self.trade_3y_id = trade_3y.id
+	# self.trade_4y_id = trade_4y.id
+	# self.trade_5y_id = trade_5y.id
 
-	#initialize the default filter
-	filter = StatFilter.new
-	filter.name = "default"
-	filter.country = 0
-	filter.region = 0
-	filter.revenue_low = 0
-	filter.revenue_high = 0
-	filter.asset_low = 0
-	filter.asset_high = 0
-	filter.sic_low = 0
-	filter.sic_high = 0
-	filter.combination = 0
-	filter.ownership = 0
-	filter.input_basis = 0
-	filter.save
-	self.current_filter_id = filter.id
+	# #initialize the default filter
+	# filter = StatFilter.new
+	# filter.name = "default"
+	# filter.country = 0
+	# filter.region = 0
+	# filter.revenue_low = 0
+	# filter.revenue_high = 0
+	# filter.asset_low = 0
+	# filter.asset_high = 0
+	# filter.sic_low = 0
+	# filter.sic_high = 0
+	# filter.combination = 0
+	# filter.ownership = 0
+	# filter.input_basis = 0
+	# filter.save
+	# self.current_filter_id = filter.id
 
-	self.save  	
-  end
+	# self.save  	
+ #  end
 
+  #################################################################
   # singleton patterns for the current filter, and stats
+  #
+  #
   def current_filter
   	unless self.current_filter_id == nil
   		return self.current_filter_id
@@ -169,6 +172,105 @@ class Company < ActiveRecord::Base
 			self.trade_3y_id
 		end
 	end
+	def trade_4y
+		unless self.trade_4y_id == nil
+			self.trade_4y_id
+		else
+			trade=TradeStat.new
+			trade.company_id = self.id
+			trade.save
+			self.trade_4y_id = trade.id
+			self.save
+			self.trade_4y_id
+		end
+	end
+	def trade_5y
+		unless self.trade_5y_id == nil
+			self.trade_5y_id
+		else
+			trade=TradeStat.new
+			trade.company_id = self.id
+			trade.save
+			self.trade_5y_id = trade.id
+			self.save
+			self.trade_5y_id
+		end
+	end
+	def secure_now
+		unless self.secure_now_id == nil
+			self.secure_now_id
+		else
+			secure=SecureStat.new
+			secure.company_id = self.id
+			secure.save
+			self.secure_now_id = secure.id
+			self.save
+			self.secure_now_id
+		end
+	end
+	def secure_cy
+		unless self.secure_cy_id == nil
+			self.secure_cy_id
+		else
+			secure=SecureStat.new
+			secure.company_id = self.id
+			secure.save
+			self.secure_cy_id = secure.id
+			self.save
+			self.secure_cy_id
+		end
+	end
+	def secure_2y
+		unless self.secure_2y_id == nil
+			self.secure_2y_id
+		else
+			secure=SecureStat.new
+			secure.company_id = self.id
+			secure.save
+			self.secure_2y_id = secure.id
+			self.save
+			self.secure_2y_id
+		end
+	end
+	def secure_3y
+		unless self.secure_3y_id == nil
+			self.secure_3y_id
+		else
+			secure=SecureStat.new
+			secure.company_id = self.id
+			secure.save
+			self.secure_3y_id = secure.id
+			self.save
+			self.secure_3y_id
+		end
+	end
+	def secure_4y
+		unless self.secure_4y_id == nil
+			self.secure_4y_id
+		else
+			secure=SecureStat.new
+			secure.company_id = self.id
+			secure.save
+			self.secure_4y_id = secure.id
+			self.save
+			self.secure_4y_id
+		end
+	end
+	def secure_5y
+		unless self.secure_5y_id == nil
+			self.secure_5y_id
+		else
+			secure=SecureStat.new
+			secure.company_id = self.id
+			secure.save
+			self.secure_5y_id = secure.id
+			self.save
+			self.secure_5y_id
+		end
+	end
+	#
+	# end singleton patterns
+	##################################################################
 
   #exporting to excel for the data sheet
 	def datasheet_xls
@@ -312,12 +414,12 @@ class Company < ActiveRecord::Base
 	 	sheet1[22,6] = "#{secure_5y.debt_multiple}"
 	 	sheet1[23,6] = "#{secure_5y.stock_price}"
 
-	 	trade_now= TradeStat.find(trade_now_id)
-  	trade_cy = TradeStat.find(trade_cy_id)
-  	trade_2y = TradeStat.find(trade_2y_id)
-  	trade_3y = TradeStat.find(trade_3y_id)
-  	trade_4y = TradeStat.find(trade_4y_id)
-  	trade_5y = TradeStat.find(trade_5y_id)
+	 	trade_now= TradeStat.find(self.trade_now)
+  	trade_cy = TradeStat.find(self.trade_cy)
+  	trade_2y = TradeStat.find(self.trade_2y)
+  	trade_3y = TradeStat.find(self.trade_3y)
+  	trade_4y = TradeStat.find(self.trade_4y)
+  	trade_5y = TradeStat.find(self.trade_5y)
 
   	sheet1[25,0] = "Company Statistics (Stat Trade)"
 	 	sheet1[26,0] = ""
@@ -439,12 +541,12 @@ class Company < ActiveRecord::Base
 	 	sheet1[5,2] = Company.country(country)
 	 	sheet1[6,2] = Company.region(region)
 
-	 	trade_now= TradeStat.find(trade_now_id)
-  	trade_cy = TradeStat.find(trade_cy_id)
-  	trade_2y = TradeStat.find(trade_2y_id)
-  	trade_3y = TradeStat.find(trade_3y_id)
-  	trade_4y = TradeStat.find(trade_4y_id)
-  	trade_5y = TradeStat.find(trade_5y_id)
+	 	trade_now= TradeStat.find(self.trade_now)
+  	trade_cy = TradeStat.find(self.trade_cy)
+  	trade_2y = TradeStat.find(self.trade_2y)
+  	trade_3y = TradeStat.find(self.trade_3y)
+  	trade_4y = TradeStat.find(self.trade_4y)
+  	trade_5y = TradeStat.find(self.trade_5y)
 
   	sheet1[8,0] = "Company Statistics (Stat Trade)"
 	 	sheet1[9,0] = ""
@@ -612,16 +714,16 @@ class Company < ActiveRecord::Base
   #perform the year shift on the data pieces
   #TODO:complete
   def shift_years
-  	secure_cy = SecureStat.find(self.secure_cy_id)
-  	secure_2y = SecureStat.find(self.secure_2y_id)
-  	secure_3y = SecureStat.find(self.secure_3y_id)
-  	secure_4y = SecureStat.find(self.secure_4y_id)
-  	secure_5y = SecureStat.find(self.secure_5y_id)
-  	trade_cy = TradeStat.find(self.trade_cy_id)
-  	trade_2y = TradeStat.find(self.trade_2y_id)
-  	trade_3y = TradeStat.find(self.trade_3y_id)
-  	trade_4y = TradeStat.find(self.trade_4y_id)
-  	trade_5y = TradeStat.find(self.trade_5y_id)
+  	secure_cy = SecureStat.find(self.secure_cy)
+  	secure_2y = SecureStat.find(self.secure_2y)
+  	secure_3y = SecureStat.find(self.secure_3y)
+  	secure_4y = SecureStat.find(self.secure_4y)
+  	secure_5y = SecureStat.find(self.secure_5y)
+  	trade_cy = TradeStat.find(self.trade_cy)
+  	trade_2y = TradeStat.find(self.trade_2y)
+  	trade_3y = TradeStat.find(self.trade_3y)
+  	trade_4y = TradeStat.find(self.trade_4y)
+  	trade_5y = TradeStat.find(self.trade_5y)
   	
   	#secure_cy.year = 
   end

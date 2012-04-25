@@ -1,4 +1,10 @@
+
+<br>
+<%= link_to "Process Company Statistics", :action=>"process_stats" %>
+<br>
+
 <h2>All Companies</h2>
+
 <table>
   <% for company in @companies %>  
     <tr class="<%= cycle("even", "odd") %>">  
