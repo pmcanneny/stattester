@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120420203413) do
+ActiveRecord::Schema.define(:version => 20120424192113) do
 
   create_table "companies", :force => true do |t|
     t.string   "name",                                 :null => false
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(:version => 20120420203413) do
     t.integer  "trade_3y_id"
     t.integer  "trade_4y_id"
     t.integer  "trade_5y_id"
-    t.integer  "default_filter_id"
+    t.integer  "current_filter_id"
     t.boolean  "network_valid"
     t.string   "CIK"
     t.string   "ticker_symbol"

@@ -1,17 +1,19 @@
-<div class="datamenu">
+<div class="datamenu" id="datamenu">
 
 <div id="datainlist" class="datain">
-<div id="datain" onselectstart="return false">Company Data In</div>
+<div id="datain">Company Data In</div>
 <p>Select from StatTrader's Public Database</p>
 <p>Upload XBRL File to StatTrader</p>
 <p>Upload a StatTrader File</p>
 </div>  
 
+<!-- 
 <div id="dataoutlist" class="dataout">
-<div id="dataout" onfocus="this.blur();">Company Data Out</div>
+<div id="dataout">Company Data Out</div>
 <p>Export to Excel</p>
 <p>Export to a StatTrader File</p>
 </div>
+ -->
 
 </div>
 
@@ -27,7 +29,7 @@
 
 
 
-<table class="summarysheet">
+<table class="summarysheet" border="0">
 
 
 <% for company in @companies %>  
@@ -37,39 +39,61 @@
 <td></td>
 <td><%= company.updated_at.strftime("%m-%d-%Y") %></td>
 
-<td><%= company.name %></td>
-<td style="text-align:center;"><%= link_to image_tag("padlock.png", :class => "icon"), {:controller=>"data_sheet",:action=>"view", :id => company.id} %></td>
 <td><%= 
-				if "#{Company.four_digit_sics(company.sic)}".length > 15
-					"#{company.sic} - #{Company.four_digit_sics(company.sic)}".slice(0,15) + "..."
+				if "#{company.name}".length > 19
+					"#{company.name}".slice(0,19) + ".."
 				else
-					"#{company.sic} - #{Company.four_digit_sics(company.sic)}"
+					"#{company.name}"
 				end
-	%></td>
+		%>
+</td>
+<td><%= link_to image_tag("padlock.png", :class => "icon"), {:controller=>"data_sheet",:action=>"view", :id => company.id} %></td>
+<td><%= 
+				if "#{Company.four_digit_sics(company.sic)}".length > 19
+					"#{Company.four_digit_sics(company.sic)}".slice(0,19) + ".."
+				else
+					"#{Company.four_digit_sics(company.sic)}"
+				end
+		%>
+</td>
 <td><%= default_filter_private_count(company) %></td>
 <td><%= default_filter_public_count(company) %></td>
 <td><%= link_to image_tag("charticon.png", :class => "icon"), {:controller=>"network_stats",:action=>"view", :id => company.id} %></td>
-<td style="text-align:center;"><%= link_to image_tag("stattrader-icon.png", :class => "icon"), {:action=>"index"} %></td>
+<td><%= link_to image_tag("stattrader-icon.png", :class => "icon"), {:action=>"index"} %></td>
 <td><%= link_to "View", {:action=>"index"} %></td>
 <td><%= link_to "View", {:action=>"index"} %></td>
 <td><%= link_to "View", {:action=>"index"} %></td>
 
 
 </tr>  
+<% end %> 
+<tr style="height:1px;background-color:#eaebd9;">  
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:20px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:100px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:200px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:50px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:200px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+</tr>  
 
-<% end %>  
 
 </table>
 
 
-<table class="summaryheader tan">
+<table class="summaryheader tan" border="0">
 
 	<tr>  
 	<th colspan="4" class="tan">My Companies</th>
 	<th colspan="4" class="tan">StatTrader's Comparison Network</th>
 	<th colspan="4" class="tan">Relevant Public Data<br />& Information</th>
 	</tr>
-	<tr>
+	<tr class="titles">
 	<td rowspan="2" class="yellow"></td>
 	<td rowspan="2" class="yellow">Last Time<br />Data<br />Updated</td>
 	<td rowspan="2" class="yellow">Company<br />Name or<br />Code</td>
@@ -80,7 +104,7 @@
 	<td colspan="2" class="blue summarytitle">Buy or Rent</td>
 	<td rowspan="2" class="blue">Network's<br />Traded<br />Links</td>
 	</tr>
-	<tr>
+	<tr class="subtitles">
 	<td class="red">Private<br />Cos</td>
 	<td class="red">Public<br />Cos</td>
 	<td class="red">View &<br />Filter</td>
@@ -88,6 +112,22 @@
 	<td class="blue">From<br />Members</td>
 	</tr>
 	
+<tr style="height:1px;background-color:#eaebd9;">  
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:20px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:100px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:200px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:50px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:200px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
+</tr>   
+
+
 </table>
 
 
@@ -162,4 +202,4 @@
 <div class="clear"></div>
 -->
 
-<p><span class="button addcompanybutton"><%= link_to "Add Company", {:controller=>"data_sheet",:action=>"new"} %></span></p>
+<div class="button addcompanybutton"><%= link_to "Add Company", {:controller=>"data_sheet",:action=>"new"} %></div>

@@ -94,15 +94,13 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .datamenu { position:fixed;top:0px;left:900px;z-index:100; }
 
-.datamenu div { float:left;background-color:#ffffff;padding:10px; }
-
 .datamenu div div { float:none;text-align:center;width:150px;border:1px solid #dddddd;color:#999999;padding:4px;display:block; }
 
 .datamenu div div:hover { cursor:pointer; }
 
-.datamenu p { white-space:nowrap;line-height:10px; }
+.datamenu p { white-space:nowrap;line-height:10px;padding-left:10px; }
 
-.dataout, .datain { position:absolute;height:20px;overflow:hidden; }
+.dataout, .datain { float:none;padding:10px 10px 10px 0px;position:absolute;height:20px;overflow:hidden;background-color:#ffffff; }
 
 .dataout { left:170px; }
 
@@ -170,25 +168,17 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .summarytitlered { vertical-align:middle;border-bottom:1px solid #ffffff; }
 
-.summarycontainer { float:left;margin-bottom:50px; }
-
 .summarymargin { margin-left:50px; }
 
-.summaryheader { text-align:center;width:1200px;position:fixed;margin:0px auto;border-spacing:0px;top:90px;padding-top:10px;border-spacing:0px; }
-
-.summaryheader td, .summaryheader th { width:80px;height:50px;text-align:center;margin:0px;padding:0px; }
+.summaryheader td, .summaryheader th { height:50px;text-align:center;padding:0px;margin:0px; }
 
 .summaryheader th { height:60px; }
 
-.summarysheet { width:1200px;text-align:center;position:relative;margin:0px auto;border-spacing:0px;top:170px;border-spacing:0px;padding:0px; }
+.summaryheader { margin-left:50px;text-align:center;position:fixed;border-spacing:0px;top:90px;border-spacing:0px;padding:10px 0px 0px 0px; }
 
-.summarysheet td { width:80px;height:40px;text-align:center;padding:0px;margin:0px; }
+.summarysheet { margin-left:50px;text-align:center;position:relative;left:0px;border-spacing:0px;top:170px;border-spacing:0px;padding:0px 0px 200px 0px; }
 
-.summarysheet td + td { text-align:center;margin:0px; }
-
-.summarysheet th { height:30px;text-align:center;font-weight:normal; }
-
-.summarysheet th + th + th + th + th { text-align:center;font-weight:normal;background-color:none; }
+.summarysheet td { height:40px;text-align:center;padding:0px;margin:0px; }
 
 .summarysheet tr { text-align:center;background-color:#efefef; }
 
@@ -224,7 +214,6 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .mycompanies tr + tr + tr { background-color:#f6f0b8; }
 
-.addcompanybutton { margin-left:50px; }
 
 .tan { background-color:#eaebd9; }
 
@@ -260,7 +249,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .logo { float:left;position:relative;margin:10px 0px 0px 40px;width:auto;height:70px;border:none; }
 
-.menu { position:fixed;width:800px;left:300px;margin-top:-26px;z-index:1000;color:#cccccc;white-space:nowrap; }
+.menu { position:fixed;width:500px;left:300px;margin-top:-26px;z-index:1000;color:#cccccc;white-space:nowrap; }
 
 .menu a { color:#999999;font-size:14px;display:inline;margin-left:20px; }
 
@@ -335,6 +324,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .updatebutton { margin-left:20px;margin-top:20px; }
 
 
+.addcompanybutton { position:relative;display:inline;margin-left:50px; }
 
 
 

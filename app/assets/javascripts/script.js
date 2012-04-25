@@ -1,13 +1,8 @@
 
 
-
-
-
 /* -------------------------- */
 /* --------- jQuery --------- */
 /* -------------------------- */
-
-
 
 $(document).ready(function() {
 
@@ -42,8 +37,9 @@ $("#4ybutton").toggle(
 	function() {
 	$("#company4y").animate({"width":"1px" }, "fast" );
 	});
-	
-$("#datain").toggle(
+
+
+$("#datainlist").hover(
 	function() {
 	$("#datainlist").animate({"height":"100px" }, "fast" );
 	},
@@ -51,7 +47,7 @@ $("#datain").toggle(
 	$("#datainlist").animate({"height":"20px" }, "fast" );
 	});
 
-$("#dataout").toggle(
+$("#dataoutlist").hover(
 	function() {
 	$("#dataoutlist").animate({"height":"100px" }, "fast" );
 	},
@@ -59,16 +55,18 @@ $("#dataout").toggle(
 	$("#dataoutlist").animate({"height":"20px" }, "fast" );
 	});
 	
-
-	
 });
 
 
+/* -------------------------- */
+/* --------- Custom --------- */
+/* -------------------------- */
+
 function getChart(c) {
-$("div.topchart").animate({"top":"280px" }, 300 );
-$("div.bottomchart").removeClass("bottomchart").addClass("hiddenchart");
-$("div.topchart").removeClass("topchart").addClass("bottomchart");
-$("#chart"+c+"container").css("top","1px");
-$("#chart"+c+"container").removeClass("hiddenchart").addClass("topchart");
-}
+	$("div.topchart").animate({"top":"280px" }, 300 );
+	$("div.bottomchart").removeClass("bottomchart").addClass("hiddenchart");
+	$("div.topchart").removeClass("topchart").addClass("bottomchart");
+	$("#chart"+c+"container").css("top","1px");
+	$("#chart"+c+"container").removeClass("hiddenchart").addClass("topchart");
+	}
 

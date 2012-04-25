@@ -1,6 +1,7 @@
 #a filter object for use in network stats
 class StatFilter < ActiveRecord::Base
   belongs_to :company
+  validates_presence_of :name
   
   #define the options for Reporting Entity
   def self.combination(r)
