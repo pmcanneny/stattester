@@ -97,6 +97,30 @@ class Company < ActiveRecord::Base
 	self.save  	
   end
 
+  def current_filter
+  	unless self.current_filter_id == nil
+  		return self.current_filter_id
+  	else
+  		filter = StatFilter.new
+			filter.name = "default"
+			filter.country = 0
+			filter.region = 0
+			filter.revenue_low = 0
+			filter.revenue_high = 0
+			filter.asset_low = 0
+			filter.asset_high = 0
+			filter.sic_low = 0
+			filter.sic_high = 0
+			filter.combination = 0
+			filter.ownership = 0
+			filter.input_basis = 0
+			filter.save
+			self.current_filter_id = filter.id
+			self.save
+			return self.current_filter_id
+		end
+	end
+
   #exporting to excel for the data sheet
 	def datasheet_xls
 		Spreadsheet.client_encoding = 'UTF-8'

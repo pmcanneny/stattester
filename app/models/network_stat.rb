@@ -75,10 +75,10 @@ class NetworkStat
 
     #gather the companies that the filter applies to
     companies = Company.where(
-      filter.region==0 ? "" : "region = #{filter.region}").where(
+      filter.region.to_f==0 ? "" : "region = #{filter.region}").where(
       #filter.country==0 ? "" : "country = #{filter.country}").where(
-      filter.ownership==0 ? "" : "ownership = #{filter.ownership}").where(
-      filter.combination==0 ? "" : "combination = #{filter.combination}").where(
+      filter.ownership.to_f==0 ? "" : "ownership = #{filter.ownership}").where(
+      filter.combination.to_f==0 ? "" : "combination = #{filter.combination}").where(
       filter.sic_low.to_f==0 ? "" : "sic = '#{filter.sic_low.to_s}'")     #todo: make sic a string
 
     companies = companies.where(:id => company_ids1)

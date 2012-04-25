@@ -1,4 +1,20 @@
+<script type="text/javascript">
+    $(document).ready(function() {
 
+        $('#save').click(function(){
+            var target = '/network_stats/save_filter';
+            $('#filterform').attr('action', target);
+            $('#filterform').submit();
+        });
+
+        $('#apply').click(function(){
+            var target = '/network_stats/filter';
+            $('#filterform').attr('action', target);
+            $('#filterform').submit();
+        });
+
+    });
+</script>
 
 <div class="menu networktab">
 	<%= link_to "Summary Sheet", :controller=>"summary_sheet",:action=>"index" %>
@@ -36,7 +52,7 @@
 
 
 
-<form accept-charset="UTF-8" action="/network_stats/save_filter" method="post">
+<form accept-charset="UTF-8" action="/network_stats/save_filter" method="post" id="filterform">
 
 <!--
 
@@ -91,7 +107,7 @@
 <table>
 <tr>
 <td rowspan="3">
-<%= hidden_field(:company, :id) %><input name="commit" type="submit" value="Apply Filter" /><input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+<%= hidden_field(:company, :id) %><input name="commit" type="submit" value="Apply Filter" id="apply" /><input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
 </td>
 <td rowspan="3">Core:</td>
 <td>SIC:</td>
@@ -126,7 +142,7 @@
 	<tr>
 		<td>Save Filter as: </td>
 		<td><%= text_field :filter, :name %></td>
-		<td><input name="commit" type="submit" value="Save & Apply Filter" /></td>
+		<td><input name="commit" type="submit" value="Save & Apply Filter" id="save" /></td>
 	</tr>
 </table>
 

@@ -156,7 +156,7 @@ class NetworkStatsController < ApplicationController
     authorize_user(@company.user_id)
 
     #get the company's default stat filter
-    @filter = StatFilter.find(@company.current_filter_id)
+    @filter = StatFilter.find(@company.current_filter)
 
     #get list of filters for the company
     @filters = StatFilter.where(:company_id => @company.id)
@@ -170,7 +170,7 @@ class NetworkStatsController < ApplicationController
     @trade_5y = TradeStat.find(@company.trade_5y_id)
 
     #calculate and create network stats
-    netstats = NetworkStat.new(@company.current_filter_id)
+    netstats = NetworkStat.new(@company.current_filter)
    
     #initialize all these variables 
     #todo: change this to be not necessary
