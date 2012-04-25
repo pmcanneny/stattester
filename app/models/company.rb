@@ -121,6 +121,54 @@ class Company < ActiveRecord::Base
 			return self.current_filter_id
 		end
 	end
+	def trade_now
+		unless self.trade_now_id == nil
+			self.trade_now_id
+		else
+			trade=TradeStat.new
+			trade.company_id = self.id
+			trade.save
+			self.trade_now_id = trade.id
+			self.save
+			self.trade_now_id
+		end
+	end
+	def trade_cy
+		unless self.trade_cy_id == nil
+			self.trade_cy_id
+		else
+			trade=TradeStat.new
+			trade.company_id = self.id
+			trade.save
+			self.trade_cy_id = trade.id
+			self.save
+			self.trade_cy_id
+		end
+	end
+	def trade_2y
+		unless self.trade_2y_id == nil
+			self.trade_2y_id
+		else
+			trade=TradeStat.new
+			trade.company_id = self.id
+			trade.save
+			self.trade_2y_id = trade.id
+			self.save
+			self.trade_2y_id
+		end
+	end
+	def trade_3y
+		unless self.trade_3y_id == nil
+			self.trade_3y_id
+		else
+			trade=TradeStat.new
+			trade.company_id = self.id
+			trade.save
+			self.trade_3y_id = trade.id
+			self.save
+			self.trade_3y_id
+		end
+	end
 
   #exporting to excel for the data sheet
 	def datasheet_xls

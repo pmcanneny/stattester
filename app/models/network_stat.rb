@@ -173,7 +173,7 @@ class NetworkStat
 
     #add up all the values for the matching companies
     for comp in companies
-      trade_now = TradeStat.find(comp.trade_now_id)
+      trade_now = TradeStat.find(comp.trade_now)
       @now_revenue_category+=(TradeStat.valid?(trade_now.revenue_category) ? trade_now.revenue_category : 0)
       @now_asset_category+=(TradeStat.valid?(trade_now.asset_category) ? trade_now.asset_category : 0)
       @now_sales_growth+=(TradeStat.valid?(trade_now.sales_growth) ? trade_now.sales_growth : 0)
@@ -184,7 +184,7 @@ class NetworkStat
       @now_ebitda_multiple+=(TradeStat.valid?(trade_now.ebitda_multiple) ? trade_now.ebitda_multiple : 0)
       @now_sales_multiple+=(TradeStat.valid?(trade_now.sales_multiple) ? trade_now.sales_multiple : 0)
       @now_debt_multiple+=(TradeStat.valid?(trade_now.debt_multiple) ? trade_now.debt_multiple : 0)
-      trade_cy = TradeStat.find(comp.trade_cy_id)
+      trade_cy = TradeStat.find(comp.trade_cy)
       @cy_revenue_category+=(TradeStat.valid?(trade_cy.revenue_category) ? trade_cy.revenue_category : 0)
       @cy_asset_category+=(TradeStat.valid?(trade_cy.asset_category) ? trade_cy.asset_category : 0)
       @cy_sales_growth+=(TradeStat.valid?(trade_cy.sales_growth) ? trade_cy.sales_growth : 0)
@@ -195,7 +195,7 @@ class NetworkStat
       @cy_ebitda_multiple+=(TradeStat.valid?(trade_cy.ebitda_multiple) ? trade_cy.ebitda_multiple : 0)
       @cy_sales_multiple+=(TradeStat.valid?(trade_cy.sales_multiple) ? trade_cy.sales_multiple : 0)
       @cy_debt_multiple+=(TradeStat.valid?(trade_cy.debt_multiple) ? trade_cy.debt_multiple : 0)
-      trade_2y = TradeStat.find(comp.trade_2y_id)
+      trade_2y = TradeStat.find(comp.trade_2y)
       @y2_revenue_category+=(TradeStat.valid?(trade_2y.revenue_category) ? trade_2y.revenue_category : 0)
       @y2_asset_category+=(TradeStat.valid?(trade_2y.asset_category) ? trade_2y.asset_category : 0)
       @y2_sales_growth+=(TradeStat.valid?(trade_2y.sales_growth) ? trade_2y.sales_growth : 0)
@@ -206,7 +206,7 @@ class NetworkStat
       @y2_ebitda_multiple+=(TradeStat.valid?(trade_2y.ebitda_multiple) ? trade_2y.ebitda_multiple : 0)
       @y2_sales_multiple+=(TradeStat.valid?(trade_2y.sales_multiple) ? trade_2y.sales_multiple : 0)
       @y2_debt_multiple+=(TradeStat.valid?(trade_2y.debt_multiple) ? trade_2y.debt_multiple : 0)
-      trade_3y = TradeStat.find(comp.trade_3y_id)
+      trade_3y = TradeStat.find(comp.trade_3y)
       @y3_revenue_category+=(TradeStat.valid?(trade_3y.revenue_category) ? trade_3y.revenue_category : 0)
       @y3_asset_category+=(TradeStat.valid?(trade_3y.asset_category) ? trade_3y.asset_category : 0)
       @y3_sales_growth+=(TradeStat.valid?(trade_3y.sales_growth) ? trade_3y.sales_growth : 0)
