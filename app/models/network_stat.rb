@@ -54,7 +54,8 @@ class NetworkStat
 		#gather data for the filter
     #gather all trade stats with revenue category
     tradestats = TradeStat.where(
-      filter.revenue_low.to_f==0 ? "" : "revenue_category = #{filter.revenue_low}")
+      filter.revenue_low.to_f==0 ? "" : "revenue_category >= #{filter.revenue_low}").where(
+      filter.revenue_high.to_f==0 ? "" : "revenue_category <= #{filter.revenue_high}")
     
     company_ids1 = Array.new
     tradestats.each do |tradestat|
@@ -68,6 +69,7 @@ class NetworkStat
     users.each do |user|
       user_ids1.push(user.id)
     end
+    user_ids1.push(-1)
 
     #todo: Also filter out non-network valid companies
 
@@ -80,9 +82,9 @@ class NetworkStat
       filter.sic_low.to_f==0 ? "" : "sic = '#{filter.sic_low.to_s}'")     #todo: make sic a string
 
     companies = companies.where(:id => company_ids1)
-    companies_stattrader = companies.where(:user_id => -1)
+    #companies_stattrader = companies.where(:user_id => -1)
     companies = companies.where(:user_id => user_ids1)
-    companies+=companies_stattrader
+    #companies+=companies_stattrader
 
     @total_companies = companies.size.to_f
 

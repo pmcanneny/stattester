@@ -34,6 +34,8 @@
 <% end %>
 
 
+
+
 <form accept-charset="UTF-8" action="/network_stats/save_filter" method="post">
 
 <!--
@@ -93,13 +95,13 @@
 </td>
 <td rowspan="3">Core:</td>
 <td>SIC:</td>
-<td><select><option value="Any">Any</option></select></td>
+<td><%= select(:filter, :sic_low, Company.four_digit_sic_options, :include_blank => 'Any') %></td>
 <td rowspan="3">Quality:</td>
 <td>Accounts:</td>
 <td><%= select(:filter, :quality, StatFilter.quality_options) %></td>
 <td rowspan="3">Sourcing:</td>
 <td>User Type:</td>
-<td><select><option value="Any">Any</option></select></td>
+<td><%= select(:filter, :user_type, User.subtype_options, :include_blank => 'Any') %></td>
 </tr>
 <tr>
 <td>Country:</td>
@@ -114,8 +116,9 @@
 <td><%= select(:filter, :region, StatFilter.region_options) %></td>
 <td>Entities:</td>
 <td><%= select(:filter, :combination, StatFilter.combination_options) %></td>
-<td>Revenue:</td>
-<td><select><option value="Any">Any</option></select></td>
+<td>Revenue Range:</td>
+<td><%= select(:filter, :revenue_low, {1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12}, :include_blank => 'Any') %></td>
+<td><%= select(:filter, :revenue_high, {1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12}, :include_blank => 'Any') %></td>
 </tr>
 </table>
 
@@ -127,10 +130,9 @@
 	</tr>
 </table>
 
+
+
  </form>
-
-
-
 
 
 </div>
@@ -182,6 +184,46 @@ Operating Profit Margin
 <div id="chart5" class="chart"></div>
 </p>
 </div>
+<div id="chart6container" class="hiddenchart">
+<p>
+Ebitda %
+</p>
+<p>
+<div id="chart6" class="chart"></div>
+</p>
+</div>
+<div id="chart7container" class="hiddenchart">
+<p>
+Enterprise Multiple of Book
+</p>
+<p>
+<div id="chart7" class="chart"></div>
+</p>
+</div>
+<div id="chart8container" class="hiddenchart">
+<p>
+My Ebitda Multiple
+</p>
+<p>
+<div id="chart8" class="chart"></div>
+</p>
+</div>
+<div id="chart9container" class="hiddenchart">
+<p>
+My Sales Multiple
+</p>
+<p>
+<div id="chart9" class="chart"></div>
+</p>
+</div>
+<div id="chart10container" class="hiddenchart">
+<p>
+My Funded Debt Multiple
+</p>
+<p>
+<div id="chart10" class="chart"></div>
+</p>
+</div>
 </div>
 
 
@@ -209,7 +251,7 @@ Operating Profit Margin
 		<th></th>
 	</tr>
 	<tr>
-	<td><img src="/img/graph-icon.gif" onclick="getChart(1)" /></td>
+	<td><img src="/img/charticon.png" class="icon" onclick="getChart(1)" /></td>
 		<td><%= label :trade, "Revenue Category:" %></td>
 		<td><%= @trade_now.revenue_category %></td>
 		<td></td>
@@ -221,7 +263,7 @@ Operating Profit Margin
 		<td></td>
 	</tr>
 	<tr>
-	<td><img src="/img/graph-icon.gif" onclick="getChart(2)" /></td>
+	<td><img src="/img/charticon.png" class="icon" onclick="getChart(2)" /></td>
 		<td><%= label :trade, "Asset Category:" %></td>
 		<td><%= @trade_now.asset_category %></td>
 		<td></td>
@@ -233,7 +275,7 @@ Operating Profit Margin
 		<td></td>
 	</tr>
 	<tr>
-	<td><img src="/img/graph-icon.gif" onclick="getChart(3)" /></td>
+	<td><img src="/img/charticon.png" class="icon" onclick="getChart(3)" /></td>
 		<td><%= label :trade, "Sales/Revenue Growth:" %></td>
 		<td><%= @trade_now.sales_growth %></td>
 		<td><%= "%" unless @trade_now.sales_growth.nil? %></td>
@@ -245,7 +287,7 @@ Operating Profit Margin
 		<td><%= "%" unless @trade_3y.sales_growth.nil? %></td>
 	</tr>
 	<tr>
-	<td><img src="/img/graph-icon.gif" onclick="getChart(4)" /></td>
+	<td><img src="/img/charticon.png" class="icon" onclick="getChart(4)" /></td>
 		<td><%= label :trade, "Gross Profit Margin:" %></td>
 		<td><%= @trade_now.gross_profit_margin %></td>
 		<td><%= "%" unless @trade_now.gross_profit_margin.nil? %></td>
@@ -257,7 +299,7 @@ Operating Profit Margin
 		<td><%= "%" unless @trade_3y.gross_profit_margin.nil? %></td>
 	</tr>
 	<tr>
-	<td><img src="/img/graph-icon.gif" onclick="getChart(5)" /></td>
+	<td><img src="/img/charticon.png" class="icon" onclick="getChart(5)" /></td>
 		<td><%= label :trade, "Operating Profit Margin:" %></td>
 		<td><%= @trade_now.operating_profit_margin %></td>
 		<td><%= "%" unless @trade_now.operating_profit_margin.nil? %></td>
@@ -269,7 +311,7 @@ Operating Profit Margin
 		<td><%= "%" unless @trade_3y.operating_profit_margin.nil? %></td>
 	</tr>
 	<tr>
-	<td></td>
+	<td><img src="/img/charticon.png" class="icon" onclick="getChart(6)" /></td>
 		<td><%= label :trade, "EBITDA %:" %></td>
 		<td><%= @trade_now.ebitda_percent %></td>
 		<td><%= "%" unless @trade_now.ebitda_percent.nil? %></td>
@@ -281,7 +323,7 @@ Operating Profit Margin
 		<td><%= "%" unless @trade_3y.ebitda_percent.nil? %></td>
 	</tr>
 	<tr>
-	<td></td>
+	<td><img src="/img/charticon.png" class="icon" onclick="getChart(7)" /></td>
 		<td><%= label :trade, "Enterprise Multiple of Book:" %></td>
 		<td><%= @trade_now.enterprise_multiple %></td>
 		<td></td>
@@ -293,8 +335,8 @@ Operating Profit Margin
 		<td></td>
 	</tr>
 	<tr>
-	<td></td>
-		<td><%= label :trade, "My EBITDA Multiple:" %></td>
+	<td><img src="/img/charticon.png" class="icon" onclick="getChart(8)" /></td>
+	<td><%= label :trade, "My EBITDA Multiple:" %></td>
 		<td><%= @trade_now.ebitda_multiple %></td>
 		<td></td>
 		<td><%= @trade_cy.ebitda_multiple %></td>
@@ -305,7 +347,7 @@ Operating Profit Margin
 		<td></td>
 	</tr>
 	<tr>
-	<td></td>
+	<td><img src="/img/charticon.png" class="icon" onclick="getChart(9)" /></td>
 		<td><%= label :trade, "My Sales Multiple:" %></td>
 		<td><%= @trade_now.sales_multiple %></td>
 		<td></td>
@@ -317,7 +359,7 @@ Operating Profit Margin
 		<td></td>
 	</tr>
 	<tr>
-	<td></td>
+	<td><img src="/img/charticon.png" class="icon" onclick="getChart(10)" /></td>
 		<td><%= label :trade, "My Funded Debt Multiple:" %></td>
 		<td><%= @trade_now.debt_multiple %></td>
 		<td></td>
@@ -507,21 +549,41 @@ var t4 = [[1, <%= @trade_now.gross_profit_margin %>], [2, <%= @trade_cy.gross_pr
 
 var t5 = [[1, <%= @trade_now.operating_profit_margin %>], [2, <%= @trade_cy.operating_profit_margin %>], [3, <%= @trade_2y.operating_profit_margin %>], [4, <%= @trade_3y.operating_profit_margin %>]];
 
+var t6 = [[1, <%= @trade_now.ebitda_percent %>],[2, <%= @trade_cy.ebitda_percent %>],[3, <%= @trade_2y.ebitda_percent %>],[4, <%= @trade_3y.ebitda_percent %>]];
+
+var t7 = [[1, <%= @trade_now.enterprise_multiple %>],[2, <%= @trade_cy.enterprise_multiple %>],[3, <%= @trade_2y.enterprise_multiple %>],[4, <%= @trade_3y.enterprise_multiple %>]];
+
+var t8 = [[1, <%= @trade_now.ebitda_multiple %>],[2, <%= @trade_cy.ebitda_multiple %>],[3, <%= @trade_2y.ebitda_multiple %>],[4, <%= @trade_3y.ebitda_multiple %>]];
+
+var t9 = [[1, <%= @trade_now.sales_multiple %>],[2, <%= @trade_cy.sales_multiple %>],[3, <%= @trade_2y.sales_multiple %>],[4, <%= @trade_3y.sales_multiple %>]];
+
+var t10 = [[1, <%= @trade_now.debt_multiple %>],[2, <%= @trade_cy.debt_multiple %>],[3, <%= @trade_2y.debt_multiple %>],[4, <%= @trade_3y.debt_multiple %>]];
+
 var s1 = [[1, <%= number_with_precision(@now_revenue_category, :precision => 1) %>],[2, <%= number_with_precision(@cy_revenue_category, :precision => 1) %>],[3, <%= number_with_precision(@y2_revenue_category, :precision => 1) %>],[4, <%= number_with_precision(@y3_revenue_category, :precision => 1) %>]];
 
 var s2 = [[1, <%= number_with_precision(@now_asset_category, :precision => 1) %>],[2, <%= number_with_precision(@cy_asset_category, :precision => 1) %>],[3, <%= number_with_precision(@y2_asset_category, :precision => 1) %>],[4, <%= number_with_precision(@y3_asset_category, :precision => 1) %>]];
 
 var s3 = [[1, <%= number_with_precision(@now_sales_growth, :precision => 1) %>],[2,<%= number_with_precision(@cy_sales_growth, :precision => 1) %>],[3,<%= number_with_precision(@y2_sales_growth, :precision => 1) %>],[4,<%= number_with_precision(@y3_sales_growth, :precision => 1) %>]];
 
-var s4 = [[1, <%= number_with_precision(@now_gross_profit_margin, :precision => 1) %>],[2,<%= number_with_precision(@cy_gross_profit_margin, :precision => 1) %>][3,<%= number_with_precision(@y2_gross_profit_margin, :precision => 1) %>],[4,<%= number_with_precision(@y3_gross_profit_margin, :precision => 1) %>]];
+var s4 = [[1, <%= number_with_precision(@now_gross_profit_margin, :precision => 1) %>],[2,<%= number_with_precision(@cy_gross_profit_margin, :precision => 1) %>],[3,<%= number_with_precision(@y2_gross_profit_margin, :precision => 1) %>],[4,<%= number_with_precision(@y3_gross_profit_margin, :precision => 1) %>]];
 
 var s5 = [[1, <%= number_with_precision(@now_operating_profit_margin, :precision => 1) %>],[2,<%= number_with_precision(@cy_operating_profit_margin, :precision => 1) %>],[3,<%= number_with_precision(@y2_operating_profit_margin, :precision => 1) %>],[4,<%= number_with_precision(@y3_operating_profit_margin, :precision => 1) %>]];
 
+var s6 = [[1, <%= number_with_precision(@now_ebitda_percent, :precision => 1) %>],[2,<%= number_with_precision(@cy_ebitda_percent, :precision => 1) %>],[3,<%= number_with_precision(@y2_ebitda_percent, :precision => 1) %>],[4,<%= number_with_precision(@y3_ebitda_percent, :precision => 1) %>]];
+
+var s7 = [[1, <%= number_with_precision(@now_enterprise_multiple, :precision => 1) %>],[2,<%= number_with_precision(@cy_enterprise_multiple, :precision => 1) %>],[3,<%= number_with_precision(@y2_enterprise_multiple, :precision => 1) %>],[4,<%= number_with_precision(@y3_enterprise_multiple, :precision => 1) %>]];
+
+var s8 = [[1, <%= number_with_precision(@now_ebitda_multiple, :precision => 1) %>],[2,<%= number_with_precision(@cy_ebitda_multiple, :precision => 1) %>],[3,<%= number_with_precision(@y2_ebitda_multiple, :precision => 1) %>],[4,<%= number_with_precision(@y3_ebitda_multiple, :precision => 1) %>]];
+
+var s9 = [[1, <%= number_with_precision(@now_sales_multiple, :precision => 1) %>],[2,<%= number_with_precision(@cy_sales_multiple, :precision => 1) %>],[3,<%= number_with_precision(@y2_sales_multiple, :precision => 1) %>],[4,<%= number_with_precision(@y3_sales_multiple, :precision => 1) %>]];
+
+var s10 = [[1, <%= number_with_precision(@now_debt_multiple, :precision => 1) %>],[2,<%= number_with_precision(@cy_debt_multiple, :precision => 1) %>],[3,<%= number_with_precision(@y2_debt_multiple, :precision => 1) %>],[4,<%= number_with_precision(@y3_debt_multiple, :precision => 1) %>]];
+
 $.plot($("#chart1"), [{	
-        	color: "#c3d3e1",
+        	color: "#ab1600",
             data: t1,
-            points: { radius: 2, symbol: "circle",show:true,fill:true,fillColor: "#999999" },
-            lines: { show:true,fill:false,lineWidth:2 },
+            points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
+            lines: { show:true,fill:false,lineWidth:3 },
             shadowSize:0
         },{	
             data: s1,
@@ -533,10 +595,10 @@ $.plot($("#chart1"), [{
 		});
 	
 $.plot($("#chart2"), [{	
-        	color: "#c3d3e1",
+        	color: "#ab1600",
             data: t2,
-            points: { radius: 2, symbol: "circle",show:true,fill:true,fillColor: "#999999" },
-            lines: { show:true,fill:false,lineWidth:2 },
+            points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
+            lines: { show:true,fill:false,lineWidth:3 },
             shadowSize:0
         },{	
             data: s2,
@@ -548,10 +610,10 @@ $.plot($("#chart2"), [{
 		});
 	
 $.plot($("#chart3"), [{	
-        	color: "#c3d3e1",
+        	color: "#ab1600",
             data: t3,
-            points: { radius: 2, symbol: "circle",show:true,fill:true,fillColor: "#999999" },
-            lines: { show:true,fill:false,lineWidth:2 },
+            points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
+            lines: { show:true,fill:false,lineWidth:3 },
             shadowSize:0
         },{	
             data: s3,
@@ -563,10 +625,10 @@ $.plot($("#chart3"), [{
 		});
 		
 $.plot($("#chart4"), [{	
-        	color: "#c3d3e1",
+        	color: "#ab1600",
             data: t4,
-            points: { radius: 2, symbol: "circle",show:true,fill:true,fillColor: "#999999" },
-            lines: { show:true,fill:false,lineWidth:2 },
+            points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
+            lines: { show:true,fill:false,lineWidth:3 },
             shadowSize:0
         },{	
             data: s4,
@@ -578,10 +640,10 @@ $.plot($("#chart4"), [{
 		});
 		
 $.plot($("#chart5"), [{	
-        	color: "#c3d3e1",
+        	color: "#ab1600",
             data: t5,
-            points: { radius: 2, symbol: "circle",show:true,fill:true,fillColor: "#999999" },
-            lines: { show:true,fill:false,lineWidth:2 },
+            points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
+            lines: { show:true,fill:false,lineWidth:3 },
             shadowSize:0
         },{	
             data: s5,
@@ -592,6 +654,81 @@ $.plot($("#chart5"), [{
     	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
 		});
 		
+		
+$.plot($("#chart6"), [{	
+        	color: "#ab1600",
+            data: t6,
+            points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
+            lines: { show:true,fill:false,lineWidth:3 },
+            shadowSize:0
+        },{	
+            data: s6,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+        }],
+    	{
+    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+		});
+		
+$.plot($("#chart7"), [{	
+        	color: "#ab1600",
+            data: t7,
+            points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
+            lines: { show:true,fill:false,lineWidth:3 },
+            shadowSize:0
+        },{	
+            data: s7,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+        }],
+    	{
+    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+		});
+		
+$.plot($("#chart8"), [{	
+        	color: "#ab1600",
+            data: t8,
+            points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
+            lines: { show:true,fill:false,lineWidth:3 },
+            shadowSize:0
+        },{	
+            data: s8,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+        }],
+    	{
+    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+		});
+		
+$.plot($("#chart9"), [{	
+        	color: "#ab1600",
+            data: t9,
+            points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
+            lines: { show:true,fill:false,lineWidth:3 },
+            shadowSize:0
+        },{	
+            data: s9,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+        }],
+    	{
+    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+		});
+		
+$.plot($("#chart10"), [{	
+        	color: "#ab1600",
+            data: t10,
+            points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
+            lines: { show:true,fill:false,lineWidth:3 },
+            shadowSize:0
+        },{	
+            data: s10,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+        }],
+    	{
+    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+		});	
 	
 	/*
 	$.plot($("#chart2"), [d2],
