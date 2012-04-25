@@ -2,6 +2,9 @@
 module SummarySheetHelper
 
 	def default_filter_public_count(company)
+    if company.current_filter_id == nil
+      return 0
+    end
 		#gather the companies that the filter applies to
 		filter = StatFilter.find(company.current_filter_id)
   	Company.where(
@@ -12,6 +15,9 @@ module SummarySheetHelper
 	end
 
 	def default_filter_private_count(company)
+    if company.current_filter_id == nil
+      return 0
+    end
 		#gather the companies that the filter applies to
 		filter = StatFilter.find(company.current_filter_id)
   	companies = Company.where(
