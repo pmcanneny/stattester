@@ -84,7 +84,7 @@ class NetworkStat
     #@total_companies = companies.size.to_f
     #companies = companies.where(:id => company_ids1)
     #companies_stattrader = companies.where(:user_id => -1)    
-    #companies = companies.where(:user_id => user_ids1)
+    companies = companies.where(:user_id => user_ids1)
     #companies+=companies_stattrader
 
     @total_companies = companies.size.to_i
