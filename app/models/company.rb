@@ -97,6 +97,7 @@ class Company < ActiveRecord::Base
 	self.save  	
   end
 
+  # singleton patterns for the current filter, and stats
   def current_filter
   	unless self.current_filter_id == nil
   		return self.current_filter_id
