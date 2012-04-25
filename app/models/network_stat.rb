@@ -87,6 +87,7 @@ class NetworkStat
     companies = companies.where(:user_id => user_ids1)
     #companies+=companies_stattrader
 
+    companies = Company.all
     @total_companies = companies.size.to_f
 
     @now_revenue_category=0
