@@ -31,7 +31,7 @@ class DataSheetController < ApplicationController
 
         respond_to do |format|
             format.html
-            format.xml { render :xml => @company }
+            format.xml { send_data @company.stattrader_xml, content_type: 'text/xml', :filename => "#{@company.name}-StatTrader.xml" }
             format.xls { send_data @company.datasheet_xls.string, content_type: 'application/vnd.ms-excel', :filename => "#{@company.name}.xls" }
         end
 	end

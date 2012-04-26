@@ -6,104 +6,13 @@ class Company < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :user_id
 
-  #The greatest numbers of months that CY's financial year end can be in the past
-  def self.max_cy_range
-  	18
-  end
-
-  #after creation of a company, initialize all the yearly data columns
-  #we must set their company_id as well as set this company's data ids
-  #also, set the data column's year type and reporting scale default to 1
- #  after_create do
- #  	#the six SecureStat years
- #  	secure_now = SecureStat.new
- #  	secure_cy = SecureStat.new
- #  	secure_2y = SecureStat.new
- #  	secure_3y = SecureStat.new
- #  	secure_4y = SecureStat.new
- #  	secure_5y = SecureStat.new
-	# secure_now.company_id = self.id
-	# secure_now.reporting_scale = 1	
-	# secure_cy.company_id = self.id
-	# secure_cy.reporting_scale = 1	
-	# secure_2y.company_id = self.id
-	# secure_2y.reporting_scale = 1
-	# secure_3y.company_id = self.id
-	# secure_3y.reporting_scale = 1
-	# secure_4y.company_id = self.id
-	# secure_4y.reporting_scale = 1
-	# secure_5y.company_id = self.id
-	# secure_5y.reporting_scale = 1
-
-	# secure_now.save
-	# secure_2y.save
-	# secure_3y.save
-	# secure_4y.save
-	# secure_5y.save
-
-	# #saving the cy last to prevent issues
-	# secure_cy.save
-
-	# self.secure_now_id = secure_now.id
-	# self.secure_cy_id = secure_cy.id
-	# self.secure_2y_id = secure_2y.id
-	# self.secure_3y_id = secure_3y.id
-	# self.secure_4y_id = secure_4y.id
-	# self.secure_5y_id = secure_5y.id
-
-	# #the six TradeStat years
-	# trade_now = TradeStat.new
- #  	trade_cy = TradeStat.new
- #  	trade_2y = TradeStat.new
- #  	trade_3y = TradeStat.new
- #  	trade_4y = TradeStat.new
- #  	trade_5y = TradeStat.new
-	# trade_now.company_id = self.id
-	# trade_now.save
-	# trade_cy.company_id = self.id
-	# trade_cy.save
-	# trade_2y.company_id = self.id
-	# trade_2y.save
-	# trade_3y.company_id = self.id
-	# trade_3y.save
-	# trade_4y.company_id = self.id
-	# trade_4y.save
-	# trade_5y.company_id = self.id
-	# trade_5y.save
-	# self.trade_now_id = trade_now.id
-	# self.trade_cy_id = trade_cy.id
-	# self.trade_2y_id = trade_2y.id
-	# self.trade_3y_id = trade_3y.id
-	# self.trade_4y_id = trade_4y.id
-	# self.trade_5y_id = trade_5y.id
-
-	# #initialize the default filter
-	# filter = StatFilter.new
-	# filter.name = "default"
-	# filter.country = 0
-	# filter.region = 0
-	# filter.revenue_low = 0
-	# filter.revenue_high = 0
-	# filter.asset_low = 0
-	# filter.asset_high = 0
-	# filter.sic_low = 0
-	# filter.sic_high = 0
-	# filter.combination = 0
-	# filter.ownership = 0
-	# filter.input_basis = 0
-	# filter.save
-	# self.current_filter_id = filter.id
-
-	# self.save  	
- #  end
-
   #################################################################
   # singleton patterns for the current filter, and stats
   #
   #
   def current_filter
-  	unless self.current_filter_id == nil
-  		return self.current_filter_id
+  	unless self.current_filter_id == nil or (StatFilter.find(current_filter_id) rescue nil) == nil
+  		self.current_filter_id
   	else
   		filter = StatFilter.new
 			filter.name = "default"
@@ -121,11 +30,11 @@ class Company < ActiveRecord::Base
 			filter.save
 			self.current_filter_id = filter.id
 			self.save
-			return self.current_filter_id
+			self.current_filter_id
 		end
 	end
 	def trade_now
-		unless self.trade_now_id == nil
+		unless self.trade_now_id == nil or (TradeStat.find(trade_now_id) rescue nil) == nil
 			self.trade_now_id
 		else
 			trade=TradeStat.new
@@ -137,7 +46,7 @@ class Company < ActiveRecord::Base
 		end
 	end
 	def trade_cy
-		unless self.trade_cy_id == nil
+		unless self.trade_cy_id == nil or (TradeStat.find(trade_cy_id) rescue nil) == nil
 			self.trade_cy_id
 		else
 			trade=TradeStat.new
@@ -149,7 +58,7 @@ class Company < ActiveRecord::Base
 		end
 	end
 	def trade_2y
-		unless self.trade_2y_id == nil
+		unless self.trade_2y_id == nil or (TradeStat.find(trade_2y_id) rescue nil) == nil
 			self.trade_2y_id
 		else
 			trade=TradeStat.new
@@ -161,7 +70,8 @@ class Company < ActiveRecord::Base
 		end
 	end
 	def trade_3y
-		unless self.trade_3y_id == nil
+		#temp = TradeStat.find(id) rescue nil
+		unless self.trade_3y_id == nil or (TradeStat.find(trade_3y_id) rescue nil) == nil
 			self.trade_3y_id
 		else
 			trade=TradeStat.new
@@ -173,7 +83,7 @@ class Company < ActiveRecord::Base
 		end
 	end
 	def trade_4y
-		unless self.trade_4y_id == nil
+		unless self.trade_4y_id == nil or (TradeStat.find(trade_4y_id) rescue nil) == nil
 			self.trade_4y_id
 		else
 			trade=TradeStat.new
@@ -185,7 +95,7 @@ class Company < ActiveRecord::Base
 		end
 	end
 	def trade_5y
-		unless self.trade_5y_id == nil
+		unless self.trade_5y_id == nil or (TradeStat.find(trade_5y_id) rescue nil) == nil
 			self.trade_5y_id
 		else
 			trade=TradeStat.new
@@ -197,7 +107,7 @@ class Company < ActiveRecord::Base
 		end
 	end
 	def secure_now
-		unless self.secure_now_id == nil
+		unless self.secure_now_id == nil or (SecureStat.find(secure_now_id) rescue nil) == nil
 			self.secure_now_id
 		else
 			secure=SecureStat.new
@@ -209,7 +119,7 @@ class Company < ActiveRecord::Base
 		end
 	end
 	def secure_cy
-		unless self.secure_cy_id == nil
+		unless self.secure_cy_id == nil or (SecureStat.find(secure_cy_id) rescue nil) == nil
 			self.secure_cy_id
 		else
 			secure=SecureStat.new
@@ -221,7 +131,7 @@ class Company < ActiveRecord::Base
 		end
 	end
 	def secure_2y
-		unless self.secure_2y_id == nil
+		unless self.secure_2y_id == nil or (SecureStat.find(secure_2y_id) rescue nil) == nil
 			self.secure_2y_id
 		else
 			secure=SecureStat.new
@@ -233,7 +143,7 @@ class Company < ActiveRecord::Base
 		end
 	end
 	def secure_3y
-		unless self.secure_3y_id == nil
+		unless self.secure_3y_id == nil or (SecureStat.find(secure_3y_id) rescue nil) == nil
 			self.secure_3y_id
 		else
 			secure=SecureStat.new
@@ -245,7 +155,7 @@ class Company < ActiveRecord::Base
 		end
 	end
 	def secure_4y
-		unless self.secure_4y_id == nil
+		unless self.secure_4y_id == nil or (SecureStat.find(secure_4y_id) rescue nil) == nil
 			self.secure_4y_id
 		else
 			secure=SecureStat.new
@@ -257,7 +167,7 @@ class Company < ActiveRecord::Base
 		end
 	end
 	def secure_5y
-		unless self.secure_5y_id == nil
+		unless self.secure_5y_id == nil or (SecureStat.find(secure_5y_id) rescue nil) == nil
 			self.secure_5y_id
 		else
 			secure=SecureStat.new
@@ -271,6 +181,120 @@ class Company < ActiveRecord::Base
 	#
 	# end singleton patterns
 	##################################################################
+
+	#export to xml stattrader format
+	def stattrader_xml
+
+		secure_now= SecureStat.find(self.secure_now)
+		secure_cy = SecureStat.find(self.secure_cy)
+  	secure_2y = SecureStat.find(self.secure_2y)
+  	secure_3y = SecureStat.find(self.secure_3y)
+  	secure_4y = SecureStat.find(self.secure_4y)
+  	secure_5y = SecureStat.find(self.secure_5y)
+
+		"
+			<stattrader>
+				<profile>
+					<name>#{self.name}</name> 
+					<alias>#{self.name}</alias>
+					<combination>#{self.combination}</combination> 
+					<ownership>#{self.ownership}</ownership>
+					<sic>#{self.sic}</sic>
+					<country>#{self.country}</country> 
+					<region>#{self.region}</region> 
+			    <state>#{self.state}</state> 
+			    <zipcode>#{self.zipcode}</zipcode> 
+					<ticker_symbol>#{self.ticker_symbol}</ticker_symbol> 
+					<CIK>#{self.CIK}</CIK>
+				</profile>
+				
+				<company_data fye=\"#{secure_now.fye.nil? ? nil : secure_now.fye.month.to_s+'/'+secure_now.fye.day.to_s+'/'+secure_now.fye.year.to_s}\">
+					<reporting_scale>#{secure_now.reporting_scale}</reporting_scale> 
+					<input_basis>#{secure_now.input_basis}</input_basis>
+					<quality>#{secure_now.quality}</quality> 
+					<assets>#{secure_now.assets}</assets>
+					<gross_sales>#{secure_now.gross_sales}</gross_sales> 
+					<gross_profit>#{secure_now.gross_profit}</gross_profit>
+					<operating_profit>#{secure_now.operating_profit}</operating_profit>
+					<ebitda>#{secure_now.ebitda}</ebitda>
+					<stock_price>#{secure_now.stock_price}</stock_price>
+					<sales_multiple>#{secure_now.sales_multiple}</sales_multiple>
+					<ebitda_multiple>#{secure_now.ebitda_multiple}</ebitda_multiple>
+					<debt_multiple>#{secure_now.debt_multiple}</debt_multiple>
+				</company_data>
+				<company_data fye=\"#{secure_cy.fye.nil? ? nil : secure_cy.fye.month.to_s+'/'+secure_cy.fye.day.to_s+'/'+secure_cy.fye.year.to_s}\">
+					<reporting_scale>#{secure_cy.reporting_scale}</reporting_scale> 
+					<input_basis>#{secure_cy.input_basis}</input_basis>
+					<quality>#{secure_cy.quality}</quality> 
+					<assets>#{secure_cy.assets}</assets>
+					<gross_sales>#{secure_cy.gross_sales}</gross_sales> 
+					<gross_profit>#{secure_cy.gross_profit}</gross_profit>
+					<operating_profit>#{secure_cy.operating_profit}</operating_profit>
+					<ebitda>#{secure_cy.ebitda}</ebitda>
+					<stock_price>#{secure_cy.stock_price}</stock_price>
+					<sales_multiple>#{secure_cy.sales_multiple}</sales_multiple>
+					<ebitda_multiple>#{secure_cy.ebitda_multiple}</ebitda_multiple>
+					<debt_multiple>#{secure_cy.debt_multiple}</debt_multiple>
+				</company_data>
+				<company_data fye=\"#{secure_2y.fye.nil? ? nil : secure_2y.fye.month.to_s+'/'+secure_2y.fye.day.to_s+'/'+secure_2y.fye.year.to_s}\">
+					<reporting_scale>#{secure_2y.reporting_scale}</reporting_scale> 
+					<input_basis>#{secure_2y.input_basis}</input_basis>
+					<quality>#{secure_2y.quality}</quality> 
+					<assets>#{secure_2y.assets}</assets>
+					<gross_sales>#{secure_2y.gross_sales}</gross_sales> 
+					<gross_profit>#{secure_2y.gross_profit}</gross_profit>
+					<operating_profit>#{secure_2y.operating_profit}</operating_profit>
+					<ebitda>#{secure_2y.ebitda}</ebitda>
+					<stock_price>#{secure_2y.stock_price}</stock_price>
+					<sales_multiple>#{secure_2y.sales_multiple}</sales_multiple>
+					<ebitda_multiple>#{secure_2y.ebitda_multiple}</ebitda_multiple>
+					<debt_multiple>#{secure_2y.debt_multiple}</debt_multiple>
+				</company_data>
+				<company_data fye=\"#{secure_3y.fye.nil? ? nil : secure_3y.fye.month.to_s+'/'+secure_3y.fye.day.to_s+'/'+secure_3y.fye.year.to_s}\">
+					<reporting_scale>#{secure_3y.reporting_scale}</reporting_scale> 
+					<input_basis>#{secure_3y.input_basis}</input_basis>
+					<quality>#{secure_3y.quality}</quality> 
+					<assets>#{secure_3y.assets}</assets>
+					<gross_sales>#{secure_3y.gross_sales}</gross_sales> 
+					<gross_profit>#{secure_3y.gross_profit}</gross_profit>
+					<operating_profit>#{secure_3y.operating_profit}</operating_profit>
+					<ebitda>#{secure_3y.ebitda}</ebitda>
+					<stock_price>#{secure_3y.stock_price}</stock_price>
+					<sales_multiple>#{secure_3y.sales_multiple}</sales_multiple>
+					<ebitda_multiple>#{secure_3y.ebitda_multiple}</ebitda_multiple>
+					<debt_multiple>#{secure_3y.debt_multiple}</debt_multiple>
+				</company_data>
+				<company_data fye=\"#{secure_4y.fye.nil? ? nil : secure_4y.fye.month.to_s+'/'+secure_4y.fye.day.to_s+'/'+secure_4y.fye.year.to_s}\">
+					<reporting_scale>#{secure_4y.reporting_scale}</reporting_scale> 
+					<input_basis>#{secure_4y.input_basis}</input_basis>
+					<quality>#{secure_4y.quality}</quality> 
+					<assets>#{secure_4y.assets}</assets>
+					<gross_sales>#{secure_4y.gross_sales}</gross_sales> 
+					<gross_profit>#{secure_4y.gross_profit}</gross_profit>
+					<operating_profit>#{secure_4y.operating_profit}</operating_profit>
+					<ebitda>#{secure_4y.ebitda}</ebitda>
+					<stock_price>#{secure_4y.stock_price}</stock_price>
+					<sales_multiple>#{secure_4y.sales_multiple}</sales_multiple>
+					<ebitda_multiple>#{secure_4y.ebitda_multiple}</ebitda_multiple>
+					<debt_multiple>#{secure_4y.debt_multiple}</debt_multiple>
+				</company_data>
+				<company_data fye=\"#{secure_5y.fye.nil? ? nil : secure_5y.fye.month.to_s+'/'+secure_5y.fye.day.to_s+'/'+secure_5y.fye.year.to_s}\">
+					<reporting_scale>#{secure_5y.reporting_scale}</reporting_scale> 
+					<input_basis>#{secure_5y.input_basis}</input_basis>
+					<quality>#{secure_5y.quality}</quality> 
+					<assets>#{secure_5y.assets}</assets>
+					<gross_sales>#{secure_5y.gross_sales}</gross_sales> 
+					<gross_profit>#{secure_5y.gross_profit}</gross_profit>
+					<operating_profit>#{secure_5y.operating_profit}</operating_profit>
+					<ebitda>#{secure_5y.ebitda}</ebitda>
+					<stock_price>#{secure_5y.stock_price}</stock_price>
+					<sales_multiple>#{secure_5y.sales_multiple}</sales_multiple>
+					<ebitda_multiple>#{secure_5y.ebitda_multiple}</ebitda_multiple>
+					<debt_multiple>#{secure_5y.debt_multiple}</debt_multiple>
+				</company_data>
+			</stattrader>
+		"
+	end
 
   #exporting to excel for the data sheet
 	def datasheet_xls
@@ -311,12 +335,12 @@ class Company < ActiveRecord::Base
 	 	sheet1[22,0] = "Funded Debt Multiple:"
 	 	sheet1[23,0] = "Stock Price:"
 
-		secure_now= SecureStat.find(secure_now_id)
-		secure_cy = SecureStat.find(secure_cy_id)
-  	secure_2y = SecureStat.find(secure_2y_id)
-  	secure_3y = SecureStat.find(secure_3y_id)
-  	secure_4y = SecureStat.find(secure_4y_id)
-  	secure_5y = SecureStat.find(secure_5y_id)
+		secure_now= SecureStat.find(secure_now)
+		secure_cy = SecureStat.find(secure_cy)
+  	secure_2y = SecureStat.find(secure_2y)
+  	secure_3y = SecureStat.find(secure_3y)
+  	secure_4y = SecureStat.find(secure_4y)
+  	secure_5y = SecureStat.find(secure_5y)
 
 	 	sheet1[9,1]  = "NOW"
 	 	sheet1[10,1] = secure_now.fye == nil ? "" : "#{secure_now.fye.month}/#{secure_now.fye.year}"
@@ -705,7 +729,7 @@ class Company < ActiveRecord::Base
   	companies = Company.all
   	for company in companies
   	  cy = SecureStat.find(company.secure_cy)
-  	  if ((DateTime.now.year-cy.fye.year)*12 + (DateTime.now.month-cy.fye.month)) > Company.max_cy_range
+  	  if ((DateTime.now.year-cy.fye.year)*12 + (DateTime.now.month-cy.fye.month)) > 18
   	  	company.shift_years
   	  end
   	end

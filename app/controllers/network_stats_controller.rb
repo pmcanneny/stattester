@@ -146,6 +146,13 @@ class NetworkStatsController < ApplicationController
     @y3_sales_multiple=netstats.y3_sales_multiple
     @y3_debt_multiple=netstats.y3_debt_multiple
 
+
+    respond_to do |format|
+      format.html
+      format.xml { send_data @company.stattrader_xml, content_type: 'text/xml', :filename => "#{@company.name}-StatTrader.xml" }
+      format.xls { send_data @company.networkstats_xls(netstats).string, content_type: 'application/vnd.ms-excel', :filename => "#{@company.name}.xls" }
+    end
+
   end
 
 end
