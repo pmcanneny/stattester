@@ -9,7 +9,7 @@
   <% for company in @companies %>  
     <tr class="<%= cycle("even", "odd") %>">  
       <td ><font face ="Lucida Console"><%= company.name %></font></td>    
-      <td><%= company.updated_at.strftime("%m-%d-%Y") %></td> 
+      
     </tr>  
   <% end %>  
 </table>

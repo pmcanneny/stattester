@@ -162,7 +162,7 @@
 <div class="charts">
 <div id="chart1container" class="hiddenchart">
 <p>
-Revenue Category
+Revenue Category ( in millions )
 </p>
 <p>
 <div id="chart1" class="chart"></div>
@@ -170,7 +170,7 @@ Revenue Category
 </div>
 <div id="chart2container" class="hiddenchart">
 <p>
-Asset Category
+Asset Category ( in millions )
 </p>
 <p>
 <div id="chart2" class="chart"></div>
@@ -178,7 +178,7 @@ Asset Category
 </div>
 <div id="chart3container" class="topchart">
 <p>
-Sales/Revenue Growth
+Sales/Revenue Growth %
 </p>
 <p>
 <div id="chart3" class="chart"></div>
@@ -186,7 +186,7 @@ Sales/Revenue Growth
 </div>
 <div id="chart4container" class="bottomchart">
 <p>
-Gross Profit Margin
+Gross Profit Margin %
 </p>
 <p>
 <div id="chart4" class="chart"></div>
@@ -194,7 +194,7 @@ Gross Profit Margin
 </div>
 <div id="chart5container" class="hiddenchart">
 <p>
-Operating Profit Margin
+Operating Profit Margin %
 </p>
 <p>
 <div id="chart5" class="chart"></div>
@@ -218,7 +218,7 @@ Enterprise Multiple of Book
 </div>
 <div id="chart8container" class="hiddenchart">
 <p>
-My EBITDA Multiple
+EBITDA Multiple
 </p>
 <p>
 <div id="chart8" class="chart"></div>
@@ -226,7 +226,7 @@ My EBITDA Multiple
 </div>
 <div id="chart9container" class="hiddenchart">
 <p>
-My Sales Multiple
+Sales Multiple
 </p>
 <p>
 <div id="chart9" class="chart"></div>
@@ -234,13 +234,14 @@ My Sales Multiple
 </div>
 <div id="chart10container" class="hiddenchart">
 <p>
-My Funded Debt Multiple
+Funded Debt Multiple
 </p>
 <p>
 <div id="chart10" class="chart"></div>
 </p>
 </div>
 </div>
+
 
 
  </div>
@@ -550,200 +551,235 @@ My Funded Debt Multiple
 
 <script>
 
+//jQuery.noConflict()
 
 /* --------- Charts --------- */
 
+function yaxis(val) {
+
+if ( val < 3 ) {
+return "0 - 9";
+} else if ( val < 5 ) {
+return "10 - 74";
+} else if ( val < 7 ) {
+return "75 - 149";
+} else if ( val < 9 ) {
+return "150 - 499";
+} else if ( val < 11 ) {
+return "500 - 1,999";
+} else {
+return ">2000";
+}
+
+}
+
+
 $(function () {
 
-var t1 = [[1, <%= @trade_now.revenue_category %>], [2, <%= @trade_cy.revenue_category %>], [3, <%= @trade_2y.revenue_category %>], [4, <%= @trade_3y.revenue_category %>]];
+var t1 = [[1,<%= @trade_3y.revenue_category %>],[2,<%= @trade_2y.revenue_category %>],[3,<%= @trade_cy.revenue_category %>],[4,<%= @trade_now.revenue_category %>]];
 
-var t2 = [[1, <%= @trade_now.asset_category %>], [2, <%= @trade_cy.asset_category %>], [3, <%= @trade_2y.asset_category %>], [4, <%= @trade_3y.asset_category %>]];
+var t2 = [[1,<%= @trade_3y.asset_category %>],[2,<%= @trade_2y.asset_category %>],[3,<%= @trade_cy.asset_category %>],[4,<%= @trade_now.asset_category %>]];
 
-var t3 = [[1, <%= @trade_now.sales_growth %>], [2, <%= @trade_cy.sales_growth %>], [3, <%= @trade_2y.sales_growth %>], [4, <%= @trade_3y.sales_growth %>]];
+var t3 = [[1,<%= @trade_3y.sales_growth %>],[2,<%= @trade_2y.sales_growth %>],[3,<%= @trade_cy.sales_growth %>],[4,<%= @trade_now.sales_growth %>]];
 
-var t4 = [[1, <%= @trade_now.gross_profit_margin %>], [2, <%= @trade_cy.gross_profit_margin %>], [3, <%= @trade_2y.gross_profit_margin %>], [4, <%= @trade_3y.gross_profit_margin %>]];
+var t4 = [[1,<%= @trade_3y.gross_profit_margin %>],[2,<%= @trade_2y.gross_profit_margin %>],[3,<%= @trade_cy.gross_profit_margin %>],[4,<%= @trade_now.gross_profit_margin %>]];
 
-var t5 = [[1, <%= @trade_now.operating_profit_margin %>], [2, <%= @trade_cy.operating_profit_margin %>], [3, <%= @trade_2y.operating_profit_margin %>], [4, <%= @trade_3y.operating_profit_margin %>]];
+var t5 = [[1,<%= @trade_3y.operating_profit_margin %>],[2,<%= @trade_2y.operating_profit_margin %>],[3,<%= @trade_cy.operating_profit_margin %>],[4,<%= @trade_now.operating_profit_margin %>]];
 
-var t6 = [[1, <%= @trade_now.ebitda_percent %>],[2, <%= @trade_cy.ebitda_percent %>],[3, <%= @trade_2y.ebitda_percent %>],[4, <%= @trade_3y.ebitda_percent %>]];
+var t6 = [[1,<%= @trade_3y.ebitda_percent %>],[2,<%= @trade_2y.ebitda_percent %>],[3,<%= @trade_cy.ebitda_percent %>],[4,<%= @trade_now.ebitda_percent %>]];
 
-var t7 = [[1, <%= @trade_now.enterprise_multiple %>],[2, <%= @trade_cy.enterprise_multiple %>],[3, <%= @trade_2y.enterprise_multiple %>],[4, <%= @trade_3y.enterprise_multiple %>]];
+var t7 = [[1,<%= @trade_3y.enterprise_multiple %>],[2,<%= @trade_2y.enterprise_multiple %>],[3,<%= @trade_cy.enterprise_multiple %>],[4,<%= @trade_now.enterprise_multiple %>]];
 
-var t8 = [[1, <%= @trade_now.ebitda_multiple %>],[2, <%= @trade_cy.ebitda_multiple %>],[3, <%= @trade_2y.ebitda_multiple %>],[4, <%= @trade_3y.ebitda_multiple %>]];
+var t8 = [[1,<%= @trade_3y.ebitda_multiple %>],[2,<%= @trade_2y.ebitda_multiple %>],[3,<%= @trade_cy.ebitda_multiple %>],[4,<%= @trade_now.ebitda_multiple %>]];
 
-var t9 = [[1, <%= @trade_now.sales_multiple %>],[2, <%= @trade_cy.sales_multiple %>],[3, <%= @trade_2y.sales_multiple %>],[4, <%= @trade_3y.sales_multiple %>]];
+var t9 = [[1,<%= @trade_3y.sales_multiple %>],[2,<%= @trade_2y.sales_multiple %>],[3,<%= @trade_cy.sales_multiple %>],[4,<%= @trade_now.sales_multiple %>]];
 
-var t10 = [[1, <%= @trade_now.debt_multiple %>],[2, <%= @trade_cy.debt_multiple %>],[3, <%= @trade_2y.debt_multiple %>],[4, <%= @trade_3y.debt_multiple %>]];
+var t10 = [[1,<%= @trade_3y.debt_multiple %>],[2,<%= @trade_2y.debt_multiple %>],[3,<%= @trade_cy.debt_multiple %>],[4,<%= @trade_now.debt_multiple %>]];
 
-var s1 = [[1, <%= number_with_precision(@now_revenue_category, :precision => 1) %>],[2, <%= number_with_precision(@cy_revenue_category, :precision => 1) %>],[3, <%= number_with_precision(@y2_revenue_category, :precision => 1) %>],[4, <%= number_with_precision(@y3_revenue_category, :precision => 1) %>]];
+var s1 = [[1,<%= number_with_precision(@y3_revenue_category, :precision => 1) %>],[2,<%= number_with_precision(@y2_revenue_category, :precision => 1) %>],[3,<%= number_with_precision(@cy_revenue_category, :precision => 1) %>],[4,<%= number_with_precision(@now_revenue_category, :precision => 1) %>]];
 
-var s2 = [[1, <%= number_with_precision(@now_asset_category, :precision => 1) %>],[2, <%= number_with_precision(@cy_asset_category, :precision => 1) %>],[3, <%= number_with_precision(@y2_asset_category, :precision => 1) %>],[4, <%= number_with_precision(@y3_asset_category, :precision => 1) %>]];
+var s2 = [[1,<%= number_with_precision(@y3_asset_category, :precision => 1) %>],[2,<%= number_with_precision(@y2_asset_category, :precision => 1) %>],[3,<%= number_with_precision(@cy_asset_category, :precision => 1) %>],[4,<%= number_with_precision(@now_asset_category, :precision => 1) %>]];
 
-var s3 = [[1, <%= number_with_precision(@now_sales_growth, :precision => 1) %>],[2,<%= number_with_precision(@cy_sales_growth, :precision => 1) %>],[3,<%= number_with_precision(@y2_sales_growth, :precision => 1) %>],[4,<%= number_with_precision(@y3_sales_growth, :precision => 1) %>]];
+var s3 = [[1,<%= number_with_precision(@y3_sales_growth, :precision => 1) %>],[2,<%= number_with_precision(@y2_sales_growth, :precision => 1) %>],[3,<%= number_with_precision(@cy_sales_growth, :precision => 1) %>],[4,<%= number_with_precision(@now_sales_growth, :precision => 1) %>]];
 
-var s4 = [[1, <%= number_with_precision(@now_gross_profit_margin, :precision => 1) %>],[2,<%= number_with_precision(@cy_gross_profit_margin, :precision => 1) %>],[3,<%= number_with_precision(@y2_gross_profit_margin, :precision => 1) %>],[4,<%= number_with_precision(@y3_gross_profit_margin, :precision => 1) %>]];
+var s4 = [[1,<%= number_with_precision(@y3_gross_profit_margin, :precision => 1) %>],[2,<%= number_with_precision(@y2_gross_profit_margin, :precision => 1) %>],[3,<%= number_with_precision(@cy_gross_profit_margin, :precision => 1) %>],[4,<%= number_with_precision(@now_gross_profit_margin, :precision => 1) %>]];
 
-var s5 = [[1, <%= number_with_precision(@now_operating_profit_margin, :precision => 1) %>],[2,<%= number_with_precision(@cy_operating_profit_margin, :precision => 1) %>],[3,<%= number_with_precision(@y2_operating_profit_margin, :precision => 1) %>],[4,<%= number_with_precision(@y3_operating_profit_margin, :precision => 1) %>]];
+var s5 = [[1,<%= number_with_precision(@y3_operating_profit_margin, :precision => 1) %>],[2,<%= number_with_precision(@y2_operating_profit_margin, :precision => 1) %>],[3,<%= number_with_precision(@cy_operating_profit_margin, :precision => 1) %>],[4,<%= number_with_precision(@now_operating_profit_margin, :precision => 1) %>]];
 
-var s6 = [[1, <%= number_with_precision(@now_ebitda_percent, :precision => 1) %>],[2,<%= number_with_precision(@cy_ebitda_percent, :precision => 1) %>],[3,<%= number_with_precision(@y2_ebitda_percent, :precision => 1) %>],[4,<%= number_with_precision(@y3_ebitda_percent, :precision => 1) %>]];
+var s6 = [[1,<%= number_with_precision(@y3_ebitda_percent, :precision => 1) %>],[2,<%= number_with_precision(@y2_ebitda_percent, :precision => 1) %>],[3,<%= number_with_precision(@cy_ebitda_percent, :precision => 1) %>],[4,<%= number_with_precision(@now_ebitda_percent, :precision => 1) %>]];
 
-var s7 = [[1, <%= number_with_precision(@now_enterprise_multiple, :precision => 1) %>],[2,<%= number_with_precision(@cy_enterprise_multiple, :precision => 1) %>],[3,<%= number_with_precision(@y2_enterprise_multiple, :precision => 1) %>],[4,<%= number_with_precision(@y3_enterprise_multiple, :precision => 1) %>]];
+var s7 = [[1,<%= number_with_precision(@y3_enterprise_multiple, :precision => 1) %>],[2,<%= number_with_precision(@y2_enterprise_multiple, :precision => 1) %>],[3,<%= number_with_precision(@cy_enterprise_multiple, :precision => 1) %>],[4,<%= number_with_precision(@now_enterprise_multiple, :precision => 1) %>]];
 
-var s8 = [[1, <%= number_with_precision(@now_ebitda_multiple, :precision => 1) %>],[2,<%= number_with_precision(@cy_ebitda_multiple, :precision => 1) %>],[3,<%= number_with_precision(@y2_ebitda_multiple, :precision => 1) %>],[4,<%= number_with_precision(@y3_ebitda_multiple, :precision => 1) %>]];
+var s8 = [[1,<%= number_with_precision(@y3_ebitda_multiple, :precision => 1) %>],[2,<%= number_with_precision(@y2_ebitda_multiple, :precision => 1) %>],[3,<%= number_with_precision(@cy_ebitda_multiple, :precision => 1) %>],[4,<%= number_with_precision(@now_ebitda_multiple, :precision => 1) %>]];
 
-var s9 = [[1, <%= number_with_precision(@now_sales_multiple, :precision => 1) %>],[2,<%= number_with_precision(@cy_sales_multiple, :precision => 1) %>],[3,<%= number_with_precision(@y2_sales_multiple, :precision => 1) %>],[4,<%= number_with_precision(@y3_sales_multiple, :precision => 1) %>]];
+var s9 = [[1,<%= number_with_precision(@y3_sales_multiple, :precision => 1) %>],[2,<%= number_with_precision(@y2_sales_multiple, :precision => 1) %>],[3,<%= number_with_precision(@cy_sales_multiple, :precision => 1) %>],[4,<%= number_with_precision(@now_sales_multiple, :precision => 1) %>]];
 
-var s10 = [[1, <%= number_with_precision(@now_debt_multiple, :precision => 1) %>],[2,<%= number_with_precision(@cy_debt_multiple, :precision => 1) %>],[3,<%= number_with_precision(@y2_debt_multiple, :precision => 1) %>],[4,<%= number_with_precision(@y3_debt_multiple, :precision => 1) %>]];
+var s10 = [[1,<%= number_with_precision(@y3_debt_multiple, :precision => 1) %>],[2,<%= number_with_precision(@y2_debt_multiple, :precision => 1) %>],[3,<%= number_with_precision(@cy_debt_multiple, :precision => 1) %>],[4,<%= number_with_precision(@now_debt_multiple, :precision => 1) %>]];
 
 $.plot($("#chart1"), [{	
+            data: s1,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+        },{	
         	color: "#ab1600",
             data: t1,
             points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
             lines: { show:true,fill:false,lineWidth:3 },
-            shadowSize:0
-        },{	
-            data: s1,
-            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
-            shadowSize:0
-        }],
+            shadowSize:0        
+		}],
 		{
-		xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+		xaxis: { show:true, ticks:[[1,"3Y"],[2,"2Y"],[3,"CY"],[4,"Now"]], min:0, max:5 },
+		yaxis: { ticks:[0,3,5,7,9,11], tickFormatter:function(val,axis){ return yaxis(val); } }
 		});
 	
 $.plot($("#chart2"), [{	
-        	color: "#ab1600",
+			data: s2,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+        },{	
+            color: "#ab1600",
             data: t2,
             points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
             lines: { show:true,fill:false,lineWidth:3 },
             shadowSize:0
-        },{	
-            data: s2,
-            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
-            shadowSize:0
         }],
     	{
-    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+    	xaxis: { show:true, ticks:[[1,"3Y"],[2,"2Y"],[3,"CY"],[4,"Now"]], min:0, max:5 },
+		yaxis: { ticks:[0,3,5,7,9,11], tickFormatter:function(val,axis){ return yaxis(val); } }
 		});
 	
+	
+
+
 $.plot($("#chart3"), [{	
+            data: s3,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+        },{	
         	color: "#ab1600",
             data: t3,
             points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
             lines: { show:true,fill:false,lineWidth:3 },
             shadowSize:0
-        },{	
-            data: s3,
-            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
-            shadowSize:0
         }],
     	{
-    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+    	xaxis: { show:true, ticks:[[1,"3Y"],[2,"2Y"],[3,"CY"],[4,"Now"]], min:0, max:5 },
+    	yaxis: { tickFormatter:function(val,axis){ return val+"%"; } }
 		});
 		
 $.plot($("#chart4"), [{	
-        	color: "#ab1600",
+           	data: s4,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+		},{	
+			color: "#ab1600",
             data: t4,
             points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
             lines: { show:true,fill:false,lineWidth:3 },
             shadowSize:0
-        },{	
-            data: s4,
-            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
-            shadowSize:0
         }],
     	{
-    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+    	xaxis: { show:true, ticks:[[1,"3Y"],[2,"2Y"],[3,"CY"],[4,"Now"]], min:0, max:5 },
+    	yaxis: { tickFormatter:function(val,axis){ return val+"%"; } },
 		});
 		
 $.plot($("#chart5"), [{	
-        	color: "#ab1600",
+			data: s5,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+ 
+        },{	
+			color: "#ab1600",
             data: t5,
             points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
             lines: { show:true,fill:false,lineWidth:3 },
-            shadowSize:0
-        },{	
-            data: s5,
-            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
-            shadowSize:0
+            shadowSize:0   
         }],
     	{
-    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
-		});
+    	xaxis: { show:true, ticks:[[1,"3Y"],[2,"2Y"],[3,"CY"],[4,"Now"]], min:0, max:5 },
+		yaxis: { tickFormatter:function(val,axis){ return val+"%"; } }
+});
 		
 		
 $.plot($("#chart6"), [{	
-        	color: "#ab1600",
+			data: s6,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+		},{	
+            color: "#ab1600",
             data: t6,
             points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
             lines: { show:true,fill:false,lineWidth:3 },
             shadowSize:0
-        },{	
-            data: s6,
-            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
-            shadowSize:0
         }],
     	{
-    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+    	xaxis: { show:true, ticks:[[1,"3Y"],[2,"2Y"],[3,"CY"],[4,"Now"]], min:0, max:5 },
+    	yaxis: { tickFormatter:function(val,axis){ return val+"%"; } }
 		});
 		
 $.plot($("#chart7"), [{	
-        	color: "#ab1600",
+			data: s7,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+		},{	
+         	color: "#ab1600",
             data: t7,
             points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
             lines: { show:true,fill:false,lineWidth:3 },
             shadowSize:0
-        },{	
-            data: s7,
-            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
-            shadowSize:0
         }],
     	{
-    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+    	xaxis: { show:true, ticks:[[1,"3Y"],[2,"2Y"],[3,"CY"],[4,"Now"]], min:0, max:5 },
+    	yaxis: { tickDecimals:1 }
 		});
 		
 $.plot($("#chart8"), [{	
+			data: s8,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+		},{	
         	color: "#ab1600",
             data: t8,
             points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
             lines: { show:true,fill:false,lineWidth:3 },
             shadowSize:0
-        },{	
-            data: s8,
-            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
-            shadowSize:0
         }],
     	{
-    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+    	xaxis: { show:true, ticks:[[1,"3Y"],[2,"2Y"],[3,"CY"],[4,"Now"]], min:0, max:5 },
+    	yaxis: { tickDecimals:1 }
 		});
 		
 $.plot($("#chart9"), [{	
-        	color: "#ab1600",
+			data: s9,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+		},{	
+			color: "#ab1600",
             data: t9,
             points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
             lines: { show:true,fill:false,lineWidth:3 },
             shadowSize:0
-        },{	
-            data: s9,
-            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
-            shadowSize:0
+            
         }],
     	{
-    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+    	xaxis: { show:true, ticks:[[1,"3Y"],[2,"2Y"],[3,"CY"],[4,"Now"]], min:0, max:5 },
+    	yaxis: { tickDecimals:1 }
 		});
 		
 $.plot($("#chart10"), [{	
-        	color: "#ab1600",
+			data: s10,
+            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
+            shadowSize:0
+		},{	
+			color: "#ab1600",
             data: t10,
             points: { radius: 3, symbol: "circle",show:true,fill:true,fillColor: "#ab1600" },
             lines: { show:true,fill:false,lineWidth:3 },
             shadowSize:0
-        },{	
-            data: s10,
-            bars: { barWidth:.5,show:true,fillColor: "#c3d3e1",lineWidth:0,align:"center" },
-            shadowSize:0
         }],
     	{
-    	xaxis: { show:true, ticks:[[1,"Now"],[2,"CY"],[3,"2Y"],[4,"3Y"]], min:0, max:5 }
+    	xaxis: { show:true, ticks:[[1,"3Y"],[2,"2Y"],[3,"CY"],[4,"Now"]], min:0, max:5 },
+    	yaxis: { tickDecimals:1 }
 		});	
 	
 	/*

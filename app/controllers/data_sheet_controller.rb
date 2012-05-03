@@ -29,12 +29,50 @@ class DataSheetController < ApplicationController
     	@trade_4y = TradeStat.find(@company.trade_4y)
     	@trade_5y = TradeStat.find(@company.trade_5y)
 
+        #the initial choices for the SIC dropdown
+        @sic_1digit = SIC.get_divisions
+        @sic_2digit = [""]
+
         respond_to do |format|
             format.html
             format.xml { send_data @company.stattrader_xml, content_type: 'text/xml', :filename => "#{@company.name}-StatTrader.xml" }
             format.xls { send_data @company.datasheet_xls.string, content_type: 'application/vnd.ms-excel', :filename => "#{@company.name}.xls" }
+            format.js #{ render :layout => false }
         end
 	end
+
+    #filling in the SIC dropdowns
+    def fill_in_sics
+
+        @sic_2digit = SIC.get_children(params[:id])
+        @id = params[:id]
+        
+        respond_to do |format|            
+            format.js
+        end
+    end
+
+    #filling in the SIC dropdowns
+    def fill_in_sics_3digit
+
+        @sic_3digit = SIC.get_children(params[:id])
+        @id = params[:id]
+        
+        respond_to do |format|            
+            format.js
+        end
+    end
+
+    #filling in the SIC dropdowns
+    def fill_in_sics_4digit
+
+        @sic_4digit = SIC.get_children(params[:id])
+        @id = params[:id]
+        
+        respond_to do |format|            
+            format.js
+        end
+    end
 
 	#'update' will update+save the data and refresh the page
 	def update
@@ -118,8 +156,13 @@ class DataSheetController < ApplicationController
 		@trade_4y.calculate_stats!(@secure_4y)
 		@trade_5y.calculate_stats!(@secure_5y)
 
-        flash[:notice] = "Company Updated."		
-	    redirect_to :action => :view, :id =>@company.id	    
+        flash[:notice] = "Company Updated."
+
+        respond_to do |format|
+            format.html { redirect_to :action => :view, :id =>@company.id }
+            format.js
+        end		
+	    
 	end
 
     #new company page

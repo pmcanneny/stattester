@@ -22,12 +22,14 @@
 
 </div>
 
+
+
 <div class="leftwindow" id="leftwindow">
 
 <%= show_notice(notice) %>
 <div class="heading">Company Profile</div>
 
-<%= form_for @company, :url => {:controller=>:data_sheet,:action => :update} do |f| %>	
+<%= form_for @company, :url => {:controller=>:data_sheet,:action => :update}, :html => {:name => "data_update", :id => "data_update"} do |f| %>	
 		<table class="labels">
 		<tr>
 			<td><%= f.label "Company Name:" %></td>
@@ -41,9 +43,30 @@
 			<td><%= f.label "Ownership:" %></td>
 			<td><%= f.select(:ownership, Company.ownership_options, :include_blank => "Please Select") %></td>
 		</tr>
-		<tr>
-			<td><%= f.label "SIC:" %></td>
-			<td><%= f.select(:sic, Company.four_digit_sic_options, :include_blank => "Please Select") %></td>
+		<tr bgcolor="#DDD">
+			<td>SIC Division:</td>
+			<td>
+				<select name="sic_1" id="sic_1" rel="/data_sheet/fill_in_sics">
+					<%= "<option value=\"\">Select To Edit</option>".html_safe if (@company.sic != nil and @company.sic.length == 4) %>
+					<%= options_for_select(@sic_1digit) %>
+				</select>
+			</td>
+		</tr>
+		<tr bgcolor="#DDD" id="sic_row2">
+			<td>SIC Division 2:</td>
+			<td><select name="sic_2" id="sic_2" rel="/data_sheet/fill_in_sics_3digit"></select></td>
+		</tr>
+		<tr bgcolor="#DDD" id="sic_row3">
+			<td>SIC Division 3:</td>
+			<td><select name="sic_3" id="sic_3" rel="/data_sheet/fill_in_sics_4digit"></select></td>
+		</tr>
+		<tr bgcolor="#DDD">
+			<td>SIC Code: </td>
+			<td>
+				<select id="company_sic" name="company[sic]">
+					<%= options_for_select(SIC.add_description(@company.sic)) if (@company.sic != nil and @company.sic.length == 4) %>
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td><%= f.label "Country:" %></td>
@@ -64,7 +87,7 @@
 		</tr>
 		</table>
 	</div>
-	
+
 <div class="tablescontainer">
 
 <!-- <div class="heading">&nbsp;&nbsp;Company: <%= @company.name %></div> -->
