@@ -41,4 +41,12 @@ class AdminController < ApplicationController
   	redirect_to :action => :index
   end
 
+  def default_filters
+    filters = StatFilter.all
+    for filter in filters
+      filter.default_settings!
+    end
+    redirect_to :action => :index
+  end
+
 end

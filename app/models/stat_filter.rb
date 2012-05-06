@@ -23,6 +23,28 @@ class StatFilter < ActiveRecord::Base
       self.sic_parent = ""
     end
   end
+
+  #return the filter to the desired "default" settings
+  def default_settings!
+    self.sic_level1 = ""
+    self.sic_level2 = ""
+    self.sic_level3 = ""
+    self.sic_level4 = ""
+    self.sic_parent = ""
+
+    unless self.company_id == nil or (Company.find(self.company_id) rescue nil) == nil
+      company = Company.find(self.company_id)
+      unless company.sic == "" or company.sic.nil?
+        level2 = SIC.get_parent(SIC.get_parent(company.sic))
+        level1 = SIC.get_parent(level2)
+        self.sic_level1 = level1
+        self.sic_level2 = level2
+        self.sic_parent = level2
+      end
+    end
+
+    self.save
+  end
   
   #define the options for Reporting Entity
   def self.combination(r)

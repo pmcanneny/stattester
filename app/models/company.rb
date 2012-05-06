@@ -30,6 +30,7 @@ class Company < ActiveRecord::Base
 			filter.sic_level3 = ""
 			filter.sic_level4 = ""
 			filter.save
+			filter.default_settings!
 			self.current_filter_id = filter.id
 			self.save
 			self.current_filter_id
