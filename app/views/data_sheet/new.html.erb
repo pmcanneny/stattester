@@ -14,14 +14,22 @@
 <p>Upload a StatTrader File</p>
 </div>  
 
+<div id="dataoutlist" class="dataout">
+<div id="dataout" onfocus="this.blur();">Company Data Out</div>
+<p><%= link_to 'Export to an Excel Spreadsheet', :controller=>"data_sheet",:action=>"view", :id => @company.id, :format => :xls %></p>
+<p><%= link_to 'Export to a StatTrader File', :controller=>"network_stats",:action=>"view", :id => @company.id, :format => :xml %></p>
 </div>
+
+</div>
+
+
 
 <div class="leftwindow" id="leftwindow">
 
 <%= show_notice(notice) %>
 <div class="heading">Company Profile</div>
 
-<%= form_for @company, :url => {:controller=>:data_sheet,:action => :createcompany} do |f| %>	
+<%= form_for @company, :url => {:controller=>:data_sheet,:action => :createcompany}, :html => {:name => "data_update", :id => "data_update"} do |f| %>	
 		<table class="labels">
 		<tr>
 			<td><%= f.label "Company Name:" %></td>
@@ -35,9 +43,30 @@
 			<td><%= f.label "Ownership:" %></td>
 			<td><%= f.select(:ownership, Company.ownership_options, :include_blank => "Please Select") %></td>
 		</tr>
-		<tr>
-			<td><%= f.label "SIC:" %></td>
-			<td><%= f.select(:sic, Company.four_digit_sic_options, :include_blank => "Please Select") %></td>
+		<tr bgcolor="#dddddd">
+			<td>SIC Division:</td>
+			<td>
+				<select name="sic_1" id="sic_1" rel="/data_sheet/fill_in_sics">
+					<%= "<option value=\"\">Select To Edit</option>".html_safe if (@company.sic != nil and @company.sic.length == 4) %>
+					<%= options_for_select(@sic_1digit) %>
+				</select>
+			</td>
+		</tr>
+		<tr bgcolor="#dddddd" id="sic_row2">
+			<td>SIC Division 2:</td>
+			<td><select name="sic_2" id="sic_2" rel="/data_sheet/fill_in_sics_3digit"></select></td>
+		</tr>
+		<tr bgcolor="#dddddd" id="sic_row3">
+			<td>SIC Division 3:</td>
+			<td><select name="sic_3" id="sic_3" rel="/data_sheet/fill_in_sics_4digit"></select></td>
+		</tr>
+		<tr bgcolor="#dddddd">
+			<td>SIC Code: </td>
+			<td>
+				<select id="company_sic" name="company[sic]">
+					<%= options_for_select(SIC.add_description(@company.sic)) if (@company.sic != nil and @company.sic.length == 4) %>
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td><%= f.label "Country:" %></td>
@@ -52,18 +81,18 @@
 			
 				<p><%= f.hidden_field(:id) %></p>
 				<p><%= f.submit "Save Company" %></p>
-				<p><%= link_to 'Cancel', summary_sheet_url %></p>
+				<!--<p><%= link_to 'Cancel', summary_sheet_url %></p>-->
 			
 			</td>
 		</tr>
 		</table>
 	</div>
-	
+
 <div class="tablescontainer">
 
 <!-- <div class="heading">&nbsp;&nbsp;Company: <%= @company.name %></div> -->
 <br>
-
+ 
 <div class="confidential">CONFIDENTIAL <img src="../../img/padlock.png" /></div>
 
 <div class="companydatacontainer">
@@ -97,7 +126,7 @@
 <tr><th>Now</th></tr>
 <tr><td><%= fye_format(@secure_now.updated_at) %></td></tr>
 <tr><td>My Estimate </td></tr>
-<tr><td><%= SecureStat.reporting_scale(@secure_now.reporting_scale) %></td></tr>
+<tr><td style="text-align:center;"><%= SecureStat.reporting_scale(@secure_now.reporting_scale) %></td></tr>
 <tr><td></td></tr>
 <tr><td><%= text_field :secure_now, :assets %></td></tr>
 <tr><td><%= text_field :secure_now, :gross_sales %></td></tr>
@@ -140,7 +169,7 @@
 <tr><th>2Y</th></tr>
 <tr><td><%= fye_format(@secure_2y.fye) %></td></tr>
 <tr><td><%= select(:secure_2y, :quality, SecureStat.quality_options) %></td></tr>
-<tr><td><%= SecureStat.reporting_scale(@secure_2y.reporting_scale) %></td></tr>
+<tr><td style="text-align:center;"><%= SecureStat.reporting_scale(@secure_2y.reporting_scale) %></td></tr>
 <tr><td></td></tr>
 <tr><td><%= text_field :secure_2y, :assets %></td></tr>
 <tr><td><%= text_field :secure_2y, :gross_sales %></td></tr>
@@ -160,7 +189,7 @@
 <tr><th>3Y</th></tr>
 <tr><td><%= fye_format(@secure_3y.fye) %></td></tr>
 <tr><td><%= select(:secure_3y, :quality, SecureStat.quality_options) %></td></tr>
-<tr><td><%= SecureStat.reporting_scale(@secure_3y.reporting_scale) %></td></tr>
+<tr><td style="text-align:center;"><%= SecureStat.reporting_scale(@secure_3y.reporting_scale) %></td></tr>
 <tr><td></td></tr>
 <tr><td><%= text_field :secure_3y, :assets %></td></tr>
 <tr><td><%= text_field :secure_3y, :gross_sales %></td></tr>
@@ -226,7 +255,7 @@
 </div>
 
 <div class="clear"></div>
-<!--<div class="updatebutton"><%= f.hidden_field(:id) %> <%= f.submit "Update & Save"%></div>-->
+<!-- <div class="updatebutton"><%= f.hidden_field(:id) %> <%= f.submit "Update & Save"%></div> -->
 <div class="heading">My Stat Trade</div>
 
 <div class="mystattradecontainer">
@@ -235,152 +264,262 @@
 
 <div class="tablecolumn labels">
 <table>
-<tr ><th></th></tr>
+<tr><th></th></tr>
 <tr><td class="labeltitle" style="text-align:left;">Accounts</td></tr>
-<tr ><td><%= label :trade, "Asset Category:" %></td></tr>
-<tr ><td><%= label :trade, "Revenue Category:" %></td></tr>
-<tr ><td><%= label :trade, "Sales/Revenue Growth:" %></td></tr>
-<tr ><td><%= label :trade, "Gross Profit Margin:" %></td></tr>
-<tr ><td><%= label :trade, "Operating Profit Margin:" %></td></tr>
-<tr ><td><%= label :trade, "EBITDA %:" %></td></tr>
+<tr><td><%= label :trade, "Asset Category:" %></td></tr>
+<tr><td><%= label :trade, "Revenue Category:" %></td></tr>
+<tr><td><%= label :trade, "Sales/Revenue Growth:" %></td></tr>
+<tr><td><%= label :trade, "Gross Profit Margin:" %></td></tr>
+<tr><td><%= label :trade, "Operating Profit Margin:" %></td></tr>
+<tr><td><%= label :trade, "EBITDA %:" %></td></tr>
 <tr><td class="labeltitle" style="text-align:left;">Valuation</td></tr>
-<tr ><td><%= label :trade, "Enterprise Multiple of Book:" %></td></tr>
-<tr ><td><%= label :trade, "My EBITDA Multiple:" %></td></tr>
-<tr ><td><%= label :trade, "My Sales Multiple:" %></td></tr>
-<tr ><td><%= label :trade, "My Funded Debt Multiple:" %></td></tr>
+<tr><td><%= label :trade, "Enterprise Multiple of Book:" %></td></tr>
+<tr><td><%= label :trade, "My EBITDA Multiple:" %></td></tr>
+<tr><td><%= label :trade, "My Sales Multiple:" %></td></tr>
+<tr><td><%= label :trade, "My Funded Debt Multiple:" %></td></tr>
 </table>
 </div>
 
 <div class="tablecolumn tradenow">
 
 <table>
-<tr ><th>Now</th></tr>
+<tr><th>Now</th></tr>
 <tr><td></td></tr>
-<tr ><td><%= @trade_now.asset_category %></td></tr>
-<tr ><td><%= @trade_now.revenue_category %></td></tr>
-<tr ><td><%= @trade_now.sales_growth %><%= "%" unless @trade_now.sales_growth.nil? %></td></tr>
-<tr ><td><%= @trade_now.gross_profit_margin %><%= "%" unless @trade_now.gross_profit_margin.nil? %></td></tr>
-<tr ><td><%= @trade_now.operating_profit_margin %><%= "%" unless @trade_now.operating_profit_margin.nil? %></td></tr>
-<tr ><td><%= @trade_now.ebitda_percent %><%= "%" unless @trade_now.ebitda_percent.nil? %></td></tr>
+<tr><td><%= @trade_now.asset_category %></td></tr>
+<tr><td><%= @trade_now.revenue_category %></td></tr>
+<tr><td><%= @trade_now.sales_growth %></td></tr>
+<tr><td><%= @trade_now.gross_profit_margin %></td></tr>
+<tr><td><%= @trade_now.operating_profit_margin %></td></tr>
+<tr><td><%= @trade_now.ebitda_percent %></td></tr>
 <tr><td></td></tr>
-<tr ><td><%= @trade_now.enterprise_multiple %></td></tr>
-<tr ><td><%= @trade_now.ebitda_multiple %></td></tr>
-<tr ><td><%= @trade_now.sales_multiple %></td></tr>
-<tr ><td><%= @trade_now.debt_multiple %></td></tr>
+<tr><td><%= @trade_now.enterprise_multiple %></td></tr>
+<tr><td><%= @trade_now.ebitda_multiple %></td></tr>
+<tr><td><%= @trade_now.sales_multiple %></td></tr>
+<tr><td><%= @trade_now.debt_multiple %></td></tr>
 </table>
 
 
 </div>
 
-<div class="tablecolumn">
+
+<div class="tablecolumn  percentage">
+<table>
+<tr><th></th></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td><%= "%" unless @trade_now.sales_growth.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_now.gross_profit_margin.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_now.operating_profit_margin.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_now.ebitda_percent.nil? %></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+</table>
+</div>
+
+
+
+
+<div class="tablecolumn mytrade">
 
 
 <table>
-<tr ><th>CY</th></tr>
+<tr><th>CY</th></tr>
 <tr><td></td></tr>
-<tr ><td><%= @trade_cy.asset_category %></td></tr>
-<tr ><td><%= @trade_cy.revenue_category %></td></tr>
-<tr ><td><%= @trade_cy.sales_growth %><%= "%" unless @trade_cy.sales_growth.nil? %></td></tr>
-<tr ><td><%= @trade_cy.gross_profit_margin %><%= "%" unless @trade_cy.gross_profit_margin.nil? %></td></tr>
-<tr ><td><%= @trade_cy.operating_profit_margin %><%= "%" unless @trade_cy.operating_profit_margin.nil? %></td></tr>
-<tr ><td><%= @trade_cy.ebitda_percent %><%= "%" unless @trade_cy.ebitda_percent.nil? %></td></tr>
+<tr><td><%= @trade_cy.asset_category %></td></tr>
+<tr><td><%= @trade_cy.revenue_category %></td></tr>
+<tr><td><%= @trade_cy.sales_growth %></td></tr>
+<tr><td><%= @trade_cy.gross_profit_margin %></td></tr>
+<tr><td><%= @trade_cy.operating_profit_margin %></td></tr>
+<tr><td><%= @trade_cy.ebitda_percent %></td></tr>
 <tr><td></td></tr>
-<tr ><td><%= @trade_cy.enterprise_multiple %></td></tr>
-<tr ><td><%= @trade_cy.ebitda_multiple %></td></tr>
-<tr ><td><%= @trade_cy.sales_multiple %></td></tr>
-<tr ><td><%= @trade_cy.debt_multiple %></td></tr>
+<tr><td><%= @trade_cy.enterprise_multiple %></td></tr>
+<tr><td><%= @trade_cy.ebitda_multiple %></td></tr>
+<tr><td><%= @trade_cy.sales_multiple %></td></tr>
+<tr><td><%= @trade_cy.debt_multiple %></td></tr>
 </table>
 
 
 </div>
 
-
-<div class="tablecolumn">
-
-
-
+<div class="tablecolumn  percentage">
 <table>
-<tr ><th>2Y</th></tr>
+<tr><th></th></tr>
 <tr><td></td></tr>
-<tr ><td><%= @trade_2y.asset_category %></td></tr>
-<tr ><td><%= @trade_2y.revenue_category %></td></tr>
-<tr ><td><%= @trade_2y.sales_growth %><%= "%" unless @trade_2y.sales_growth.nil? %></td></tr>
-<tr ><td><%= @trade_2y.gross_profit_margin %><%= "%" unless @trade_2y.gross_profit_margin.nil? %></td></tr>
-<tr ><td><%= @trade_2y.operating_profit_margin %><%= "%" unless @trade_2y.operating_profit_margin.nil? %></td></tr>
-<tr ><td><%= @trade_2y.ebitda_percent %><%= "%" unless @trade_2y.ebitda_percent.nil? %></td></tr>
 <tr><td></td></tr>
-<tr ><td><%= @trade_2y.enterprise_multiple %></td></tr>
-<tr ><td><%= @trade_2y.ebitda_multiple %></td></tr>
-<tr ><td><%= @trade_2y.sales_multiple %></td></tr>
-<tr ><td><%= @trade_2y.debt_multiple %></td></tr>
+<tr><td></td></tr>
+<tr><td><%= "%" unless @trade_cy.sales_growth.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_cy.gross_profit_margin.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_cy.operating_profit_margin.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_cy.ebitda_percent.nil? %></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
 </table>
-
 </div>
 
-<div class="tablecolumn">
 
 
+<div class="tablecolumn mytrade">
 <table>
-<tr ><th>3Y</th></tr>
+<tr><th>2Y</th></tr>
 <tr><td></td></tr>
-<tr ><td><%= @trade_3y.asset_category %></td></tr>
-<tr ><td><%= @trade_3y.revenue_category %></td></tr>
-<tr ><td><%= @trade_3y.sales_growth %><%= "%" unless @trade_3y.sales_growth.nil? %></td></tr>
-<tr ><td><%= @trade_3y.gross_profit_margin %><%= "%" unless @trade_3y.gross_profit_margin.nil? %></td></tr>
-<tr ><td><%= @trade_3y.operating_profit_margin %><%= "%" unless @trade_3y.operating_profit_margin.nil? %></td></tr>
-<tr ><td><%= @trade_3y.ebitda_percent %><%= "%" unless @trade_3y.ebitda_percent.nil? %></td></tr>
+<tr><td><%= @trade_2y.asset_category %></td></tr>
+<tr><td><%= @trade_2y.revenue_category %></td></tr>
+<tr><td><%= @trade_2y.sales_growth %></td></tr>
+<tr><td><%= @trade_2y.gross_profit_margin %></td></tr>
+<tr><td><%= @trade_2y.operating_profit_margin %></td></tr>
+<tr><td><%= @trade_2y.ebitda_percent %></td></tr>
 <tr><td></td></tr>
-<tr ><td><%= @trade_3y.enterprise_multiple %></td></tr>
-<tr ><td><%= @trade_3y.ebitda_multiple %></td></tr>
-<tr ><td><%= @trade_3y.sales_multiple %></td></tr>
-<tr ><td><%= @trade_3y.debt_multiple %></td></tr>
+<tr><td><%= @trade_2y.enterprise_multiple %></td></tr>
+<tr><td><%= @trade_2y.ebitda_multiple %></td></tr>
+<tr><td><%= @trade_2y.sales_multiple %></td></tr>
+<tr><td><%= @trade_2y.debt_multiple %></td></tr>
 </table>
-
-
-
-
-
 </div>
+
+
+<div class="tablecolumn  percentage">
+<table>
+<tr><th></th></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td><%= "%" unless @trade_2y.sales_growth.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_2y.gross_profit_margin.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_2y.operating_profit_margin.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_2y.ebitda_percent.nil? %></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+</table>
+</div>
+
+
+
+<div class="tablecolumn mytrade">
+<table>
+<tr><th>3Y</th></tr>
+<tr><td></td></tr>
+<tr><td><%= @trade_3y.asset_category %></td></tr>
+<tr><td><%= @trade_3y.revenue_category %></td></tr>
+<tr><td><%= @trade_3y.sales_growth %></td></tr>
+<tr><td><%= @trade_3y.gross_profit_margin %></td></tr>
+<tr><td><%= @trade_3y.operating_profit_margin %></td></tr>
+<tr><td><%= @trade_3y.ebitda_percent %></td></tr>
+<tr><td></td></tr>
+<tr><td><%= @trade_3y.enterprise_multiple %></td></tr>
+<tr><td><%= @trade_3y.ebitda_multiple %></td></tr>
+<tr><td><%= @trade_3y.sales_multiple %></td></tr>
+<tr><td><%= @trade_3y.debt_multiple %></td></tr>
+</table>
+</div>
+
+<div class="tablecolumn  percentage">
+<table>
+<tr><th></th></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td><%= "%" unless @trade_3y.sales_growth.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_3y.gross_profit_margin.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_3y.operating_profit_margin.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_3y.ebitda_percent.nil? %></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+</table>
+</div>
+
+
+
 
 <div class="tablecolumn collapsed" id="trade5y">
-
-<div class="tablecolumn">
+<div class="tablecolumn mytrade">
 <table>
-<tr ><th>4Y</th></tr>
+<tr><th>4Y</th></tr>
 <tr><td></td></tr>
-<tr ><td><%= @trade_4y.asset_category %></td></tr>
-<tr ><td><%= @trade_4y.revenue_category %></td></tr>
-<tr ><td><%= @trade_4y.sales_growth %><%= "%" unless @trade_4y.sales_growth.nil? %></td></tr>
-<tr ><td><%= @trade_4y.gross_profit_margin %><%= "%" unless @trade_4y.gross_profit_margin.nil? %></td></tr>
-<tr ><td><%= @trade_4y.operating_profit_margin %><%= "%" unless @trade_4y.operating_profit_margin.nil? %></td></tr>
-<tr ><td><%= @trade_4y.ebitda_percent %><%= "%" unless @trade_4y.ebitda_percent.nil? %></td></tr>
+<tr><td><%= @trade_4y.asset_category %></td></tr>
+<tr><td><%= @trade_4y.revenue_category %></td></tr>
+<tr><td><%= @trade_4y.sales_growth %></td></tr>
+<tr><td><%= @trade_4y.gross_profit_margin %></td></tr>
+<tr><td><%= @trade_4y.operating_profit_margin %></td></tr>
+<tr><td><%= @trade_4y.ebitda_percent %></td></tr>
 <tr><td></td></tr>
-<tr ><td><%= @trade_4y.enterprise_multiple %></td></tr>
-<tr ><td><%= @trade_4y.ebitda_multiple %></td></tr>
-<tr ><td><%= @trade_4y.sales_multiple %></td></tr>
-<tr ><td><%= @trade_4y.debt_multiple %></td></tr>
+<tr><td><%= @trade_4y.enterprise_multiple %></td></tr>
+<tr><td><%= @trade_4y.ebitda_multiple %></td></tr>
+<tr><td><%= @trade_4y.sales_multiple %></td></tr>
+<tr><td><%= @trade_4y.debt_multiple %></td></tr>
 </table>
 </div>
 
 
-
-<div class="tablecolumn">
+<div class="tablecolumn  percentage">
 <table>
-<tr ><th>5Y</th></tr>
+<tr><th></th></tr>
 <tr><td></td></tr>
-<tr ><td><%= @trade_5y.asset_category %></td></tr>
-<tr ><td><%= @trade_5y.revenue_category %></td></tr>
-<tr ><td><%= @trade_5y.sales_growth %><%= "%" unless @trade_5y.sales_growth.nil? %></td></tr>
-<tr ><td><%= @trade_5y.gross_profit_margin %><%= "%" unless @trade_5y.gross_profit_margin.nil? %></td></tr>
-<tr ><td><%= @trade_5y.operating_profit_margin %><%= "%" unless @trade_5y.operating_profit_margin.nil? %></td></tr>
-<tr ><td><%= @trade_5y.ebitda_percent %><%= "%" unless @trade_5y.ebitda_percent.nil? %></td></tr>
 <tr><td></td></tr>
-<tr ><td><%= @trade_5y.enterprise_multiple %></td></tr>
-<tr ><td><%= @trade_5y.ebitda_multiple %></td></tr>
-<tr ><td><%= @trade_5y.sales_multiple %></td></tr>
-<tr ><td><%= @trade_5y.debt_multiple %></td></tr>
+<tr><td></td></tr>
+<tr><td><%= "%" unless @trade_4y.sales_growth.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_4y.gross_profit_margin.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_4y.operating_profit_margin.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_4y.ebitda_percent.nil? %></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
 </table>
 </div>
+
+
+<div class="tablecolumn mytrade">
+<table>
+<tr><th>5Y</th></tr>
+<tr><td></td></tr>
+<tr><td><%= @trade_5y.asset_category %></td></tr>
+<tr><td><%= @trade_5y.revenue_category %></td></tr>
+<tr><td><%= @trade_5y.sales_growth %></td></tr>
+<tr><td><%= @trade_5y.gross_profit_margin %></td></tr>
+<tr><td><%= @trade_5y.operating_profit_margin %></td></tr>
+<tr><td><%= @trade_5y.ebitda_percent %></td></tr>
+<tr><td></td></tr>
+<tr><td><%= @trade_5y.enterprise_multiple %></td></tr>
+<tr><td><%= @trade_5y.ebitda_multiple %></td></tr>
+<tr><td><%= @trade_5y.sales_multiple %></td></tr>
+<tr><td><%= @trade_5y.debt_multiple %></td></tr>
+</table>
+</div>
+
+
+<div class="tablecolumn  percentage">
+<table>
+<tr><th></th></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td><%= "%" unless @trade_5y.sales_growth.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_5y.gross_profit_margin.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_5y.operating_profit_margin.nil? %></td></tr>
+<tr><td><%= "%" unless @trade_5y.ebitda_percent.nil? %></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr><td></td></tr>
+</table>
+</div>
+
+
 
 </div>
 <% end %>

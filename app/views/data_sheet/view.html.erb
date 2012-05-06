@@ -43,7 +43,7 @@
 			<td><%= f.label "Ownership:" %></td>
 			<td><%= f.select(:ownership, Company.ownership_options, :include_blank => "Please Select") %></td>
 		</tr>
-		<tr bgcolor="#DDD">
+		<tr bgcolor="#dddddd">
 			<td>SIC Division:</td>
 			<td>
 				<select name="sic_1" id="sic_1" rel="/data_sheet/fill_in_sics">
@@ -52,15 +52,15 @@
 				</select>
 			</td>
 		</tr>
-		<tr bgcolor="#DDD" id="sic_row2">
+		<tr bgcolor="#dddddd" id="sic_row2">
 			<td>SIC Division 2:</td>
 			<td><select name="sic_2" id="sic_2" rel="/data_sheet/fill_in_sics_3digit"></select></td>
 		</tr>
-		<tr bgcolor="#DDD" id="sic_row3">
+		<tr bgcolor="#dddddd" id="sic_row3">
 			<td>SIC Division 3:</td>
 			<td><select name="sic_3" id="sic_3" rel="/data_sheet/fill_in_sics_4digit"></select></td>
 		</tr>
-		<tr bgcolor="#DDD">
+		<tr bgcolor="#dddddd">
 			<td>SIC Code: </td>
 			<td>
 				<select id="company_sic" name="company[sic]">

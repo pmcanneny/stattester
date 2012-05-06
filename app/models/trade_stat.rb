@@ -104,6 +104,9 @@ class TradeStat < ActiveRecord::Base
 	  self.debt_multiple = base_stats.debt_multiple
 	end
 
+  self.quality = base_stats.quality
+  self.quality = 1 if self.quality.nil?
+
 	self.save
   end
 end

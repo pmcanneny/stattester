@@ -34,8 +34,13 @@ $(document).ready(function() {
   $("#sic_1").subSelectWithAjax();
   $("#sic_2").subSelectWithAjax();
   $("#sic_3").subSelectWithAjax();
+  $("#filter_sic_level1").subSelectWithAjax();
+  $("#filter_sic_level2").subSelectWithAjax();
+  $("#filter_sic_level3").subSelectWithAjax();
   $("#sic_row2").hide();
   $("#sic_row3").hide();
+  $("#filtermenu").hide();
+  $('#hide_filter').hide();
 })
 
 

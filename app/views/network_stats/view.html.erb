@@ -13,6 +13,18 @@
             $('#filterform').submit();
         });
 
+        $('#open_filter').click(function(){
+            $('#filtermenu').slideDown();
+            $('#open_filter').hide();
+            $('#hide_filter').show();
+        });
+
+        $('#hide_filter').click(function(){
+            $('#filtermenu').slideUp();
+            $('#open_filter').show();
+            $('#hide_filter').hide();
+        });
+
     });
 </script>
 
@@ -42,103 +54,228 @@
 <%= form_for(@filter, :url => {:action => "load_filter", :id => @company.id}) do |f| %>	
 <table>
 	<tr>
+		<td><h2>Current Filter: <%= @filter.name %></h2></td>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td>Load filter: </td>
 		<td><%= select(:filter, :id, Hash[@filters.collect(&:name).zip(@filters.collect(&:id))]) %></td>
 		<td><%= f.submit "Load Filter" %></td>
+<% end %>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		<td>
+			<button type="button" id="open_filter">Edit Filter</button>
+			<button type="button" id="hide_filter">Hide Filter</button>
+		</td>
 	</tr>
 </table>
-<% end %>
 
 
 
+<div id="filtermenu">
 
 <form accept-charset="UTF-8" action="/network_stats/save_filter" method="post" id="filterform">
-
-<!--
+	<%= hidden_field(:company, :id) %>
+	<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
 
 <table>
+	<tr>
+		<td>
 
-<tr>
-<td><p>Core:</p></td>
-<td>
-<p>SIC:</p>
-<p>Country:</p>
-<p>Region:</p>
-</td>
-<td>     
-<p><select><option value="Any">Any</option></select></p>
-<p><%= select(:filter, :country, StatFilter.country_options) %></p>
-<p><%= select(:filter, :region, StatFilter.region_options) %></p>
-</td>
-
-
-<td><p>Quality:</p></td>
-<td>
-<p>Historical Quality:</p>
-<p>Accounts:</p>
-<p>Entities:</p>
-</td>
-<td>     
-<p><%= select(:filter, :quality, StatFilter.quality_options) %></p>
-<p><select><option value="Any">Any</option></select></p>
-<p><select><option value="Any">Any</option></select></p>
-</td>
-
-
-<td><p>Sourcing:</p></td>
-<td>
-<p>Combination:</p>
-<p>Ownership:</p>
-<p>Revenue:</p>
-</td>
-<td>     
-<p><%= select(:filter, :combination, StatFilter.combination_options) %></p>
-<p><%= select(:filter, :ownership, StatFilter.ownership_options) %></p>
-<p><select><option value="Any">Any</option></select></p>
-</td>
-
-</tr>
+<table>
+	<tr>
+		<td rowspan="3">Core:</td>
+		<td></td>
+		<td><input name="commit" type="submit" value="Apply Filter" id="apply" /></td>
+	</tr>
+	<tr>
+		<td>Country:</td>
+		<td><%= select(:filter, :country, StatFilter.country_options) %></td>
+	</tr>
+	<tr>
+		<td>Region:</td>
+		<td><%= select(:filter, :region, StatFilter.region_options) %></td>
+	</tr>
 </table>
 
--->
-
-<h2>Current Filter: <%= @filter.name %></h2>
+</td>
+<td>
 
 <table>
-<tr>
-<td rowspan="3">
-<%= hidden_field(:company, :id) %><input name="commit" type="submit" value="Apply Filter" id="apply" /><input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+	<tr>
+		<td rowspan="5">SIC Filter:</td>
+	</tr>
+	<tr>
+		<td>
+			<select name="filter[sic_level1]" id="filter_sic_level1" rel="/network_stats/fill_in_sics">
+				<%= options_for_select({"#{@filter.sic_level1} - #{SIC.description(@filter.sic_level1)}" => @filter.sic_level1}) unless @filter.sic_level1 == "" %>
+				<%= options_for_select(@sic_1digit) %>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<select name="filter[sic_level2]" id="filter_sic_level2" rel="/network_stats/fill_in_sics_3digit">
+				<%= options_for_select({"#{@filter.sic_level2} - #{SIC.description(@filter.sic_level2)}" => @filter.sic_level2}) unless @filter.sic_level2 == "" %>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<select name="filter[sic_level3]" id="filter_sic_level3" rel="/network_stats/fill_in_sics_4digit">
+				<%= options_for_select({"#{@filter.sic_level3} - #{SIC.description(@filter.sic_level3)}" => @filter.sic_level3}) unless @filter.sic_level3 == "" %>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<select name="filter[sic_level4]" id="filter_sic_level4">
+				<%= options_for_select({"#{@filter.sic_level4} - #{SIC.description(@filter.sic_level4)}" => @filter.sic_level4}) unless @filter.sic_level4 == "" %>
+			</select>
+		</td>
+	</tr>
+</table>
+
 </td>
-<td rowspan="3">Core:</td>
-<td>SIC:</td>
-<td><%= select(:filter, :sic_low, Company.four_digit_sic_options, :include_blank => 'Any') %></td>
-<td rowspan="3">Quality:</td>
-<td>Accounts:</td>
-<td><%= select(:filter, :quality, StatFilter.quality_options) %></td>
-<td rowspan="3">Sourcing:</td>
-<td>User Type:</td>
-<td><%= select(:filter, :user_type, User.subtype_options, :include_blank => 'Any') %></td>
-</tr>
-<tr>
-<td>Country:</td>
-<td><%= select(:filter, :country, StatFilter.country_options) %></td>
-<td>Valuation:</td>
-<td><select><option value="Any">Any</option></select></td>
-<td>Ownership:</td>
-<td><%= select(:filter, :ownership, StatFilter.ownership_options) %></td>
-</tr>
-<tr>
-<td>Region:</td>
-<td><%= select(:filter, :region, StatFilter.region_options) %></td>
-<td>Entities:</td>
-<td><%= select(:filter, :combination, StatFilter.combination_options) %></td>
-<td>Revenue Range:</td>
-<td><%= select(:filter, :revenue_low, {1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12}, :include_blank => 'Any') %></td>
-<td><%= select(:filter, :revenue_high, {1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12}, :include_blank => 'Any') %></td>
 </tr>
 </table>
 
 <table>
+<tr>
+	<td>
+
+<table style="border-style:solid;border-width:1px;border-color:#ffffff;">
+	<tr>
+		<td rowspan="14">User Type:</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :user_cpa) %></td>
+		<td>CPA in Public Practice</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :user_investment_banker) %></td>
+		<td>Investment Banker</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :user_business_broker) %></td>
+		<td>Business Broker</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :user_business_appraiser) %></td>
+		<td>Business Appraiser or Valuation Expert</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :user_commercial_lender) %></td>
+		<td>Commercial and/or Mezzanine Lender</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :user_private_investor) %></td>
+		<td>Private Investor or Private Equity Professional</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :user_public_investor) %></td>
+		<td>Public Investor or Investment Manager</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :user_financial_pro) %></td>
+		<td>Financial Professional Working in Industry</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :user_executive) %></td>
+		<td>Executive Working in Industry</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :user_attorney) %></td>
+		<td>Attorney</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :user_consultant) %></td>
+		<td>Consultant or Financial Analyst</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :user_not_classified) %></td>
+		<td>Not Classified</td>
+	</tr>
+	<tr style="background-color:#555555;">
+		<td style="text-align:right;"><%= check_box(:filter, :user_stattrader) %></td>
+		<td>StatTrader's Database</td>
+	</tr>
+</table>
+
+</td>
+<td>
+
+<table style="border-style:solid;border-width:1px;border-color:#ffffff;">
+	<tr>
+		<td rowspan="4">Accounts:</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :accounts_audit) %></td>
+		<td>Audit</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :accounts_review) %></td>
+		<td>Review</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :accounts_mgt) %></td>
+		<td>Mgt/Compiled</td>
+	</tr>
+</table>
+
+<table style="border-style:solid;border-width:1px;border-color:#ffffff;">
+	<tr>
+		<td rowspan="3">Entities:</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :entities_combination) %></td>
+		<td>Combination</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :entities_not_combination) %></td>
+		<td>Not a Combination</td>
+	</tr>
+</table>
+
+<table style="border-style:solid;border-width:1px;border-color:#ffffff;">
+	<tr>
+		<td rowspan="5">Ownership:</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :ownership_public) %></td>
+		<td>Public</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :ownership_private_investor) %></td>
+		<td>Private Investor</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :ownership_private_operator) %></td>
+		<td>Private Operator</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><%= check_box(:filter, :ownership_division) %></td>
+		<td>Division/Subsidiary</td>
+	</tr>
+</table>
+
+<table>
+	<tr>
+		<td>Revenue Category Range:</td>
+		<td><%= select(:filter, :revenue_low, {1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12}, :include_blank => 'Any') %></td>
+		<td><%= select(:filter, :revenue_high, {1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12}, :include_blank => 'Any') %></td>
+	</tr>
+	<tr>
+		<td>Asset Category Range:</td>
+		<td><%= select(:filter, :asset_low, {1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12}, :include_blank => 'Any') %></td>
+		<td><%= select(:filter, :asset_high, {1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12}, :include_blank => 'Any') %></td>
+	</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+<br>
+<table style="background-color:#555555;">
 	<tr>
 		<td>Save Filter as: </td>
 		<td><%= text_field :filter, :name %></td>
@@ -150,11 +287,12 @@
 
  </form>
 
+</div>
 
 </div>
 
 
-<div style="width:1440px;margin:0px auto;">
+<div class="networkstats_bluebottom">
 
 
 <div class="leftwindow networkstats" id="leftwindow">

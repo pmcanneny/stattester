@@ -184,6 +184,9 @@ class DataSheetController < ApplicationController
         @trade_3y = TradeStat.new
         @trade_4y = TradeStat.new
         @trade_5y = TradeStat.new
+
+        @sic_1digit = SIC.get_divisions
+        @sic_2digit = [""]
     end
 
     #action for creating a new company

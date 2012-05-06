@@ -146,6 +146,8 @@ class NetworkStatsController < ApplicationController
     @y3_sales_multiple=netstats.y3_sales_multiple
     @y3_debt_multiple=netstats.y3_debt_multiple
 
+    #logic for SIC codes
+    @sic_1digit = SIC.get_divisions
 
     respond_to do |format|
       format.html
@@ -153,6 +155,39 @@ class NetworkStatsController < ApplicationController
       format.xls { send_data @company.networkstats_xls(netstats).string, content_type: 'application/vnd.ms-excel', :filename => "#{@company.name}.xls" }
     end
 
+  end
+
+  #filling in the SIC dropdowns
+  def fill_in_sics
+
+      @sic_2digit = SIC.get_children(params[:id])
+      @id = params[:id]
+      
+      respond_to do |format|            
+          format.js
+      end
+  end
+
+  #filling in the SIC dropdowns
+  def fill_in_sics_3digit
+
+      @sic_3digit = SIC.get_children(params[:id])
+      @id = params[:id]
+      
+      respond_to do |format|            
+          format.js
+      end
+  end
+
+  #filling in the SIC dropdowns
+  def fill_in_sics_4digit
+
+      @sic_4digit = SIC.get_children(params[:id])
+      @id = params[:id]
+      
+      respond_to do |format|            
+          format.js
+      end
   end
 
 end

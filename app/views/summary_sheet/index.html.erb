@@ -49,10 +49,10 @@
 </td>
 <td><%= link_to image_tag("padlock.png", :class => "icon"), {:controller=>"data_sheet",:action=>"view", :id => company.id} %></td>
 <td><%= 
-				if "#{Company.four_digit_sics(company.sic)}".length > 19
-					"#{Company.four_digit_sics(company.sic)}".slice(0,19) + ".."
+				if "#{SIC.description(company.sic)}".length > 19
+					"#{SIC.description(company.sic)}".slice(0,19) + ".."
 				else
-					"#{Company.four_digit_sics(company.sic)}"
+					"#{SIC.description(company.sic)}"
 				end
 		%>
 </td>

@@ -2,6 +2,27 @@
 class StatFilter < ActiveRecord::Base
   belongs_to :company
   validates_presence_of :name
+
+  #calculate the sic parent on update
+  before_save do 
+
+    self.sic_level1 = "" if self.sic_level1.nil?
+    self.sic_level2 = "" if self.sic_level2.nil?
+    self.sic_level3 = "" if self.sic_level3.nil?
+    self.sic_level4 = "" if self.sic_level4.nil?
+
+    if self.sic_level4 != ""
+      self.sic_parent = self.sic_level4
+    elsif self.sic_level3 != ""
+      self.sic_parent = self.sic_level3
+    elsif self.sic_level2 != ""
+      self.sic_parent = self.sic_level2
+    elsif self.sic_level1 != ""
+      self.sic_parent = self.sic_level1
+    else
+      self.sic_parent = ""
+    end
+  end
   
   #define the options for Reporting Entity
   def self.combination(r)

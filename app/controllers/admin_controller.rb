@@ -31,6 +31,11 @@ class AdminController < ApplicationController
 			trade_3y.calculate_stats!(secure_3y)
 			trade_4y.calculate_stats!(secure_4y)
 			trade_5y.calculate_stats!(secure_5y)
+
+      if comp.ownership.nil?
+        comp.ownership = 1
+        comp.save
+      end
   	end
 
   	redirect_to :action => :index

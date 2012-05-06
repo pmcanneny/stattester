@@ -51,22 +51,44 @@ class SIC
 		SIC.add_description(result)
 	end
 
+	#returns the most recent SIC parent of the given child
+	def self.get_parent(child)
+		len = child.length
+		if len <= 1
+			return child
+		end
+
+		sics = SIC.hierarchy
+		parent = ""
+
+		for sic in sics
+			if sic.length+1 == len
+				parent = sic
+			end
+			if sic == child
+				return parent
+			end
+		end
+
+		return child
+	end
+
 	#takes in an array of SICs and returns a 2-dimentional array now with the descriptions
 	def self.add_description(array)
 		unless array.kind_of?(Array)
 			desc = array + " - " + SIC.description(array)
-			if desc.length > 19
-				desc = desc.slice(0,19) + ".."
-			end
+			# if desc.length > 19
+			# 	desc = desc.slice(0,19) + ".."
+			# end
 			return [desc]
 		end
 		result = Array.new
 		result << ["Please Select",""]
 		for sic in array
 			desc = sic + " - " + SIC.description(sic)
-			if desc.length > 19
-				desc = desc.slice(0,19) + ".."
-			end
+			# if desc.length > 19
+			# 	desc = desc.slice(0,19) + ".."
+			# end
 			result << [desc, sic]
 		end
 

@@ -52,38 +52,69 @@ class NetworkStat
 		filter = StatFilter.find(filter_id)
 
 		#gather data for the filter
-    #gather all trade stats with revenue category
+    #gather all trade stats with revenue category and asset category
+
+    #account quality filters
+    #TODO: make this filter after companies
+    quality_filter = Array.new
+    quality_filter.push(1) if filter.accounts_audit
+    quality_filter.push(2) if filter.accounts_review
+    quality_filter.push(3) if filter.accounts_mgt
+
     tradestats = TradeStat.where(
       filter.revenue_low.to_f==0 ? "" : "revenue_category >= #{filter.revenue_low}").where(
-      filter.revenue_high.to_f==0 ? "" : "revenue_category <= #{filter.revenue_high}")
-    
-    company_ids1 = Array.new
-    tradestats.each do |tradestat|
-      company_ids1.push(tradestat.company_id)
+      filter.revenue_high.to_f==0 ? "" : "revenue_category <= #{filter.revenue_high}").where(
+      filter.asset_low.to_f==0 ? "" : "asset_category >= #{filter.asset_low}").where(
+      filter.asset_high.to_f==0 ? "" : "asset_category <= #{filter.asset_high}").where(
+      :quality => quality_filter)
+
+    temp = tradestats.all(:select => 'DISTINCT company_id')
+    company_ids1 = temp.map{|temp| temp.company_id}
+
+    user_types = Array.new
+    user_types.push(1) if filter.user_cpa
+    user_types.push(2) if filter.user_investment_banker
+    user_types.push(3) if filter.user_business_broker
+    user_types.push(4) if filter.user_business_appraiser
+    user_types.push(5) if filter.user_commercial_lender
+    user_types.push(6) if filter.user_private_investor
+    user_types.push(7) if filter.user_public_investor
+    user_types.push(8) if filter.user_financial_pro
+    user_types.push(9) if filter.user_executive
+    user_types.push(10) if filter.user_attorney
+    user_types.push(11) if filter.user_consultant
+    user_types.push(12) if filter.user_not_classified
+    users = User.where(:subtype => user_types)    
+
+    temp = users.all(:select => :id)
+    user_ids1 = temp.map{|temp| temp.id}
+    user_ids1.push(-1) if filter.user_stattrader 
+
+    #todo: Also filter out non-network valid companies    
+
+    unless filter.sic_parent.nil? or filter.sic_parent.empty? or filter.sic_parent == ""
+      sics = SIC.get_sics(filter.sic_parent)
+      companies = Company.where(:sic => sics).where(:id => company_ids1).where(:user_id => user_ids1)
+    else
+      companies = Company.where(:id => company_ids1).where(:user_id => user_ids1)
     end
 
-    users = User.where(
-      filter.user_type==nil ? "" : "subtype = #{filter.user_type}")
+    combination_filter = Array.new
+    combination_filter.push(1) if filter.entities_combination
+    combination_filter.push(2) if filter.entities_not_combination
 
-    user_ids1 = Array.new
-    users.each do |user|
-      user_ids1.push(user.id)
-    end
-    user_ids1.push(-1)
-
-    #todo: Also filter out non-network valid companies
+    ownership_filter = Array.new
+    ownership_filter.push(1) if filter.ownership_public
+    ownership_filter.push(2) if filter.ownership_private_investor
+    ownership_filter.push(3) if filter.ownership_private_operator
+    ownership_filter.push(4) if filter.ownership_division
 
     #gather the companies that the filter applies to
-    companies = Company.where(
+    companies = companies.where(
       filter.region.to_f==0 ? "" : "region = #{filter.region}").where(
-      #filter.country==0 ? "" : "country = #{filter.country}").where(
-      filter.ownership.to_f==0 ? "" : "ownership = #{filter.ownership}").where(
-      filter.combination.to_f==0 ? "" : "combination = #{filter.combination}")#.where(
-      #filter.sic_low.to_f==0 ? "" : "sic = '#{filter.sic_low.to_s}'")     #todo: make sic a string
-
-    companies = companies.where(:id => company_ids1)  
-    companies = companies.where(:user_id => user_ids1)
-
+      :combination => combination_filter).where(
+      :ownership => ownership_filter)
+      
     @total_companies = companies.size.to_i
 
     @now_revenue_category=0
@@ -170,7 +201,7 @@ class NetworkStat
 
     #add up all the values for the matching companies
     for comp in companies
-      trade_now = TradeStat.find(comp.trade_now)
+      trade_now = TradeStat.find(comp.trade_now_id)
       @now_revenue_category+=(TradeStat.valid?(trade_now.revenue_category) ? trade_now.revenue_category : 0)
       @now_asset_category+=(TradeStat.valid?(trade_now.asset_category) ? trade_now.asset_category : 0)
       @now_sales_growth+=(TradeStat.valid?(trade_now.sales_growth) ? trade_now.sales_growth : 0)
@@ -181,7 +212,7 @@ class NetworkStat
       @now_ebitda_multiple+=(TradeStat.valid?(trade_now.ebitda_multiple) ? trade_now.ebitda_multiple : 0)
       @now_sales_multiple+=(TradeStat.valid?(trade_now.sales_multiple) ? trade_now.sales_multiple : 0)
       @now_debt_multiple+=(TradeStat.valid?(trade_now.debt_multiple) ? trade_now.debt_multiple : 0)
-      trade_cy = TradeStat.find(comp.trade_cy)
+      trade_cy = TradeStat.find(comp.trade_cy_id)
       @cy_revenue_category+=(TradeStat.valid?(trade_cy.revenue_category) ? trade_cy.revenue_category : 0)
       @cy_asset_category+=(TradeStat.valid?(trade_cy.asset_category) ? trade_cy.asset_category : 0)
       @cy_sales_growth+=(TradeStat.valid?(trade_cy.sales_growth) ? trade_cy.sales_growth : 0)
@@ -192,7 +223,7 @@ class NetworkStat
       @cy_ebitda_multiple+=(TradeStat.valid?(trade_cy.ebitda_multiple) ? trade_cy.ebitda_multiple : 0)
       @cy_sales_multiple+=(TradeStat.valid?(trade_cy.sales_multiple) ? trade_cy.sales_multiple : 0)
       @cy_debt_multiple+=(TradeStat.valid?(trade_cy.debt_multiple) ? trade_cy.debt_multiple : 0)
-      trade_2y = TradeStat.find(comp.trade_2y)
+      trade_2y = TradeStat.find(comp.trade_2y_id)
       @y2_revenue_category+=(TradeStat.valid?(trade_2y.revenue_category) ? trade_2y.revenue_category : 0)
       @y2_asset_category+=(TradeStat.valid?(trade_2y.asset_category) ? trade_2y.asset_category : 0)
       @y2_sales_growth+=(TradeStat.valid?(trade_2y.sales_growth) ? trade_2y.sales_growth : 0)
@@ -203,7 +234,7 @@ class NetworkStat
       @y2_ebitda_multiple+=(TradeStat.valid?(trade_2y.ebitda_multiple) ? trade_2y.ebitda_multiple : 0)
       @y2_sales_multiple+=(TradeStat.valid?(trade_2y.sales_multiple) ? trade_2y.sales_multiple : 0)
       @y2_debt_multiple+=(TradeStat.valid?(trade_2y.debt_multiple) ? trade_2y.debt_multiple : 0)
-      trade_3y = TradeStat.find(comp.trade_3y)
+      trade_3y = TradeStat.find(comp.trade_3y_id)
       @y3_revenue_category+=(TradeStat.valid?(trade_3y.revenue_category) ? trade_3y.revenue_category : 0)
       @y3_asset_category+=(TradeStat.valid?(trade_3y.asset_category) ? trade_3y.asset_category : 0)
       @y3_sales_growth+=(TradeStat.valid?(trade_3y.sales_growth) ? trade_3y.sales_growth : 0)

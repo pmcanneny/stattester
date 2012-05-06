@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120425195321) do
+ActiveRecord::Schema.define(:version => 20120506183130) do
 
   create_table "companies", :force => true do |t|
     t.string   "name",                                 :null => false
@@ -175,24 +175,44 @@ ActiveRecord::Schema.define(:version => 20120425195321) do
   add_index "secure_stats", ["company_id"], :name => "index_secure_stats_on_company_id"
 
   create_table "stat_filters", :force => true do |t|
-    t.string   "name",         :default => "default"
+    t.string   "name",                       :default => "default"
     t.integer  "user_id"
-    t.integer  "combination"
-    t.integer  "ownership"
-    t.integer  "sic_low"
-    t.integer  "sic_high"
     t.integer  "country"
     t.integer  "region"
     t.integer  "revenue_low"
     t.integer  "revenue_high"
     t.integer  "asset_low"
     t.integer  "asset_high"
-    t.integer  "input_basis"
-    t.integer  "quality"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
-    t.integer  "user_type"
+    t.string   "sic_parent"
+    t.boolean  "accounts_audit",             :default => true
+    t.boolean  "accounts_review",            :default => true
+    t.boolean  "accounts_mgt",               :default => true
+    t.boolean  "user_cpa",                   :default => true
+    t.boolean  "user_investment_banker",     :default => true
+    t.boolean  "user_business_broker",       :default => true
+    t.boolean  "user_business_appraiser",    :default => true
+    t.boolean  "user_commercial_lender",     :default => true
+    t.boolean  "user_private_investor",      :default => true
+    t.boolean  "user_public_investor",       :default => true
+    t.boolean  "user_financial_pro",         :default => true
+    t.boolean  "user_executive",             :default => true
+    t.boolean  "user_attorney",              :default => true
+    t.boolean  "user_consultant",            :default => true
+    t.boolean  "user_not_classified",        :default => true
+    t.boolean  "entities_combination",       :default => true
+    t.boolean  "entities_not_combination",   :default => true
+    t.boolean  "ownership_public",           :default => true
+    t.boolean  "ownership_private_investor", :default => true
+    t.boolean  "ownership_private_operator", :default => true
+    t.boolean  "ownership_division",         :default => true
+    t.boolean  "user_stattrader",            :default => true
+    t.string   "sic_level1"
+    t.string   "sic_level2"
+    t.string   "sic_level3"
+    t.string   "sic_level4"
   end
 
   add_index "stat_filters", ["company_id"], :name => "index_stat_filters_on_company_id"

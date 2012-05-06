@@ -27,6 +27,9 @@ input[type=text], input[type=password], input[type=number] { width:170px;font-si
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none;margin: 0px; }
 
 
+button { letter-spacing:1px;font-size:14px;background-color:#eeeeee;background: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#dddddd));background-image: -moz-linear-gradient(top, #eeeeee, #dddddd);-webkit-border-radius: .5em;-moz-border-radius: .5em;border-radius: .5em;color:#333333;padding:8px 16px 8px 16px;text-align: center;border: solid 1px #cccccc; }
+
+button:hover { background-color:#dddddd;background: -webkit-gradient(linear, left top, left bottom, from(#dddddd), to(#cccccc));background-image: -moz-linear-gradient(top, #dddddd, #cccccc);cursor:pointer; }
 
 
 /* ----|| Custom ||------*/ 
@@ -138,7 +141,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .login { position:relative;top:40px;width:400px;margin:0px auto; }
 
-.filters { width:1400px;background-color:#ab1600;padding:20px 20px 20px 20px;margin:0px;color:#ffffff; }
+.filters { width:1400px;background-color:#ab1600;padding:0px 80px 10px 20px;margin:0px;color:#ffffff; }
 
 .filters p { display:block;height:20px;margin-left:20px; }
 
@@ -336,3 +339,5 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 .percentage table { width:25px;text-align:left; }
 
+
+.networkstats_bluebottom { width:1500px;margin:0px auto; }
