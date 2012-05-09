@@ -41,7 +41,7 @@ $("#4ybutton").toggle(
 
 $("#datainlist").hover(
 	function() {
-	$("#datainlist").animate({"height":"100px" }, "fast" );
+	$("#datainlist").animate({"height":"190px" }, "fast" );
 	},
 	function() {
 	$("#datainlist").animate({"height":"20px" }, "fast" );

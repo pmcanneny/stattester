@@ -1,0 +1,15 @@
+
+<h2>Public Companies Included</h2>
+
+<table>
+	<th>Company Name</th>
+	<th>SIC Code</th>
+  <% for company in @companies %>  
+    <tr class="<%= cycle("even", "odd") %>">  
+      <td ><font face ="Lucida Console"><%= company.name %></font></td>    
+      <td ><font face ="Lucida Console"><%= "#{company.sic} - #{SIC.description(company.sic)}" %></font></td>    
+    </tr>  
+  <% end %>  
+</table>
+
+<br><br>

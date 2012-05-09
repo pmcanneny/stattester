@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>Stattrader Prototype</title>
+		<meta name="robots" content="none">
+		<%= stylesheet_link_tag    "style_public" %>
+		<%= javascript_include_tag "application" %>
+		<%= csrf_meta_tags %>
+	</head>
+	<body>
+		<div style="width:100%"  align="center">
+			<div align="center" id="container">
+				<div id="containt">
+					<div class="log_prop"><%= link_to 'Logout', {:controller => 'access', :action => 'logout'}, 'style' => 'color:#fff' %></div>
+					<div id="header">
+						<div align="left" class="img-top left">
+							<%= link_to image_tag("stattrader-logo.png", :class => "logo"), "http://www.stattrader.com" %>
+						</div>
+							<div class="left title_text"> 
+							<%= if @contentPageHeading.present?
+									@contentPageHeading
+								else
+									'Confidential Data & Stat Trade'	 
+								end
+								%>
+							</div>
+							<div class="right icons">
+								<div class="datamenu" id="datamenu">
+								<div id="datainlist" class="datain">
+								<div id="datain">
+								   <div class="right">Company Data In</div>
+								   <div class="right"><%= image_tag("list.png") %></div>
+								   <div class="clear"></div>
+								</div>
+								<p><%= link_to 'Company List',  {:controller => 'summary_sheet', :action => 'listPublicCompanies'}, 'style' => 'color:#fff' %></p>
+								<p>Upload XBRL File to StatTrader</p>
+								<p>Upload a StatTrader File</p>
+							</div> 
+							</div>
+							     
+						  </div>
+						  <div class="clear"></div>
+					</div><!--header closed -->
+					<div id="lower_data">     
+						<%= show_notice(notice) %>
+						<%= yield %>                
+					</div><!--lower_data closed -->
+				</div><!--containt closed -->
+				<div class="footer">All content © 2012 <a href="http://www.stattrader.com">StatTrader.com</a></div>
+			</div><!--container closed -->
+		 </div>
+	</body>
+</html>

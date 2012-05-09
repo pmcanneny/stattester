@@ -1,0 +1,73 @@
+<style>
+.suggest_link {
+background-color: #FFFFFF;
+padding: 2px 6px 2px 6px;
+}
+ 
+.suggest_link_over {
+background-color: #3366CC;
+padding: 2px 6px 2px 6px;
+}
+</style>
+<script>
+function suggestUser() {
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+		xmlhttp=new XMLHttpRequest();
+	else
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	xmlhttp.onreadystatechange=function() {
+		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			document.getElementById("suggest_user").innerHTML=xmlhttp.responseText;
+	  }
+	name = escape(document.getElementById('name_user').value);
+	symbol = escape(document.getElementById('symbol_user').value);
+	sic = escape(document.getElementById('sic_user').value);
+	if(name.length >= 4 || sic.length >= 2 || symbol.length >= 2) {
+		xmlhttp.open("GET", 'searchPublicCompanies?name='+ name +'&symbol='+symbol+'&sic='+sic, true);
+		xmlhttp.send();	
+	}
+}
+</script>
+<div>
+	<b>Comapy Name: </b><%= text_field :name, 'user', :onkeyup=> "suggestUser()"  %>
+	&nbsp;&nbsp;&nbsp;
+	<b>Symbol: </b><%= text_field :symbol, 'user', :onkeyup=> "suggestUser()"  %>
+	&nbsp;&nbsp;&nbsp;
+	<b>SIC: </b><%= text_field :sic, 'user', :onkeyup=> "suggestUser()"  %>
+	<%= link_to 'Reset search', {:'controller'=>'summary_sheet', :'action' => 'listPublicCompanies'}, 'style' => 'color:#fff; background-color:#474546; padding:5px;font-weight:bold;' %>
+</div>
+<br/>
+<div id="suggest_user">
+	<table class="table_prop" cellpadding="0" cellspacing="0" width="100%">
+	<tr>
+		  <th style="text-align:left">Company</th>
+		  <th>Trading Symbol</th>
+		  <th>SIC</th>
+		   <th>CY Revenue</th>
+		   <th>Ebitda Multiple</th>
+		   <th>Actions</th>
+	</tr>
+	<% for company in @companies %>  
+		 <tr>
+			  <td width="400px" style="text-align:left">
+				<%= link_to "#{company.name}",  {:controller => 'summary_sheet', :action => 'listPublicCompanies'}, 'style' => 'color:#000; font-weight:normal' %>
+			</td>
+			  <td><%= "#{company.ticker_symbol}" %></td>
+			  <td><%= "#{company.sic}" %></td>
+			  <td><%= 
+				if company.gross_profit.to_s.present?
+					number_to_currency("#{company.gross_profit}", :precision => 0, :separator => ",") 
+				end
+				%></td>
+			  <td><%= 
+				if company.ebitda_multiple.present?
+					sprintf("%.1f", company.ebitda_multiple.to_f)
+				end %>
+			</td>
+			  <td><%= link_to "Add",  {:controller => 'summary_sheet', :action => 'addPublicCompany', 
+			  :id =>"#{company.id}"},  'style' => 'color:#000; font-weight:bold;' %></td>
+			</tr>
+	<% end %> 
+	</table>
+</div>

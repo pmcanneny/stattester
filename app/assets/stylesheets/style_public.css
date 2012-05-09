@@ -1,0 +1,201 @@
+@charset "utf-8";
+body {
+width:100%;
+margin:0%;
+padding:0%;
+font-family:Arial,Helvetica,sans-serif;
+font-size:12px;
+}
+ a{
+ 
+ text-decoration:none;
+ }
+ 
+ #container{
+	height:69px;
+	border-top:#333333 solid 25px;
+	background-color:#d24d3a;
+	width:100%;
+	margin:auto;
+ }
+ 
+ #containt{
+	width:1200px;
+	margin:auto;
+	position:relative;
+	 }
+	
+#lower_data{
+   margin-top:40px;
+   width:1200px;
+}
+
+	 
+.img-top{
+  margin-top:0px;
+}
+
+@-moz-document url-prefix() {
+.img-top{
+margin-top:-40px;
+}
+}
+
+
+.no_js { display: block }
+.has_js { display: none }
+.js .no_js { display: none }
+.js .has_js { display: block }
+
+.heading{
+  background:#7e805b;
+  padding:6px;
+  color:#fff;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:25px;
+  text-transform:uppercase;
+  text-align:left;
+}
+
+.data{
+	background:#eaebd9;
+	border:#dad874 solid 1px;
+	padding:10px;
+	margin-top:20px;
+}
+
+.table_prop{
+	border:#929037 solid 1px;
+	padding:5px;
+}
+
+.left{float:left}
+
+.right{float:right}
+
+.clear{clear:both}
+
+.title_text{
+font-size:20px;
+color:#fff;
+width:800px;
+margin:auto;
+padding-top: 22px;
+}
+
+@-moz-document url-prefix() {
+.title_text{
+font-size:20px;
+color:#fff;
+width:800px;
+margin:-19px  auto 0 auto;
+padding-top: 0px;
+}
+}
+
+.log_prop{
+position:absolute;
+right:0;
+top:-1px;
+color:#fff;
+font-weight:bold;
+}
+
+@-moz-document url-prefix() {
+.log_prop{
+position:absolute;
+right:0;
+top:-41px;
+color:#fff;
+font-weight:bold;
+}
+}
+
+.icons{
+padding-top:23px;
+color:#ffe6e3;
+font-size:14px;
+}
+
+.space{
+ margin-left:12px;
+}
+
+th {
+border:0;
+border-bottom:2px solid #6c6b4a;
+text-align: center;
+padding:6px;
+background:#a09f74;
+font-size:16px;
+color:#27271b;
+}
+th a {
+display: block;
+padding: 2px 4px;
+text-decoration: none;
+}
+th a.asc:after {
+content: ' ⇣';
+}
+th a.desc:after {
+content: ' ⇡';
+}
+table tr td {
+padding: 6px;
+text-align: center;
+vertical-align: top;
+border-bottom:1px solid #ddd;
+color:#161212;
+font-size:13px;
+}
+
+table tr td a {
+color:#ad3220;
+font-weight:bold;
+}
+
+table tr td a:hover {
+color:#8e2516;
+text-decoration:underline;
+}
+
+table tr:nth-child(odd) {
+background-color: #c0bf80;
+}
+td.actions {
+text-align: center;
+white-space: nowrap;
+}
+table td.actions a {
+margin: 0px 6px;
+padding:2px 5px;
+}
+.datamenu { position:absolute;top:-21px;left:850px;z-index:100; }
+
+@-moz-document url-prefix() {
+.datamenu { position:absolute;top:-60px;left:850px;z-index:100; }
+}
+
+.datamenu div div {text-align:right;width:auto;color:#FFE6E3;padding:4px;font-weight:bold;}
+
+.datamenu div div:hover { cursor:pointer; }
+
+.datamenu p { white-space:nowrap;padding:10px 4px 5px 4px;text-align:left;background-color:#a52f1e;margin-left:10px;color:#fff}
+
+.datamenu p:hover{background-color:#bc3623;}
+
+.dataout, .datain { float:none;padding:5px 10px 10px 0px;position:absolute;height:20px;overflow:hidden;width:350px;background-color:#D24D3A;top: 36px; }
+
+.dataout { left:170px; }
+
+.mytrade { width:100px; }
+
+.add_button a{background:#d24d3a;border:#a52f1e solid 1px;padding:8px 15px;color:#fff;font-weight:bold;text-align:right;float:right;margin-top:15px;}
+
+.add_button a:hover{background:#e3523d;}
+
+.footer{background:#474546;padding:10px;color:#fff;font-style:italic;text-align:center;margin-top:20px;}
+.footer a{color:#fff;}
+
+.footer a:hover{text-decoration:underline}

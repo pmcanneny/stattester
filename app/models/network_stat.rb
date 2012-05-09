@@ -116,6 +116,8 @@ class NetworkStat
       :ownership => ownership_filter)
       
     @total_companies = companies.size.to_i
+    @public_companies = companies.where(:ownership => 1).size.to_i
+    @private_companies = @total_companies - @public_companies
 
     @now_revenue_category=0
     @now_asset_category=0

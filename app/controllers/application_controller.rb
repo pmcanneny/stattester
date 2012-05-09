@@ -14,10 +14,10 @@ class ApplicationController < ActionController::Base
   # param: id  -  the user id required to have access to the content in question
   #TODO: check if this exists the current controller action - if not make it return a boolean
   def authorize_user(id)
-    #check if they are who gets access to the page
-    if current_user.id != id
-      redirect_to summary_sheet_url, :notice => "Access denied."
-    end
+    #check if they are who gets access to the page  
+	if current_user.id != id && id != -1 # modified by Codefire
+		redirect_to summary_sheet_url, :notice => "Access denied."  and  return
+	end
   end
 
   #method to access the currently logged-in user

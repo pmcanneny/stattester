@@ -1,205 +1,125 @@
-<div class="datamenu" id="datamenu">
-
-<div id="datainlist" class="datain">
-<div id="datain">Company Data In</div>
-<p>Select from StatTrader's Public Database</p>
-<p>Upload XBRL File to StatTrader</p>
-<p>Upload a StatTrader File</p>
-</div>  
-
-<!-- 
-<div id="dataoutlist" class="dataout">
-<div id="dataout">Company Data Out</div>
-<p>Export to Excel</p>
-<p>Export to a StatTrader File</p>
+<div class="heading">Private Companies</div><!--heading closed -->
+<div class="data">
+	<table class="table_prop" cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+			  <th style="text-align:left">Company Name or Code</th>
+			  <th>To Stat Trade</th>
+			  <th>SIC Default Description</th>
+			  <th>Last Updated</th>
+			  <th>Private Cos</th>
+			  <th>Public Cos</th>
+			  <th>View & Filter</th>
+			  <th>Access Public Co. Data</th>
+			  <th>From Vendors</th>
+			  <th>From Members</th>
+			  <th>Network's Traded Links</th>
+		</tr>
+		<% for company in @companies %>  
+			 <tr>
+				  <td  style="text-align:left">
+					<%= 
+						if "#{company.name}".length > 19
+							"#{company.name}".slice(0,19) + ".."
+						else
+							"#{company.name}"
+						end
+					%>
+				</td>
+				  <td><%= link_to image_tag("padlock.png", :class => "icon"), {:controller=>"data_sheet",:action=>"view", :id => company.id} %></td>
+				  <td>
+					<%= if "#{SIC.description(company.sic)}".length > 19
+						"#{SIC.description(company.sic)}".slice(0,19) + ".."
+					else
+						"#{SIC.description(company.sic)}"
+					end %>
+				</td>
+				  <td><%= 
+					if company.updated_at.present?
+						 company.updated_at.strftime("%m-%d-%Y")
+					end
+					%>
+				</td>
+				  <td><%=
+						if company.current_filter_id.present?
+							default_filter_private_count(company) 
+						end
+					%></td>
+				<td><%= 
+					if company.current_filter_id.present?
+						default_filter_public_count(company) 
+					end
+					%></td>
+				  <td><%= link_to image_tag("charticon.png", :class => "icon"), {:controller=>"network_stats",:action=>"view", :id => company.id} %></td>
+				  <td><%= link_to image_tag("stattrader-icon.png", :class => "icon"), {:action=>"index"} %></td>
+				  <td><%= link_to "View", {:action=>"index"} %></td>
+				<td><%= link_to "View", {:action=>"index"} %></td>
+				<td><%= link_to "View", {:action=>"index"} %></td>
+			</tr>
+		<% end %> 
+	</table>
+	<div class="add_button addcompanybutton"><%= link_to "Add Company", {:controller=>"data_sheet",:action=>"new"} %></div>
+	<div class="clear"></div>
 </div>
- -->
 
+<!-- Public Company Sections -->
+<div class="heading" style="margin-top:50px;">Public Companies</div><!--heading closed -->
+<div class="data">
+	<table class="table_prop" cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+			  <th style="text-align:left">Company Name or Code</th>
+			  <th>To Stat Trade</th>
+			  <th>SIC Default Description</th>
+			  <th>Last Updated</th>
+			  <th>Private Cos</th>
+			  <th>Public Cos</th>
+			  <th>View & Filter</th>
+			  <th>Access Public Co. Data</th>
+			  <th>From Vendors</th>
+			  <th>From Members</th>
+			  <th>Network's Traded Links</th>
+		</tr>
+		<% @public_companies.each do |p_company| %>  
+			 <tr>
+				  <td  style="text-align:left">
+					<%= 
+						if "#{p_company.name}".length > 19
+							"#{p_company.name}".slice(0,19) + ".."
+						else
+							"#{p_company.name}"
+						end
+					%>
+				</td>
+				  <td><%= link_to image_tag("padlock.png", :class => "icon"), {:controller=>"data_sheet",:action=>"view", :id => p_company.id} %>
+				  <td>
+					<%= if "#{SIC.description(p_company.sic)}".length > 19
+						"#{SIC.description(p_company.sic)}".slice(0,19) + ".."
+					else
+						"#{SIC.description(p_company.sic)}"
+					end %>
+				</td>
+				  <td><%=  
+							if p_company.updated_at.present?
+								p_company.updated_at.strftime("%m-%d-%Y");
+							end;
+						%></td>
+				  <td><%= 
+					if p_company.current_filter_id.present?
+						default_filter_private_count(p_company) 
+					end
+					%></td>
+				<td><%= 
+				
+					if p_company.current_filter_id.present?
+						default_filter_public_count(p_company)  
+					end
+					%></td>
+				  <td><%= link_to image_tag("charticon.png", :class => "icon"), {:controller=>"network_stats",:action=>"view", :id => p_company.id} %></td>
+				  <td><%= link_to image_tag("stattrader-icon.png", :class => "icon"), {:action=>"index"} %></td>
+				  <td><%= link_to "View", {:action=>"index"} %></td>
+					<td><%= link_to "View", {:action=>"index"} %></td>
+					<td><%= link_to "View", {:action=>"index"} %></td>
+			</tr>
+		<% end %> 
+	</table>
+	<div class="clear"></div>
 </div>
-
-
-
-
-
-<div class="menu"><span>Summary Sheet</span></div>
-<%= show_notice(notice) %>
-
-
-
-
-
-
-<table class="summarysheet" border="0">
-
-
-<% for company in @companies %>  
-
-<tr class="<%= cycle("even", "odd") %>">  
- 
-<td></td>
-<td><%= company.updated_at.strftime("%m-%d-%Y") %></td>
-
-<td><%= 
-				if "#{company.name}".length > 19
-					"#{company.name}".slice(0,19) + ".."
-				else
-					"#{company.name}"
-				end
-		%>
-</td>
-<td><%= link_to image_tag("padlock.png", :class => "icon"), {:controller=>"data_sheet",:action=>"view", :id => company.id} %></td>
-<td><%= 
-				if "#{SIC.description(company.sic)}".length > 19
-					"#{SIC.description(company.sic)}".slice(0,19) + ".."
-				else
-					"#{SIC.description(company.sic)}"
-				end
-		%>
-</td>
-<td><%= default_filter_private_count(company) %></td>
-<td><%= default_filter_public_count(company) %></td>
-<td><%= link_to image_tag("charticon.png", :class => "icon"), {:controller=>"network_stats",:action=>"view", :id => company.id} %></td>
-<td><%= link_to image_tag("stattrader-icon.png", :class => "icon"), {:action=>"index"} %></td>
-<td><%= link_to "View", {:action=>"index"} %></td>
-<td><%= link_to "View", {:action=>"index"} %></td>
-<td><%= link_to "View", {:action=>"index"} %></td>
-
-
-</tr>  
-<% end %> 
-<tr style="height:1px;background-color:#eaebd9;">  
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:20px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:100px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:200px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:50px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:200px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-</tr>  
-
-
-</table>
-
-
-<table class="summaryheader tan" border="0">
-
-	<tr>  
-	<th colspan="4" class="tan">My Companies</th>
-	<th colspan="4" class="tan">StatTrader's Comparison Network</th>
-	<th colspan="4" class="tan">Relevant Public Data<br />& Information</th>
-	</tr>
-	<tr class="titles">
-	<td rowspan="2" class="yellow"></td>
-	<td rowspan="2" class="yellow">Last Time<br />Data<br />Updated</td>
-	<td rowspan="2" class="yellow">Company<br />Name or<br />Code</td>
-	<td rowspan="2" class="yellow">To<br />Stat<br />Trade</td>
-	<td rowspan="2" class="red">SIC<br />Default<br />Description</td>
-	<td colspan="3" class="red summarytitlered">Profile's Depth</td>
-	<td rowspan="2" class="blue">Access<br />Public Co.<br />Data</td>
-	<td colspan="2" class="blue summarytitle">Buy or Rent</td>
-	<td rowspan="2" class="blue">Network's<br />Traded<br />Links</td>
-	</tr>
-	<tr class="subtitles">
-	<td class="red">Private<br />Cos</td>
-	<td class="red">Public<br />Cos</td>
-	<td class="red">View &<br />Filter</td>
-	<td class="blue">From<br />Vendors</td>
-	<td class="blue">From<br />Members</td>
-	</tr>
-	
-<tr style="height:1px;background-color:#eaebd9;">  
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:20px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:100px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:200px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:50px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:200px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-<td style="width:20px;height:1px;"><img src="img/spacer.gif" style="width:70px;height:1px;" /></td>
-</tr>   
-
-
-</table>
-
-
-<!--
-
-
-<div class="summarycontainer summarymargin">
-<table class="summarysheet mycompanies">
-<tr><th colspan="4">My Companies</th></tr>
-<tr>
-<th></th>
-<th rowspan="2">Last Time<br />Data<br />Updated</th>
-<th rowspan="2">Company<br />Name or<br />Code</th>
-<th rowspan="2">To<br />Stat<br />Trade</th>
-</tr>
-<tr>
-<th></th>
-</tr>
-<% for company in @companies %> 
-<tr>
-<td></td>
-<td><%= company.updated_at.strftime("%m-%d-%Y") %></td>
-<td><%= company.name %></td>
-<td style="text-align:center;"><%= link_to image_tag("padlock.png", :class => "icon"), {:controller=>"data_sheet",:action=>"view", :id => company.id} %></td>
-</tr>
-<% end %> 
-</table>
-</div>
-<div class="summarycontainer red">
-<table class="summarysheet">
-<tr><th colspan="4">StatTrader's Comparison Network</th></tr>
-<tr>
-<th rowspan="2">SIC<br />Default<br />Description</th>
-<th colspan="3" class="summarytitlered">Profile's Depth</th>
-</tr>
-<tr>
-<th>Private<br />Cos</th>
-<th>Public<br />Cos</th>
-<th>View &<br />Filter</th>
-</tr>
-<% for company in @companies %> 
-<tr>
-<td><%= company.sic %> Description</td>
-<td><%= default_filter_private_count(company) %></td>
-<td><%= default_filter_public_count(company) %></td>
-<td><%= link_to image_tag("charticon.png", :class => "icon"), {:controller=>"network_stats",:action=>"view", :id => company.id} %></td>
-</tr>
-<% end %> 
-</table>
-</div>
-<div class="summarycontainer">
-<table class="summarysheet">
-<tr><th colspan="4">Relevant Public Data<br />& Information</th></tr>
-<tr>
-<th rowspan="2">Access<br />Public Co.<br />Data</th>
-<th colspan="2" class="summarytitle">Buy or Rent</th>
-<th rowspan="2">Network's<br />Traded<br />Links</th>
-</tr>
-<tr>
-<th>From<br />Vendors</th>
-<th>From<br />Members</th>
-</tr>
-<% for company in @companies %> 
-<tr>
-<td><%= link_to image_tag("stattrader-icon.png", :class => "icon"), {:action=>"index"} %></td>
-<td><%= link_to "View", {:action=>"index"} %></td>
-<td><%= link_to "View", {:action=>"index"} %></td>
-<td><%= link_to "View", {:action=>"index"} %></td></tr>
-<% end %> 
-</table>
-</div>
-<div class="clear"></div>
--->
-
-<div class="button addcompanybutton"><%= link_to "Add Company", {:controller=>"data_sheet",:action=>"new"} %></div>
