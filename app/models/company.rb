@@ -317,7 +317,7 @@ class Company < ActiveRecord::Base
 	 	sheet1[1,2] = name
 	 	sheet1[2,2] = Company.combination(combination)
 	 	sheet1[3,2] = Company.ownership(ownership)
-	 	sheet1[4,2] = "#{sic} #{Company.four_digit_sics(sic)}"
+	 	sheet1[4,2] = "#{sic} #{SIC.description(sic)}"
 	 	sheet1[5,2] = Company.country(country)
 	 	sheet1[6,2] = Company.region(region)
 
@@ -338,12 +338,12 @@ class Company < ActiveRecord::Base
 	 	sheet1[22,0] = "Funded Debt Multiple:"
 	 	sheet1[23,0] = "Stock Price:"
 
-		secure_now= SecureStat.find(secure_now)
-		secure_cy = SecureStat.find(secure_cy)
-  	secure_2y = SecureStat.find(secure_2y)
-  	secure_3y = SecureStat.find(secure_3y)
-  	secure_4y = SecureStat.find(secure_4y)
-  	secure_5y = SecureStat.find(secure_5y)
+		secure_now= SecureStat.find(self.secure_now)
+		secure_cy = SecureStat.find(self.secure_cy)
+  	secure_2y = SecureStat.find(self.secure_2y)
+  	secure_3y = SecureStat.find(self.secure_3y)
+  	secure_4y = SecureStat.find(self.secure_4y)
+  	secure_5y = SecureStat.find(self.secure_5y)
 
 	 	sheet1[9,1]  = "NOW"
 	 	sheet1[10,1] = secure_now.fye == nil ? "" : "#{secure_now.fye.month}/#{secure_now.fye.year}"
@@ -564,7 +564,7 @@ class Company < ActiveRecord::Base
 	 	sheet1[1,2] = name
 	 	sheet1[2,2] = Company.combination(combination)
 	 	sheet1[3,2] = Company.ownership(ownership)
-	 	sheet1[4,2] = "#{sic} #{Company.four_digit_sics(sic)}"
+	 	sheet1[4,2] = "#{sic} #{SIC.description(sic)}"
 	 	sheet1[5,2] = Company.country(country)
 	 	sheet1[6,2] = Company.region(region)
 
