@@ -3141,6 +3141,8 @@ class SIC
 			"NONCLASSIFIABLE ESTABLISHMENTS"
 		when "9999"
 			"NONCLASSIFIABLE ESTABLISHMENTS"
+		else
+			"SIC code not found"
 		end
 	end
 
