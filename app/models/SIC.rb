@@ -3142,7 +3142,7 @@ class SIC
 		when "9999"
 			"NONCLASSIFIABLE ESTABLISHMENTS"
 		else
-			"SIC code not found"
+			"SIC description not available"
 		end
 	end
 

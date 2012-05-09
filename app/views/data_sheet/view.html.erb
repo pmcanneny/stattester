@@ -47,7 +47,7 @@
 			<td>SIC Division:</td>
 			<td>
 				<select name="sic_1" id="sic_1" rel="/data_sheet/fill_in_sics">
-					<%= "<option value=\"\">Select To Edit</option>".html_safe if (@company.sic != nil) %>
+					<%= "<option value=\"\">Select To Edit</option>".html_safe if (@company.sic != nil and @company.sic.length == 4) %>
 					<%= options_for_select(@sic_1digit) %>
 				</select>
 			</td>
@@ -64,7 +64,7 @@
 			<td>SIC Code: </td>
 			<td>
 				<select id="company_sic" name="company[sic]">
-					<%= options_for_select(SIC.add_description(@company.sic)) if (@company.sic != nil) %>
+					<%= options_for_select(SIC.add_description(@company.sic)) if (@company.sic != nil and @company.sic.length == 4) %>
 				</select>
 			</td>
 		</tr>
