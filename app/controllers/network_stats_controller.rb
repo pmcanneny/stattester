@@ -249,8 +249,9 @@ class NetworkStatsController < ApplicationController
       @filter.region.to_f==0 ? "" : "region = #{@filter.region}").where(
       :combination => combination_filter).where(
       :ownership => ownership_filter)
-
+    
     @companies = companies
+    render :layout => 'public_company'
   end
 
   #show a table containing private company involvement stats
@@ -321,9 +322,46 @@ class NetworkStatsController < ApplicationController
       :combination => combination_filter).where(
       :ownership => ownership_filter)
 
-    temp = tradestats.all(:select => 'DISTINCT company_id')
-    company_ids1 = temp.map{|temp| temp.company_id}
-    companies
+    temp = companies.all(:select => 'DISTINCT id')
+    company_ids1 = temp.map{|temp| temp.id}
+    
+    @licensee_c = 0
+    @licensee_m = 0
+    @cpa_c = 0
+    @cpa_m = 0
+    @banker_c = 0
+    @banker_m = 0
+    @broker_c = 0
+    @broker_m = 0
+
+    @commercial_c = 0
+    @commercial_m = 0
+    @financialpro_c = 0
+    @financialpro_m = 0
+    @executive_c = 0
+    @executive_m = 0
+
+    @financial_c = 0
+    @financial_m = 0
+    @appraiser_c = 0
+    @appraiser_m = 0
+    @lender_c = 0
+    @lender_m = 0
+    @priv_investor_c = 0
+    @priv_investor_m = 0
+    @pub_investor_c = 0
+    @pub_investor_m = 0
+
+    @analyst_c = 0
+    @analyst_m = 0
+    @attorney_c = 0
+    @attorney_m = 0
+    @consultant_c = 0
+    @consultant_m = 0
+    @not_classified_c = 0
+    @not_classified_m = 0
+
+
   end
 
 

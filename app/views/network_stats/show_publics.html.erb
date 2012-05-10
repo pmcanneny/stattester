@@ -1,15 +1,40 @@
 
 <h2>Public Companies Included</h2>
 
-<table>
-	<th>Company Name</th>
-	<th>SIC Code</th>
-  <% for company in @companies %>  
-    <tr class="<%= cycle("even", "odd") %>">  
-      <td ><font face ="Lucida Console"><%= company.name %></font></td>    
-      <td ><font face ="Lucida Console"><%= "#{company.sic} - #{SIC.description(company.sic)}" %></font></td>    
-    </tr>  
-  <% end %>  
-</table>
 
 <br><br>
+
+<div id="suggest_user">
+	<table class="table_prop" cellpadding="0" cellspacing="0" width="100%">
+	<tr>
+		  <th style="text-align:left">Company</th>
+		  <th>Trading Symbol</th>
+		  <th>SIC</th>
+		   <th>CY Revenue</th>
+		   <th>Ebitda Multiple</th>
+		   <th>Actions</th>
+	</tr>
+	<% for company in @companies %> 
+		<% cy = SecureStat.find(company.secure_cy) %> 
+		 <tr>
+			  <td width="400px" style="text-align:left">
+				<%= link_to "#{company.name}",  {:controller => 'summary_sheet', :action => 'listPublicCompanies'}, 'style' => 'color:#000; font-weight:normal' %>
+			</td>
+			  <td><%= "#{company.ticker_symbol}" %></td>
+			  <td><%= "#{company.sic}" %></td>
+			  <td><%= 
+				if cy.gross_profit.to_s.present?
+					number_to_currency("#{cy.gross_profit}", :precision => 0, :separator => ",") 
+				end
+				%></td>
+			  <td><%= 
+				if cy.ebitda_multiple.present?
+					sprintf("%.1f", cy.ebitda_multiple.to_f)
+				end %>
+			</td>
+			  <td><%= link_to "Add",  {:controller => 'summary_sheet', :action => 'addPublicCompany', 
+			  :id =>"#{company.id}"},  'style' => 'color:#000; font-weight:bold;' %></td>
+			</tr>
+	<% end %> 
+	</table>
+</div>

@@ -97,7 +97,18 @@ class SIC
 
 	#return an array containing the first SIC divisions
 	def self.get_divisions()
-		SIC.add_description(["A","B","C","D","E","F","G","H","I","J","K"])
+		[	["Please Select",""],
+			["A (0) - "+SIC.description("A"), "A"],
+			["B (1) - "+SIC.description("B"), "B"],
+			["C (1) - "+SIC.description("C"), "C"],
+			["D (2-3) - "+SIC.description("D"), "D"],
+			["E (4) - "+SIC.description("E"), "E"],
+			["F (5) - "+SIC.description("F"), "F"],
+			["G (5) - "+SIC.description("G"), "G"],
+			["H (6) - "+SIC.description("H"), "H"],
+			["I (7-8) - "+SIC.description("I"), "I"],
+			["J (9) - "+SIC.description("J"), "J"],
+			["K - "+SIC.description("K"), "K"]]
 	end
 
 	#return the description of the given SIC string
