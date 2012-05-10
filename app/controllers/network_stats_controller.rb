@@ -325,45 +325,75 @@ class NetworkStatsController < ApplicationController
     temp = companies.all(:select => 'DISTINCT user_id')
     user_ids1 = temp.map{|temp| temp.user_id}
 
-
     
-    @licensee_c = 0
-    @licensee_m = User.where(:id => user_ids1).where(:subtype => [1,2,3]).size.to_i
-    @cpa_c = 0
-    @cpa_m = User.where(:id => user_ids1).where(:subtype => 1).size.to_i
-    @banker_c = 0
-    @banker_m = User.where(:id => user_ids1).where(:subtype => 2).size.to_i
-    @broker_c = 0
-    @broker_m = User.where(:id => user_ids1).where(:subtype => 3).size.to_i
+    @licensee_m = User.where(:id => user_ids1).where(:subtype => [1,2,3])
+    @licensee_m = @licensee_m.map{|i| i.id}
+    @licensee_c = companies.where(:user_id => @licensee_m).size.to_i
+    @licensee_m = @licensee_m.size.to_i
+    @cpa_m = User.where(:id => user_ids1).where(:subtype => 1)
+    @cpa_m = @cpa_m.map{|i| i.id}
+    @cpa_c = companies.where(:user_id => @cpa_m).size.to_i
+    @cpa_m = @cpa_m.size.to_i
+    @banker_m = User.where(:id => user_ids1).where(:subtype => 2)
+    @banker_m = @banker_m.map{|i| i.id}
+    @banker_c = companies.where(:user_id => @banker_m).size.to_i
+    @banker_m = @banker_m.size.to_i
+    @broker_m = User.where(:id => user_ids1).where(:subtype => 3)
+    @broker_m = @broker_m.map{|i| i.id}
+    @broker_c = companies.where(:user_id => @broker_m).size.to_i
+    @broker_m = @broker_m.size.to_i
 
-    @commercial_c = 0
-    @commercial_m = User.where(:id => user_ids1).where(:subtype => [8,9]).size.to_i
-    @financialpro_c = 0
-    @financialpro_m = User.where(:id => user_ids1).where(:subtype => 8).size.to_i
-    @executive_c = 0
-    @executive_m = User.where(:id => user_ids1).where(:subtype => 9).size.to_i
+    @commercial_m = User.where(:id => user_ids1).where(:subtype => [8,9])
+    @commercial_m = @commercial_m.map{|i| i.id}
+    @commercial_c = companies.where(:user_id => @commercial_m).size.to_i
+    @commercial_m = @commercial_m.size.to_i
+    @financialpro_m = User.where(:id => user_ids1).where(:subtype => 8)
+    @financialpro_m = @financialpro_m.map{|i| i.id}
+    @financialpro_c = companies.where(:user_id => @financialpro_m).size.to_i
+    @financialpro_m = @financialpro_m.size.to_i
+    @executive_m = User.where(:id => user_ids1).where(:subtype => 9)
+    @executive_m = @executive_m.map{|i| i.id}
+    @executive_c = companies.where(:user_id => @executive_m).size.to_i
+    @executive_m = @executive_m.size.to_i
+    
+    @financial_m = User.where(:id => user_ids1).where(:subtype => [4,5,6,7])
+    @financial_m = @financial_m.map{|i| i.id}
+    @financial_c = companies.where(:user_id => @financial_m).size.to_i
+    @financial_m = @financial_m.size.to_i
+    @appraiser_m = User.where(:id => user_ids1).where(:subtype => 4)
+    @appraiser_m = @appraiser_m.map{|i| i.id}
+    @appraiser_c = companies.where(:user_id => @appraiser_m).size.to_i
+    @appraiser_m = @appraiser_m.size.to_i
+    @lender_m = User.where(:id => user_ids1).where(:subtype => 5)
+    @lender_m = @lender_m.map{|i| i.id}
+    @lender_c = companies.where(:user_id => @lender_m).size.to_i
+    @lender_m = @lender_m.size.to_i
+    @priv_investor_m = User.where(:id => user_ids1).where(:subtype => 6)
+    @priv_investor_m = @priv_investor_m.map{|i| i.id}
+    @priv_investor_c = companies.where(:user_id => @priv_investor_m).size.to_i
+    @priv_investor_m = @priv_investor_m.size.to_i
+    @pub_investor_m = User.where(:id => user_ids1).where(:subtype => 7)
+    @pub_investor_m = @pub_investor_m.map{|i| i.id}
+    @pub_investor_c = companies.where(:user_id => @pub_investor_m).size.to_i
+    @pub_investor_m = @pub_investor_m.size.to_i
 
-    @financial_c = 0
-    @financial_m = User.where(:id => user_ids1).where(:subtype => [4,5,6,7]).size.to_i
-    @appraiser_c = 0
-    @appraiser_m = User.where(:id => user_ids1).where(:subtype => 4).size.to_i
-    @lender_c = 0
-    @lender_m = User.where(:id => user_ids1).where(:subtype => 5).size.to_i
-    @priv_investor_c = 0
-    @priv_investor_m = User.where(:id => user_ids1).where(:subtype => 6).size.to_i
-    @pub_investor_c = 0
-    @pub_investor_m = User.where(:id => user_ids1).where(:subtype => 7).size.to_i
-
-    @analyst_c = 0
-    @analyst_m = User.where(:id => user_ids1).where(:subtype => [10,11,12]).size.to_i
-    @attorney_c = 0
-    @attorney_m = User.where(:id => user_ids1).where(:subtype => 10).size.to_i
-    @consultant_c = 0
-    @consultant_m = User.where(:id => user_ids1).where(:subtype => 11).size.to_i
-    @not_classified_c = 0
-    @not_classified_m = User.where(:id => user_ids1).where(:subtype => 12).size.to_i
-
-
+    @analyst_m = User.where(:id => user_ids1).where(:subtype => [10,11,12])
+    @analyst_m = @analyst_m.map{|i| i.id}
+    @analyst_c = companies.where(:user_id => @analyst_m).size.to_i
+    @analyst_m = @analyst_m.size.to_i
+    @attorney_m = User.where(:id => user_ids1).where(:subtype => 10)
+    @attorney_m = @attorney_m.map{|i| i.id}
+    @attorney_c = companies.where(:user_id => @attorney_m).size.to_i
+    @attorney_m = @attorney_m.size.to_i
+    @consultant_m = User.where(:id => user_ids1).where(:subtype => 11)
+    @consultant_m = @consultant_m.map{|i| i.id}
+    @consultant_c = companies.where(:user_id => @consultant_m).size.to_i
+    @consultant_m = @consultant_m.size.to_i
+    @not_classified_m = User.where(:id => user_ids1).where(:subtype => 12)
+    @not_classified_m = @not_classified_m.map{|i| i.id}
+    @not_classified_c = companies.where(:user_id => @not_classified_m).size.to_i
+    @not_classified_m = @not_classified_m.size.to_i
+    
     render :layout => 'public_company'
   end
 
