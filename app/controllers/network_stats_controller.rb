@@ -249,7 +249,7 @@ class NetworkStatsController < ApplicationController
       @filter.region.to_f==0 ? "" : "region = #{@filter.region}").where(
       :combination => combination_filter).where(
       :ownership => ownership_filter)
-    
+
     @companies = companies
     render :layout => 'public_company'
   end
@@ -322,46 +322,49 @@ class NetworkStatsController < ApplicationController
       :combination => combination_filter).where(
       :ownership => ownership_filter)
 
-    temp = companies.all(:select => 'DISTINCT id')
-    company_ids1 = temp.map{|temp| temp.id}
+    temp = companies.all(:select => 'DISTINCT user_id')
+    user_ids1 = temp.map{|temp| temp.user_id}
+
+
     
     @licensee_c = 0
-    @licensee_m = 0
+    @licensee_m = User.where(:id => user_ids1).where(:subtype => [1,2,3]).size.to_i
     @cpa_c = 0
-    @cpa_m = 0
+    @cpa_m = User.where(:id => user_ids1).where(:subtype => 1).size.to_i
     @banker_c = 0
-    @banker_m = 0
+    @banker_m = User.where(:id => user_ids1).where(:subtype => 2).size.to_i
     @broker_c = 0
-    @broker_m = 0
+    @broker_m = User.where(:id => user_ids1).where(:subtype => 3).size.to_i
 
     @commercial_c = 0
-    @commercial_m = 0
+    @commercial_m = User.where(:id => user_ids1).where(:subtype => [8,9]).size.to_i
     @financialpro_c = 0
-    @financialpro_m = 0
+    @financialpro_m = User.where(:id => user_ids1).where(:subtype => 8).size.to_i
     @executive_c = 0
-    @executive_m = 0
+    @executive_m = User.where(:id => user_ids1).where(:subtype => 9).size.to_i
 
     @financial_c = 0
-    @financial_m = 0
+    @financial_m = User.where(:id => user_ids1).where(:subtype => [4,5,6,7]).size.to_i
     @appraiser_c = 0
-    @appraiser_m = 0
+    @appraiser_m = User.where(:id => user_ids1).where(:subtype => 4).size.to_i
     @lender_c = 0
-    @lender_m = 0
+    @lender_m = User.where(:id => user_ids1).where(:subtype => 5).size.to_i
     @priv_investor_c = 0
-    @priv_investor_m = 0
+    @priv_investor_m = User.where(:id => user_ids1).where(:subtype => 6).size.to_i
     @pub_investor_c = 0
-    @pub_investor_m = 0
+    @pub_investor_m = User.where(:id => user_ids1).where(:subtype => 7).size.to_i
 
     @analyst_c = 0
-    @analyst_m = 0
+    @analyst_m = User.where(:id => user_ids1).where(:subtype => [10,11,12]).size.to_i
     @attorney_c = 0
-    @attorney_m = 0
+    @attorney_m = User.where(:id => user_ids1).where(:subtype => 10).size.to_i
     @consultant_c = 0
-    @consultant_m = 0
+    @consultant_m = User.where(:id => user_ids1).where(:subtype => 11).size.to_i
     @not_classified_c = 0
-    @not_classified_m = 0
+    @not_classified_m = User.where(:id => user_ids1).where(:subtype => 12).size.to_i
 
 
+    render :layout => 'public_company'
   end
 
 

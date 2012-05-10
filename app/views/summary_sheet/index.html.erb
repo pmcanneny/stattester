@@ -121,6 +121,11 @@
 					<td><%= link_to "Delete", {:action=>"delete_company_link", :id => user_company.id}, :confirm =>"This will remove company '#{p_company.name}' from your list.  Are you sure?" %></td>
 			</tr>
 		<% end %> 
+		<% if @user_companies.size.to_i == 0 %>
+			<tr>
+				<td colspan="11">No StatTrader Public companies added yet. Click "Import Company Data" above to add to this list.</td>
+			</tr>
+		<% end %>
 	</table>
 	<div class="clear"></div>
 </div>

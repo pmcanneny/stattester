@@ -8,6 +8,11 @@ class Company < ActiveRecord::Base
   validates_presence_of :ownership, :on => :create
 
 
+  after_create do
+		self.current_filter_id = self.current_filter
+		self.save
+  end
+
   #################################################################
   # singleton patterns for the current filter, and stats
   #
@@ -30,6 +35,7 @@ class Company < ActiveRecord::Base
 			filter.sic_level3 = ""
 			filter.sic_level4 = ""
 			filter.save
+			filter.company_id = self.id
 			filter.default_settings!
 			self.current_filter_id = filter.id
 			self.save
