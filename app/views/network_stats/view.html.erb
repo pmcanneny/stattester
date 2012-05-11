@@ -106,29 +106,32 @@
 	<tr>
 		<td>
 			<select name="filter[sic_level1]" id="filter_sic_level1" rel="/network_stats/fill_in_sics">
-				<%= options_for_select({"#{@filter.sic_level1} - #{SIC.description(@filter.sic_level1)}" => @filter.sic_level1}) unless @filter.sic_level1 == "" %>
-				<%= options_for_select(@sic_1digit) %>
+				<%= options_for_select(@sic_1digit, @filter.sic_level1) unless @filter.sic_level1 == "" %>
+				<%= options_for_select(@sic_1digit) if @filter.sic_level1 == "" %>
 			</select>
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<select name="filter[sic_level2]" id="filter_sic_level2" rel="/network_stats/fill_in_sics_3digit">
-				<%= options_for_select({"#{@filter.sic_level2} - #{SIC.description(@filter.sic_level2)}" => @filter.sic_level2}) unless @filter.sic_level2 == "" %>
+				<%= options_for_select(SIC.get_children(@filter.sic_level1), @filter.sic_level2) if @filter.sic_level2 != "" %>
+				<%= options_for_select(SIC.get_children(@filter.sic_level1)) if @filter.sic_level1 != "" and @filter.sic_level2 == "" %>
 			</select>
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<select name="filter[sic_level3]" id="filter_sic_level3" rel="/network_stats/fill_in_sics_4digit">
-				<%= options_for_select({"#{@filter.sic_level3} - #{SIC.description(@filter.sic_level3)}" => @filter.sic_level3}) unless @filter.sic_level3 == "" %>
+				<%= options_for_select(SIC.get_children(@filter.sic_level2), @filter.sic_level3) if @filter.sic_level3 != "" %>
+				<%= options_for_select(SIC.get_children(@filter.sic_level2)) if @filter.sic_level2 != "" and @filter.sic_level3 == "" %>
 			</select>
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<select name="filter[sic_level4]" id="filter_sic_level4">
-				<%= options_for_select({"#{@filter.sic_level4} - #{SIC.description(@filter.sic_level4)}" => @filter.sic_level4}) unless @filter.sic_level4 == "" %>
+				<%= options_for_select(SIC.get_children(@filter.sic_level3), @filter.sic_level4) if @filter.sic_level4 != "" %>
+				<%= options_for_select(SIC.get_children(@filter.sic_level3)) if @filter.sic_level3 != "" and @filter.sic_level4 == "" %>
 			</select>
 		</td>
 	</tr>

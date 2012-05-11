@@ -83,7 +83,7 @@ class SIC
 			return [desc]
 		end
 		result = Array.new
-		result << ["Please Select",""]
+		result << ["Select to Narrow Search",""]
 		for sic in array
 			desc = sic + " - " + SIC.description(sic)
 			# if desc.length > 19
