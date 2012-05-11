@@ -78,9 +78,8 @@ class DataSheetController < ApplicationController
 	def update
         #fix params as they come in through the formatting javascript
         params.each do |key, value| 
-          # target groups using regular expressions
+          # target using regular expressions
           if (key.to_s[/(secure_.*)/])
-            # whatever logic you need for params that start with 'setname1'
             params[key].each do |subkey, subvalue|
                 unless params[key][subkey] == ""
                     params[key][subkey] = drop_dollar_format(params[key][subkey]).to_f
@@ -191,6 +190,18 @@ class DataSheetController < ApplicationController
 
     #action for creating a new company
     def createcompany
+        #fix params as they come in through the formatting javascript
+        params.each do |key, value| 
+          # target using regular expression
+          if (key.to_s[/(secure_.*)/])
+            params[key].each do |subkey, subvalue|
+                unless params[key][subkey] == ""
+                    params[key][subkey] = drop_dollar_format(params[key][subkey]).to_f
+                end
+            end
+          end
+        end
+        params[:company][:id] = drop_dollar_format(params[:company][:id])
         @company = Company.new(params[:company])
         @company.user_id = current_user.id
         unless @company.save
