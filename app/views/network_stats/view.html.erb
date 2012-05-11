@@ -534,12 +534,12 @@ Funded Debt Multiple
 <div class="statsheading">Network Stats
 	<!-- <span>Companies Included: <%= @sample_size.to_i %></span> -->
 	<span>Public Companies Included: <%= link_to @public_companies.to_i, {:action => :show_publics, :id => @company.id}, :target => "_blank"  %></span>
-	<span>Private Companies Included: <%= @private_companies.to_i %></span>
+	<span>Private Companies Included: <%= link_to @private_companies.to_i, {:action => :private_stats, :id => @company.id}, :target => "_blank"  %> </span>
 
 </div>
 
 
-<table>
+<table style="padding-top:10px;">
 
 		<!-- <th></th> -->
 		<th>Now</th>

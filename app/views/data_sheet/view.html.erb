@@ -64,7 +64,7 @@
 			<td>SIC Code: </td>
 			<td>
 				<select id="company_sic" name="company[sic]">
-					<%= options_for_select(SIC.add_description(@company.sic)) if (@company.sic != nil and @company.sic.length == 4) %>
+					<%= "<option value=\"#{@company.sic}\">#{@company.sic} - #{SIC.description(@company.sic)}</option>".html_safe if (@company.sic != nil and @company.sic.length == 4) %>
 				</select>
 			</td>
 		</tr>
