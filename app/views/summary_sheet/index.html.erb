@@ -40,12 +40,12 @@
 					%>
 				</td>
 				  <td><%=
-						if company.current_filter_id.present?
+						if company.current_filter.present?
 							link_to "#{default_filter_private_count(company)}", {:controller => :network_stats, :action => :private_stats, :id => company.id}
 						end
 					%></td>
 				<td><%= 
-					if company.current_filter_id.present?
+					if company.current_filter.present?
 						link_to "#{default_filter_public_count(company)}", {:controller => :network_stats, :action => :show_publics, :id => company.id}
 					end
 					%></td>
@@ -104,13 +104,13 @@
 							end;
 						%></td>
 				  <td><%= 
-					if p_company.current_filter_id.present?
+					if p_company.current_filter.present?
 						link_to "#{default_filter_private_count(company)}", {:controller => :network_stats, :action => :private_stats, :id => company.id}
 					end
 					%></td>
 				<td><%= 
 				
-					if p_company.current_filter_id.present?
+					if p_company.current_filter.present?
 						link_to "#{default_filter_public_count(company)}", {:controller => :network_stats, :action => :show_publics, :id => company.id}
 					end
 					%></td>
