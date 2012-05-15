@@ -106,13 +106,13 @@
 						%></td>
 				  <td><%= 
 					if p_company.current_filter.present?
-						link_to "#{default_filter_private_count(p_company)}", {:controller => :network_stats, :action => :private_stats, :id => company.id}
+						link_to "#{default_filter_private_count(p_company)}", {:controller => :network_stats, :action => :private_stats, :id => p_company.id}
 					end
 					%></td>
 				<td><%= 
 				
 					if p_company.current_filter.present?
-						link_to "#{default_filter_public_count(p_company)}", {:controller => :network_stats, :action => :show_publics, :id => company.id}
+						link_to "#{default_filter_public_count(p_company)}", {:controller => :network_stats, :action => :show_publics, :id => p_company.id}
 					end
 					%></td>
 				  <td><%= link_to image_tag("charticon.png", :class => "icon"), {:controller=>"network_stats",:action=>"view", :id => p_company.id} %></td>
