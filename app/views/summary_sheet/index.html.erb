@@ -80,6 +80,7 @@
 		</tr>
 		<% @user_companies.each do |user_company| %>  
 			<% p_company = Company.find(user_company.pc_id) %>
+			<% next if p_company == nil %>
 			 <tr>
 				  <td  style="text-align:left">
 					<%= 
